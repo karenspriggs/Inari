@@ -388,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: DeccelFactor
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: MovementSpeed
@@ -441,6 +441,10 @@ PrefabInstance:
     - target: {fileID: 888231057575403148, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4060298514138807093, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: movementSmoothingSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}

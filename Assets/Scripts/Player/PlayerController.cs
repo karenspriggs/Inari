@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(rawInputMovement);
         CalculateMovementInputSmoothing();
         UpdatePlayerMovement();
     }
