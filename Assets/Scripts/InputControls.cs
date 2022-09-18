@@ -25,30 +25,21 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""Player"",
-            ""id"": ""2531faba-55f2-4340-9dba-c4e3817d29cd"",
+            ""id"": ""ff31400e-ca54-4916-80ec-87b592a95164"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""08bc2723-8b43-48c3-a2ea-c0b50d1af23c"",
+                    ""type"": ""Value"",
+                    ""id"": ""074cf664-991e-4402-9dbe-1ca25c375834"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""31f9172d-3e3b-4c1e-9e36-79566242eaaf"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
-                    ""id"": ""ea5ec03c-8c50-4ce7-8443-22a4f3179655"",
+                    ""id"": ""9cf2602b-08ef-4bcb-bb8b-b715306c1fcb"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -57,7 +48,16 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""HeavyAttack"",
                     ""type"": ""Button"",
-                    ""id"": ""35243cfe-df87-419c-9f3c-37d8efd326fb"",
+                    ""id"": ""6f3c0ca3-d075-44ed-b2d6-9269d44b0489"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""8c235201-d7fa-47e4-a0c9-33501e316ea9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -66,7 +66,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Shuriken"",
                     ""type"": ""Button"",
-                    ""id"": ""826b9eb4-8a22-4cb1-abe4-d02fc4d34acb"",
+                    ""id"": ""658db6de-ea89-4ec9-a610-0116aed83f09"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -76,51 +76,18 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""f6c3f1ea-81c2-4b5e-89b8-6b26ffdb5760"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MainControls"",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d25200c0-e2ff-4ad3-9d76-0b38abbff6cb"",
+                    ""id"": ""c4db8a4b-756c-4d05-8279-0f35fa3fa330"",
                     ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""31658c46-0b45-403e-b3d7-f78f2a9cc834"",
-                    ""path"": ""<SwitchProControllerHID>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MainControls"",
-                    ""action"": ""HeavyAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""965351b7-2466-4d43-b3fa-426858ad8ac4"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MainControls"",
-                    ""action"": ""Shuriken"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""WASD"",
-                    ""id"": ""1aa9d976-37b7-4b8b-b964-05d1551e6831"",
+                    ""id"": ""66009b66-fb7b-4700-a0ad-260ad846f16d"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -131,51 +98,51 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""7560ce69-1109-4726-94ba-2298c8e2b055"",
+                    ""id"": ""ec3bb287-6d05-4b07-adc3-2a35b9479d7c"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""cb5f88ef-999d-4239-8fbf-8fe79bc86c4a"",
+                    ""id"": ""0ff943cb-af38-4649-b3ea-d4c782897ad4"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""6900b25e-fbbe-41c2-990a-a3be5e3fa202"",
+                    ""id"": ""072afbcc-989f-403a-8fca-b7275cb91699"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""237ccf30-65c9-4caa-b1b4-43542915438c"",
+                    ""id"": ""aabe3bf4-06af-4e56-aa6f-98f11f40e0cd"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""Arrow Keys"",
-                    ""id"": ""088e3bc3-0c7e-4eb9-927b-cd88eba3320c"",
+                    ""id"": ""aa55cf1f-12a9-435d-bcab-07ec492c9522"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -186,55 +153,88 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""6b177565-cf77-4701-8fcf-1a4765136d0c"",
+                    ""id"": ""be29ba20-0181-4450-b7f1-a350dccd78c9"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""e859a8e5-8075-4cd1-b396-ce9b0198f661"",
+                    ""id"": ""54fec5c2-e571-4c0a-bd5f-d67c19278ba5"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""b494f6a5-1853-41e3-84e3-bffa08eaa2e7"",
+                    ""id"": ""88444b71-f4b0-4387-834d-62beba6b3881"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""ed494d5b-7f67-4c36-8b5f-3e2a72d3fce4"",
+                    ""id"": ""1251fe45-b747-4e7f-a2dc-fc19f05cff82"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""MainControls"",
+                    ""groups"": ""MainInput"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""31992d4b-9c63-4d00-b7fe-51c81e100481"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MainInput"",
+                    ""action"": ""HeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43d7152b-f6d4-4ff4-9604-b835a650631b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MainInput"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d59e3e4d-a5bf-45cf-b03b-87cb46c8dc61"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MainInput"",
+                    ""action"": ""Shuriken"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""MainControls"",
-            ""bindingGroup"": ""MainControls"",
+            ""name"": ""MainInput"",
+            ""bindingGroup"": ""MainInput"",
             ""devices"": []
         }
     ]
@@ -242,9 +242,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Shuriken = m_Player.FindAction("Shuriken", throwIfNotFound: true);
     }
 
@@ -306,18 +306,18 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_HeavyAttack;
+    private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Shuriken;
     public struct PlayerActions
     {
         private @InputControls m_Wrapper;
         public PlayerActions(@InputControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Shuriken => m_Wrapper.m_Player_Shuriken;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -331,15 +331,15 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @HeavyAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
+                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Shuriken.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShuriken;
                 @Shuriken.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShuriken;
                 @Shuriken.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShuriken;
@@ -350,15 +350,15 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Dash.started += instance.OnDash;
-                @Dash.performed += instance.OnDash;
-                @Dash.canceled += instance.OnDash;
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
                 @HeavyAttack.started += instance.OnHeavyAttack;
                 @HeavyAttack.performed += instance.OnHeavyAttack;
                 @HeavyAttack.canceled += instance.OnHeavyAttack;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
                 @Shuriken.started += instance.OnShuriken;
                 @Shuriken.performed += instance.OnShuriken;
                 @Shuriken.canceled += instance.OnShuriken;
@@ -366,21 +366,21 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-    private int m_MainControlsSchemeIndex = -1;
-    public InputControlScheme MainControlsScheme
+    private int m_MainInputSchemeIndex = -1;
+    public InputControlScheme MainInputScheme
     {
         get
         {
-            if (m_MainControlsSchemeIndex == -1) m_MainControlsSchemeIndex = asset.FindControlSchemeIndex("MainControls");
-            return asset.controlSchemes[m_MainControlsSchemeIndex];
+            if (m_MainInputSchemeIndex == -1) m_MainInputSchemeIndex = asset.FindControlSchemeIndex("MainInput");
+            return asset.controlSchemes[m_MainInputSchemeIndex];
         }
     }
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnShuriken(InputAction.CallbackContext context);
     }
 }
