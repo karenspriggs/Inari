@@ -23,28 +23,19 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = new InputControls();
         playerActions = playerInput.Player;
+        playerActions.Enable();
 
-        playerActions.Move.performed += OnMovement;
+        playerActions.Move.performed += ctx => rawInputMovement = ctx.ReadValue<Vector2>();
     }
 
     private void OnDisable()
     {
-        playerActions.Move.performed -= OnMovement;
+        playerActions.Move.performed -= ctx => rawInputMovement = ctx.ReadValue<Vector2>();
     }
 
     public void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-    }
-
-    public void OnMovement(InputAction.CallbackContext value)
-    {
-        inputMovement = value.ReadValue<Vector2>();
-
-        Debug.Log(inputMovement);
-
-        // Putting the movement and saving it to rawmovement
-        rawInputMovement = new Vector3(inputMovement.x, inputMovement.y, 0);
     }
 
     void CalculateMovementInputSmoothing()
@@ -60,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(rawInputMovement);
         CalculateMovementInputSmoothing();
         UpdatePlayerMovement();
     }

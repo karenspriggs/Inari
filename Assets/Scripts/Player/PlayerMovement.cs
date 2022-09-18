@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Settings")]
     public float MovementSpeed;
     public float DashDistance;
+    public float DeccelFactor;
 
     private bool canMove;
     private Vector3 movementInput;
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        movementInput = Vector3.zero;
     }
 
     void MovePlayer()
@@ -39,6 +41,11 @@ public class PlayerMovement : MonoBehaviour
         if (!canMove) return;
 
         Vector2 movementThisFrame = new Vector2(movementInput.x, movementInput.y) * MovementSpeed * Time.deltaTime;
+
+        if (movementInput == Vector3.zero)
+        {
+            movementThisFrame *= DeccelFactor;
+        }
 
         playerRigidbody.velocity = movementThisFrame;
     }
