@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         playerActions.Enable();
 
         playerActions.Move.performed += ctx => rawInputMovement = ctx.ReadValue<Vector2>();
+        playerActions.Move.canceled += ctx => rawInputMovement = Vector2.zero;
     }
 
     private void OnDisable()
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     void CalculateMovementInputSmoothing()
     {
-        smoothInputMovement = Vector3.Lerp(smoothInputMovement, rawInputMovement, Time.deltaTime * movementSmoothingSpeed);
+        smoothInputMovement = Vector2.Lerp(smoothInputMovement, rawInputMovement, Time.deltaTime * movementSmoothingSpeed);
     }
 
     void UpdatePlayerMovement()

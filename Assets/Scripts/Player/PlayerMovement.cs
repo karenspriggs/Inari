@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float DeccelFactor;
 
     private bool canMove;
-    private Vector3 movementInput;
+    private Vector2 movementInput;
 
     Rigidbody2D playerRigidbody;
 
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        movementInput = Vector3.zero;
+        movementInput = Vector2.zero;
     }
 
     void MovePlayer()
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 movementThisFrame = new Vector2(movementInput.x, movementInput.y) * MovementSpeed * Time.deltaTime;
 
-        if (movementInput == Vector3.zero)
+        if (movementInput == Vector2.zero)
         {
             movementThisFrame *= DeccelFactor;
         }
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.velocity = movementThisFrame;
     }
 
-    public void UpdateMovementData(Vector3 newMovementDirection)
+    public void UpdateMovementData(Vector2 newMovementDirection)
     {
         movementInput = newMovementDirection;
     }
