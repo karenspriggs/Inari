@@ -406,6 +406,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Placeholder
       objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.9149711
+      objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_Size.y
+      value: 3.4811463
+      objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_Offset.x
+      value: 1.0915989
+      objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.12648869
+      objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 3.4
+      objectReference: {fileID: 0}
     - target: {fileID: 888231057575403148, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -462,6 +490,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3739880366043423979, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.15296039
+      objectReference: {fileID: 0}
     - target: {fileID: 4060298514138807093, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: movementSmoothingSpeed
       value: 10
@@ -470,7 +502,8 @@ PrefabInstance:
       propertyPath: velocityToStopMovingAnim
       value: 0.4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2979834720565512387, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
 --- !u!1 &888231057816129490 stripped
 GameObject:

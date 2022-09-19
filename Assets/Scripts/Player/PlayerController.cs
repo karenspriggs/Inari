@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<PlayerAnimator>();
     }
 
+    void OnBasicAttack()
+    {
+
+    }
+
     void CalculateMovementInputSmoothing()
     {
         smoothInputMovement = Vector2.Lerp(smoothInputMovement, rawInputMovement, Time.deltaTime * movementSmoothingSpeed);
