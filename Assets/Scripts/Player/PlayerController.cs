@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Sub Behaviors")]
     PlayerMovement playerMovement;
+    PlayerAnimator playerAnimator;
 
     [Header("Input Settings")]
     public float movementSmoothingSpeed = 1f;
@@ -37,11 +38,13 @@ public class PlayerController : MonoBehaviour
     public void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     void CalculateMovementInputSmoothing()
     {
         smoothInputMovement = Vector2.Lerp(smoothInputMovement, rawInputMovement, Time.deltaTime * movementSmoothingSpeed);
+        playerAnimator.UpdateMoveAnimation(smoothInputMovement);
     }
 
     void UpdatePlayerMovement()
