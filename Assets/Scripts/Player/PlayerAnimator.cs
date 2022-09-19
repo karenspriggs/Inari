@@ -8,6 +8,7 @@ public class PlayerAnimator : MonoBehaviour
 
     [Header("Animator Values")]
     private int animatorMoveBool;
+    private int animatorBasicAttackBool;
 
     public float velocityToStopMovingAnim;
 
@@ -16,6 +17,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animatorMoveBool = Animator.StringToHash("IsMoving");
+        animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
     }
 
     public void UpdateMoveAnimation(Vector2 moveInput)
@@ -28,6 +30,15 @@ public class PlayerAnimator : MonoBehaviour
         }
 
         animator.SetBool(animatorMoveBool, isMoving);
+    }
+
+    public void UpdateBaseAttackAnimation(float isAttacking)
+    {
+        bool isAttackingThisFrame = true;
+
+        if (isAttacking == 0f) isAttackingThisFrame = false;
+
+        animator.SetBool(animatorBasicAttackBool, isAttackingThisFrame);
     }
 
     // Update is called once per frame

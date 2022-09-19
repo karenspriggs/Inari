@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 rawInputMovement;
     private Vector3 smoothInputMovement;
 
+    private float isBasicAttacking;
+
     private void OnEnable()
     {
         playerInput = new InputControls();
@@ -28,11 +30,18 @@ public class PlayerController : MonoBehaviour
 
         playerActions.Move.performed += ctx => rawInputMovement = ctx.ReadValue<Vector2>();
         playerActions.Move.canceled += ctx => rawInputMovement = Vector2.zero;
+
+        playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
+        playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
     }
 
     private void OnDisable()
     {
         playerActions.Move.performed -= ctx => rawInputMovement = ctx.ReadValue<Vector2>();
+        playerActions.Move.canceled -= ctx => rawInputMovement = Vector2.zero;
+
+        playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
+        playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
     }
 
     public void Start()
@@ -58,9 +67,15 @@ public class PlayerController : MonoBehaviour
         playerMovement.UpdateMovementData(smoothInputMovement);
     }
 
+    void UpdatePlayerBasicAttack()
+    {
+        playerAnimator.UpdateBaseAttackAnimation(isBasicAttacking);
+    }
+
     private void Update()
     {
         CalculateMovementInputSmoothing();
         UpdatePlayerMovement();
+        UpdatePlayerBasicAttack();
     }
 }
