@@ -44,14 +44,14 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 movementThisFrame = new Vector2(movementInput.x, movementInput.y) * MovementSpeed * Time.deltaTime;
 
-        if (!isFacingRight && movementInput.x > 0f)
-        {
-            FlipPlayer();
-        }
-        else if (isFacingRight && movementInput.x < 0f)
-        {
-            FlipPlayer();
-        }
+        //if (!isFacingRight && movementInput.x > 0f)
+        //{
+        //    FlipPlayer();
+        //}
+        //else if (isFacingRight && movementInput.x < 0f)
+        //{
+        //    FlipPlayer();
+        //}
 
         if (movementInput == Vector2.zero)
         {
