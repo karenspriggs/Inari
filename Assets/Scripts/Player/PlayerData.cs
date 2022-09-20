@@ -22,7 +22,6 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
-        TakeDamage(1);
     }
 
     // Update is called once per frame
