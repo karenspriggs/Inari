@@ -16,7 +16,14 @@ public class PlayerData : MonoBehaviour
     [SerializeField]
     private Weapon currentWeapon;
 
-    public static Action<int> PlayerTookDamage; 
+    /// <summary>
+    /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
+    /// </summary>
+    public static Action<int> PlayerTookDamage;
+    /// <summary>
+    /// Subscribe to this delegate for methods that want to know when a player died
+    /// </summary>
+    public static Action PlayerDied;
 
     // Start is called before the first frame update
     void Start()
@@ -35,5 +42,14 @@ public class PlayerData : MonoBehaviour
         Debug.Log(damage);
         currentHP -= damage;
         PlayerTookDamage?.Invoke(damage);
+        CheckIfDead();
+    }
+
+    void CheckIfDead()
+    {
+        if (currentHP >= 0)
+        {
+            PlayerDied?.Invoke();
+        }
     }
 }

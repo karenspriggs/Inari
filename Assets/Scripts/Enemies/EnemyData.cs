@@ -1,27 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 public class EnemyData : MonoBehaviour
 {
+    [Header("Enemy Stats")]
+    [SerializeField]
+    private int maxHP;
+    [SerializeField]
+    private int currentHP;
+    [SerializeField]
+    private int Attack;
+
+    public static Action EnemyKilled;
+
+    private void OnEnable()
+    {
+        EnemyKilled += OnEnemyKilled;
+    }
+
+    private void OnDisable()
+    {
+        EnemyKilled -= OnEnemyKilled;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        currentHP = maxHP;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
-            Debug.Log("enemy hit");
-            Destroy(gameObject);
+            currentHP--;
+            CheckIfDead();
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Debug.Log(damage);
+        currentHP -= damage;
+    }
+
+    void CheckIfDead()
+    {
+        if (currentHP <= 0)
+        {
+            EnemyKilled?.Invoke();
+        }
+    }
+
+    void OnEnemyKilled()
+    {
+        Destroy(gameObject);
     }
 }
