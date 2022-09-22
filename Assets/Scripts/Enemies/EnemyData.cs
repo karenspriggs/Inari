@@ -43,7 +43,6 @@ public class EnemyData : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log(damage);
         currentHP -= damage;
     }
 

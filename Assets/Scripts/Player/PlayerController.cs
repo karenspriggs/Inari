@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerAnimator playerAnimator;
 
-    // Added by Hannah
-    // PlayerData playerData;
-
     [Header("Input Settings")]
     public float movementSmoothingSpeed = 1f;
 
@@ -36,10 +33,6 @@ public class PlayerController : MonoBehaviour
 
         playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
         playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
-
-        // Added by Hannah
-        // This was my attempt sobsob
-        // PlayerData.PlayerTookDamage += playerData.TakeDamage;
     }
 
     private void OnDisable()
@@ -49,20 +42,12 @@ public class PlayerController : MonoBehaviour
 
         playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
         playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
-
-        // Added by Hannah
-        // PlayerData.PlayerTookDamage -= playerData.TakeDamage;
     }
 
     public void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponent<PlayerAnimator>();
-    }
-
-    void OnBasicAttack()
-    {
-
     }
 
     void CalculateMovementInputSmoothing()

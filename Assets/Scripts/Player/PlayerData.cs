@@ -8,18 +8,22 @@ public class PlayerData : MonoBehaviour
 {
     [Header("Player Stats")]
     [SerializeField]
-    private int maxHP;
+    private float maxHP;
     [SerializeField]
-    private int currentHP;
+    private float currentHP;
     [SerializeField]
-    private int Attack;
+    private float Attack;
     [SerializeField]
     private Weapon currentWeapon;
 
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
     /// </summary>
-    public static Action<int> PlayerTookDamage;
+    public static Action<float> InitializedPlayerHealth;
+    /// <summary>
+    /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
+    /// </summary>
+    public static Action<float> PlayerTookDamage;
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player died
     /// </summary>
@@ -29,6 +33,7 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
+        InitializedPlayerHealth?.Invoke(currentHP);
     }
 
     // Update is called once per frame
@@ -37,9 +42,8 @@ public class PlayerData : MonoBehaviour
         
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        Debug.Log(damage);
         currentHP -= damage;
         PlayerTookDamage?.Invoke(damage);
         CheckIfDead();
@@ -51,5 +55,10 @@ public class PlayerData : MonoBehaviour
         {
             PlayerDied?.Invoke();
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        TakeDamage(1f);
     }
 }
