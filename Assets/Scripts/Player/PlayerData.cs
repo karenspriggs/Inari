@@ -14,7 +14,11 @@ public class PlayerData : MonoBehaviour
     [SerializeField]
     private float Attack;
     [SerializeField]
+    private float maxEnergy;
+    [SerializeField]
     private Weapon currentWeapon;
+
+    public float currentEnergy;
 
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
@@ -33,6 +37,7 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
+        currentEnergy = maxEnergy;
         InitializedPlayerHealth?.Invoke(currentHP);
     }
 
