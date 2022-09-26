@@ -108,7 +108,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 18
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -207,6 +207,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 658db6de-ea89-4ec9-a610-0116aed83f09
     m_ActionName: Player/Shuriken[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3390d740-7bd2-488e-846f-2961cf02765a
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -240,6 +244,7 @@ MonoBehaviour:
   MovementSpeed: 200
   DashDistance: 0
   DeccelFactor: 0.2
+  JumpHeight: 8000
 --- !u!114 &-2889860059966569433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +260,9 @@ MonoBehaviour:
   maxHP: 3
   currentHP: 0
   Attack: 0
+  maxEnergy: 0
   currentWeapon: {fileID: 0}
+  currentEnergy: 0
 --- !u!114 &8707113614145497619
 MonoBehaviour:
   m_ObjectHideFlags: 0

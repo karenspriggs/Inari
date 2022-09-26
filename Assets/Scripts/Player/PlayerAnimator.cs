@@ -32,6 +32,11 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(animatorMoveBool, isMoving);
     }
 
+    public void UpdateJumpAnimation(float isJumping)
+    {
+
+    }
+
     public void UpdateBaseAttackAnimation(float isAttacking)
     {
         bool isAttackingThisFrame = true;

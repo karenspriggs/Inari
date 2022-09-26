@@ -10,8 +10,10 @@ public class PlayerMovement : MonoBehaviour
     public float MovementSpeed;
     public float DashDistance;
     public float DeccelFactor;
+    public float JumpHeight;
 
     private bool canMove;
+    private bool canJump;
     private bool isFacingRight;
     private Vector2 movementInput;
 
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         canMove = true;
+        canJump = true;
         isFacingRight = true;
     }
 
@@ -42,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!canMove) return;
 
-        Vector2 movementThisFrame = new Vector2(movementInput.x, movementInput.y) * MovementSpeed * Time.deltaTime;
+        Vector2 movementThisFrame = new Vector2(movementInput.x, 0) * MovementSpeed * Time.deltaTime;
 
         if (!isFacingRight && movementInput.x > 0f)
         {
@@ -61,9 +64,26 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.velocity = movementThisFrame;
     }
 
+    void Jump()
+    {
+        playerRigidbody.AddForce(Vector2.up * JumpHeight);
+    }
+
     public void UpdateMovementData(Vector2 newMovementDirection)
     {
         movementInput = newMovementDirection;
+    }
+
+    public void UpdateJump(float isJumping)
+    {
+        Debug.Log("Jump method");
+        bool isJumpingThisFrame = isJumping > 0;
+
+        if (canJump && isJumpingThisFrame)
+        {
+            Jump();
+            canJump = false;
+        }
     }
 
     void FlipPlayer()
@@ -75,8 +95,11 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    void UpdateSpritePosition()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            canJump = true;
+        }
     }
 }
