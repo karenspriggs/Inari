@@ -11,9 +11,12 @@ public class PlayerMovement : MonoBehaviour
     public float DashDistance;
     public float DeccelFactor;
     public float JumpHeight;
+    public float DashTimer;
 
     private bool canMove;
     private bool canJump;
+    private bool canDash;
+    private bool dashTimerOn;
     private bool isFacingRight;
     private Vector2 movementInput;
 
@@ -26,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         canMove = true;
         canJump = true;
+        canDash = true;
+        dashTimerOn = false;
         isFacingRight = true;
     }
 
@@ -74,15 +79,39 @@ public class PlayerMovement : MonoBehaviour
         movementInput = newMovementDirection;
     }
 
-    public void UpdateJump(float isJumping)
+    public void Dash()
     {
-        Debug.Log("Jump method");
-        bool isJumpingThisFrame = isJumping > 0;
+        float dashDistanceThisFrame = DashDistance;
 
-        if (canJump && isJumpingThisFrame)
+        if (!isFacingRight)
+        {
+            dashDistanceThisFrame = -dashDistanceThisFrame;
+        }
+
+        playerRigidbody.AddForce(Vector2.right * dashDistanceThisFrame);
+        canDash = false;
+    }
+
+    public void UpdateJump()
+    {
+        if (canJump)
         {
             Jump();
             canJump = false;
+        }
+    }
+
+    public void UpdateDash()
+    {
+        if (canDash)
+        {
+            Dash();
+
+            if (!dashTimerOn)
+            {
+                dashTimerOn = true;
+                StartCoroutine(DashCoroutine());
+            }
         }
     }
 
@@ -101,5 +130,14 @@ public class PlayerMovement : MonoBehaviour
         {
             canJump = true;
         }
+    }
+
+    IEnumerator DashCoroutine()
+    {
+        Debug.Log("Dash coroutine started");
+
+        yield return new WaitForSeconds(DashTimer);
+        canDash = true;
+        dashTimerOn = false;
     }
 }

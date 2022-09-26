@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 smoothInputMovement;
 
     private float isJumping;
+    private float isDashing;
     private float isBasicAttacking;
 
     private void OnEnable()
@@ -35,6 +36,9 @@ public class PlayerController : MonoBehaviour
         playerActions.Jump.performed += ctx => isJumping = ctx.ReadValue<float>();
         playerActions.Jump.canceled += ctx => isJumping = ctx.ReadValue<float>();
 
+        playerActions.Dash.performed += ctx => isDashing = ctx.ReadValue<float>();
+        playerActions.Dash.canceled += ctx => isDashing = ctx.ReadValue<float>();
+
         playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
         playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
     }
@@ -46,6 +50,9 @@ public class PlayerController : MonoBehaviour
 
         playerActions.Jump.performed -= ctx => isJumping = ctx.ReadValue<float>();
         playerActions.Jump.canceled -= ctx => isJumping = ctx.ReadValue<float>();
+
+        playerActions.Dash.performed -= ctx => isDashing = ctx.ReadValue<float>();
+        playerActions.Dash.canceled -= ctx => isDashing = ctx.ReadValue<float>();
 
         playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
         playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
@@ -69,9 +76,24 @@ public class PlayerController : MonoBehaviour
         playerMovement.UpdateMovementData(smoothInputMovement);
     }
 
+    void UpdatePlayerDash()
+    {
+        bool isDashingThisFrame = isDashing > 0;
+        
+        if (isDashingThisFrame)
+        {
+            playerMovement.UpdateDash();
+        }
+    }
+
     void UpdatePlayerJump()
     {
-        playerMovement.UpdateJump(isJumping);
+        bool isJumpingThisFrame = isJumping > 0;
+
+        if (isJumpingThisFrame)
+        {
+            playerMovement.UpdateJump();
+        }
     }
 
     void UpdatePlayerBasicAttack()
@@ -84,6 +106,7 @@ public class PlayerController : MonoBehaviour
         CalculateMovementInputSmoothing();
         UpdatePlayerMovement();
         UpdatePlayerJump();
+        UpdatePlayerDash();
         UpdatePlayerBasicAttack();
     }
 }
