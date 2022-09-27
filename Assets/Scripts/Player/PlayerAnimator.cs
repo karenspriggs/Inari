@@ -9,6 +9,8 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Animator Values")]
     private int animatorMoveBool;
     private int animatorBasicAttackBool;
+    private int animatorJumpBool;
+    private int animatorDashBool;
 
     public float velocityToStopMovingAnim;
 
@@ -18,6 +20,8 @@ public class PlayerAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
         animatorMoveBool = Animator.StringToHash("IsMoving");
         animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
+        animatorJumpBool = Animator.StringToHash("IsJumping");
+        animatorDashBool = Animator.StringToHash("IsDashing");
     }
 
     public void UpdateMoveAnimation(Vector2 moveInput)
@@ -32,9 +36,19 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(animatorMoveBool, isMoving);
     }
 
-    public void UpdateJumpAnimation(float isJumping)
+    public void UpdateJumpAnimation(bool isJumping)
+    {
+        animator.SetBool(animatorJumpBool, isJumping);
+    }
+
+    public void UpdateGrounded(bool isGrounded)
     {
 
+    }
+
+    public void UpdateDashAnimation(bool isDashing)
+    {
+        animator.SetBool(animatorDashBool, isDashing);
     }
 
     public void UpdateBaseAttackAnimation(float isAttacking)
