@@ -12,37 +12,38 @@ public class PlayerMovement : MonoBehaviour
     public float DeccelFactor;
     public float JumpHeight;
     public float DashTimer;
+    public float FallingGravityScale;
 
-    private bool canMove;
-    public bool canJump;
-    public bool canDash;
-    private bool dashTimerOn;
-    private bool isFacingRight;
+    private bool canMove = true;
+    public bool canJump = true;
+    public bool canDoubleJump = true;
+    public bool canDash = true;
+    private bool canWallJump = false;
+    private bool dashTimerOn = false;
+    private bool isFacingRight = true;
+    private bool isGrounded = true;
+
+    private LayerMask groundMask;
+
     private Vector2 movementInput;
 
     Rigidbody2D playerRigidbody;
+    CapsuleCollider2D playerCollider;
 
 
     // Start is called before the first frame update
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        canMove = true;
-        canJump = true;
-        canDash = true;
-        dashTimerOn = false;
-        isFacingRight = true;
-    }
+        playerCollider = GetComponent<CapsuleCollider2D>();
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        groundMask = LayerMask.GetMask("Ground");
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
+        //UpdateGrouding();
         movementInput = Vector2.zero;
     }
 
@@ -96,8 +97,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canJump)
         {
+            Debug.Log("Jump");
             Jump();
             canJump = false;
+            isGrounded = false;
+        } else
+        {
+            if (canDoubleJump)
+            {
+                Debug.Log("Double jump");
+                Jump();
+                canDoubleJump = false;
+                isGrounded = false;
+            }
+            else
+            {
+                if (canWallJump)
+                {
+                    Jump();
+                    canWallJump = false;
+                }
+            }
         }
     }
 
@@ -129,7 +149,25 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             canJump = true;
+            canDoubleJump = true;
         }
+    }
+
+    //void UpdateGrouding()
+    //{
+    //    if (playerCollider.IsTouchingLayers(groundMask))
+    //    {
+    //        isGrounded = true;
+    //    }
+    //    else
+    //    {
+    //        isGrounded = false;
+    //    }
+    //}
+
+    void UpdateGravity()
+    {
+
     }
 
     IEnumerator DashCoroutine()

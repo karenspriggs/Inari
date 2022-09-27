@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 rawInputMovement;
     private Vector3 smoothInputMovement;
 
+    private bool canJump;
     private float isJumping;
     private float isDashing;
     private float isBasicAttacking;
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponent<PlayerAnimator>();
+        canJump = true;
     }
 
     void CalculateMovementInputSmoothing()
@@ -78,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerDash()
     {
-        bool hasDashInputThisFrame = isDashing > 0;
+        bool hasDashInputThisFrame = isDashing == 1;
         
         if (hasDashInputThisFrame)
         {
@@ -92,16 +94,15 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerJump()
     {
-        bool hasJumpInputThisFrame = isJumping > 0;
+        bool hasJumpInputThisFrame = isJumping == 1;
 
         if (hasJumpInputThisFrame)
         {
-            if (playerMovement.canJump)
-            {
-                playerAnimator.UpdateJumpAnimation();
-            }
-            playerMovement.UpdateJump();
+            Debug.Log("jump");
+            playerAnimator.UpdateJumpAnimation();
         }
+
+        playerMovement.UpdateJump();
     }
 
     void UpdatePlayerBasicAttack()
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.UpdateBaseAttackAnimation(isBasicAttacking);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         CalculateMovementInputSmoothing();
         UpdatePlayerMovement();
