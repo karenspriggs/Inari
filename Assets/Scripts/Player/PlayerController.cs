@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 rawInputMovement;
     private Vector3 smoothInputMovement;
 
-    private bool canJump;
+    private bool hasJumped = false;
     private float isJumping;
     private float isDashing;
     private float isBasicAttacking;
@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponent<PlayerAnimator>();
-        canJump = true;
     }
 
     void CalculateMovementInputSmoothing()
@@ -96,13 +95,18 @@ public class PlayerController : MonoBehaviour
     {
         bool hasJumpInputThisFrame = isJumping == 1;
 
-        if (hasJumpInputThisFrame)
+        if (hasJumpInputThisFrame && !hasJumped)
         {
             Debug.Log("jump");
+            playerMovement.UpdateJump();
+            hasJumped = true;
             playerAnimator.UpdateJumpAnimation();
         }
 
-        playerMovement.UpdateJump();
+        if (hasJumped == true)
+        {
+            hasJumped = hasJumpInputThisFrame; 
+        }
     }
 
     void UpdatePlayerBasicAttack()

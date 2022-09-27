@@ -38,7 +38,6 @@ public class PlayerAnimator : MonoBehaviour
 
     public void UpdateJumpAnimation()
     {
-        Debug.Log("Jump animation");
         animator.SetTrigger(animatorJumpTrigger);
     }
 

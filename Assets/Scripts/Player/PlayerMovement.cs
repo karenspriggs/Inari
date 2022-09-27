@@ -110,14 +110,7 @@ public class PlayerMovement : MonoBehaviour
                 canDoubleJump = false;
                 isGrounded = false;
             }
-            else
-            {
-                if (canWallJump)
-                {
-                    Jump();
-                    canWallJump = false;
-                }
-            }
+            
         }
     }
 
