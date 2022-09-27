@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float DashTimer;
 
     private bool canMove;
-    private bool canJump;
-    private bool canDash;
+    public bool canJump;
+    public bool canDash;
     private bool dashTimerOn;
     private bool isFacingRight;
     private Vector2 movementInput;

@@ -9,8 +9,8 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Animator Values")]
     private int animatorMoveBool;
     private int animatorBasicAttackBool;
-    private int animatorJumpBool;
-    private int animatorDashBool;
+    private int animatorJumpTrigger;
+    private int animatorDashTrigger;
 
     public float velocityToStopMovingAnim;
 
@@ -20,8 +20,8 @@ public class PlayerAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
         animatorMoveBool = Animator.StringToHash("IsMoving");
         animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
-        animatorJumpBool = Animator.StringToHash("IsJumping");
-        animatorDashBool = Animator.StringToHash("IsDashing");
+        animatorJumpTrigger = Animator.StringToHash("IsJumping");
+        animatorDashTrigger = Animator.StringToHash("IsDashing");
     }
 
     public void UpdateMoveAnimation(Vector2 moveInput)
@@ -36,19 +36,16 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(animatorMoveBool, isMoving);
     }
 
-    public void UpdateJumpAnimation(bool isJumping)
+    public void UpdateJumpAnimation()
     {
-        animator.SetBool(animatorJumpBool, isJumping);
+        Debug.Log("Jump animation");
+        animator.SetTrigger(animatorJumpTrigger);
     }
 
-    public void UpdateGrounded(bool isGrounded)
+    public void UpdateDashAnimation()
     {
-
-    }
-
-    public void UpdateDashAnimation(bool isDashing)
-    {
-        animator.SetBool(animatorDashBool, isDashing);
+        Debug.Log("Dash animation");
+        animator.SetTrigger(animatorDashTrigger);
     }
 
     public void UpdateBaseAttackAnimation(float isAttacking)

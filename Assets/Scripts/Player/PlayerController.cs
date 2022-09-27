@@ -78,20 +78,28 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerDash()
     {
-        bool isDashingThisFrame = isDashing > 0;
+        bool hasDashInputThisFrame = isDashing > 0;
         
-        if (isDashingThisFrame)
+        if (hasDashInputThisFrame)
         {
+            if (playerMovement.canDash)
+            {
+                playerAnimator.UpdateDashAnimation();
+            }
             playerMovement.UpdateDash();
         }
     }
 
     void UpdatePlayerJump()
     {
-        bool isJumpingThisFrame = isJumping > 0;
+        bool hasJumpInputThisFrame = isJumping > 0;
 
-        if (isJumpingThisFrame)
+        if (hasJumpInputThisFrame)
         {
+            if (playerMovement.canJump)
+            {
+                playerAnimator.UpdateJumpAnimation();
+            }
             playerMovement.UpdateJump();
         }
     }
