@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         //UpdateGrouding();
-        //UpdateGravity();
+        UpdateGravity();
         movementInput = Vector2.zero;
     }
 
@@ -171,13 +171,13 @@ public class PlayerMovement : MonoBehaviour
             playerRigidbody.gravityScale = FallingGravityScale;
         } else
         {
-            playerRigidbody.gravityScale = 1;
+        //    playerRigidbody.gravityScale = 1;
 
         }
 
         if (isGrounded)
         {
-            playerRigidbody.gravityScale = 1;
+       //     playerRigidbody.gravityScale = 1;
         }
     }
 
