@@ -249,6 +249,34 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""23bbbec9-e3c7-4a9c-b3f4-6bc16fcff457"",
+            ""actions"": [
+                {
+                    ""name"": ""SlowmoToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""18a8b7c4-ec8d-471e-a5f7-1de45ffe446d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""791334fd-4b97-48e2-9f61-d9f1e7ac6d96"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MainInput"",
+                    ""action"": ""SlowmoToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -267,6 +295,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Shuriken = m_Player.FindAction("Shuriken", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_SlowmoToggle = m_Debug.FindAction("SlowmoToggle", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -395,6 +426,39 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_SlowmoToggle;
+    public struct DebugActions
+    {
+        private @InputControls m_Wrapper;
+        public DebugActions(@InputControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SlowmoToggle => m_Wrapper.m_Debug_SlowmoToggle;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @SlowmoToggle.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSlowmoToggle;
+                @SlowmoToggle.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSlowmoToggle;
+                @SlowmoToggle.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSlowmoToggle;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @SlowmoToggle.started += instance.OnSlowmoToggle;
+                @SlowmoToggle.performed += instance.OnSlowmoToggle;
+                @SlowmoToggle.canceled += instance.OnSlowmoToggle;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_MainInputSchemeIndex = -1;
     public InputControlScheme MainInputScheme
     {
@@ -412,5 +476,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnShuriken(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnSlowmoToggle(InputAction.CallbackContext context);
     }
 }

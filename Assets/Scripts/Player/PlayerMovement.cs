@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         //UpdateGrouding();
-        UpdateGravity();
+        //UpdateGravity();
         movementInput = Vector2.zero;
     }
 
@@ -69,13 +69,13 @@ public class PlayerMovement : MonoBehaviour
             movementThisFrame *= DeccelFactor;
         }
 
-        playerRigidbody.velocity = movementThisFrame;
+        playerRigidbody.velocity = movementThisFrame + new Vector2(0, playerRigidbody.velocity.y);
     }
 
     void Jump()
     {
-        playerRigidbody.AddForce(Vector2.up * JumpHeight);
-        //playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, JumpHeight);
+        //playerRigidbody.AddForce(Vector2.up * JumpHeight, ForceMode2D.Impulse);
+        playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, JumpHeight);
     }
 
     public void UpdateMovementData(Vector2 newMovementDirection)

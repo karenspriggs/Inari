@@ -227,6 +227,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Debug",
+            "id": "23bbbec9-e3c7-4a9c-b3f4-6bc16fcff457",
+            "actions": [
+                {
+                    "name": "SlowmoToggle",
+                    "type": "Button",
+                    "id": "18a8b7c4-ec8d-471e-a5f7-1de45ffe446d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "791334fd-4b97-48e2-9f61-d9f1e7ac6d96",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MainInput",
+                    "action": "SlowmoToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
