@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
+public enum InariState
+{
+    Neutral,
+    Dashing
+}
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Sub Behaviors")]
@@ -24,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private float isJumping;
     private float isDashing;
     private float isBasicAttacking;
+
+    private InariState currentState = InariState.Neutral;
 
     private void OnEnable()
     {
@@ -63,6 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponent<PlayerAnimator>();
+
     }
 
     void CalculateMovementInputSmoothing()
