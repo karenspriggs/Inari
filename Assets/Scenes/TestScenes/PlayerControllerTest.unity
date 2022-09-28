@@ -1066,7 +1066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: JumpHeight
-      value: 6000
+      value: 8000
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: DashDistance
@@ -1079,6 +1079,10 @@ PrefabInstance:
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: MovementSpeed
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: FallingGravityScale
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -2889860059966569433, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: maxHP
@@ -1094,7 +1098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888231057575403146, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: m_GravityScale
-      value: 18
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: m_Size.x

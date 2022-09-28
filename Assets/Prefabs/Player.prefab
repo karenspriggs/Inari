@@ -108,7 +108,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 18
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -245,6 +245,11 @@ MonoBehaviour:
   DashDistance: 0
   DeccelFactor: 0.2
   JumpHeight: 8000
+  DashTimer: 0
+  FallingGravityScale: 0
+  canJump: 0
+  canDoubleJump: 0
+  canDash: 0
 --- !u!114 &-2889860059966569433
 MonoBehaviour:
   m_ObjectHideFlags: 0

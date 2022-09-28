@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerDash()
     {
-        bool hasDashInputThisFrame = isDashing == 1;
+        bool hasDashInputThisFrame = isDashing > 0.1f;
         
         if (hasDashInputThisFrame)
         {

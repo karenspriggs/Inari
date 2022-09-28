@@ -38,12 +38,14 @@ public class PlayerMovement : MonoBehaviour
         playerCollider = GetComponent<CapsuleCollider2D>();
 
         groundMask = LayerMask.GetMask("Ground");
+        canDash = true;
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
         //UpdateGrouding();
+        UpdateGravity();
         movementInput = Vector2.zero;
     }
 
@@ -160,7 +162,14 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateGravity()
     {
-
+        if (playerRigidbody.velocity.y <= 0f)
+        {
+            //Debug.Log("Gravity scale set");
+            playerRigidbody.gravityScale = FallingGravityScale;
+        } else
+        {
+            playerRigidbody.gravityScale = 1;
+        }
     }
 
     IEnumerator DashCoroutine()
