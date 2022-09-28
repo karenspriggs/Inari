@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {
         playerRigidbody.AddForce(Vector2.up * JumpHeight);
+        //playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, JumpHeight);
     }
 
     public void UpdateMovementData(Vector2 newMovementDirection)
@@ -91,7 +92,8 @@ public class PlayerMovement : MonoBehaviour
             dashDistanceThisFrame = -dashDistanceThisFrame;
         }
 
-        playerRigidbody.AddForce(Vector2.right * dashDistanceThisFrame);
+        //playerRigidbody.AddForce(Vector2.right * dashDistanceThisFrame);
+        playerRigidbody.velocity = new Vector2(dashDistanceThisFrame, playerRigidbody.velocity.y);
         canDash = false;
     }
 
@@ -145,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
         {
             canJump = true;
             canDoubleJump = true;
+            isGrounded = true;
         }
     }
 
@@ -167,6 +170,12 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Gravity scale set");
             playerRigidbody.gravityScale = FallingGravityScale;
         } else
+        {
+            playerRigidbody.gravityScale = 1;
+
+        }
+
+        if (isGrounded)
         {
             playerRigidbody.gravityScale = 1;
         }
