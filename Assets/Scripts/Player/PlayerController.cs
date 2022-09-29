@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private float isDashing;
     private float isBasicAttacking;
 
-    private InariState currentState = InariState.Neutral;
+    public InariState currentState = InariState.Neutral;
 
     private void OnEnable()
     {
@@ -95,8 +95,22 @@ public class PlayerController : MonoBehaviour
             if (playerMovement.canDash)
             {
                 playerAnimator.UpdateDashAnimation();
+
             }
             playerMovement.UpdateDash();
+        }
+    }
+
+    void CheckForDash()
+    {
+        bool hasDashInputThisFrame = isDashing > 0.1f;
+        if (hasDashInputThisFrame)
+        {
+            if (playerMovement.canDash)
+            {
+                SwitchState(InariState.Dashing);
+            }
+            
         }
     }
 
@@ -125,10 +139,45 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckForDash();
+        DoState(currentState);
+
+        /*
         CalculateMovementInputSmoothing();
         UpdatePlayerMovement();
         UpdatePlayerJump();
         UpdatePlayerDash();
         UpdatePlayerBasicAttack();
+        */
+    }
+
+    public void SwitchState(InariState newState)
+    {
+        currentState = newState;
+        switch (newState)
+        {
+            case InariState.Neutral:
+                break;
+            case InariState.Dashing:
+                playerAnimator.UpdateDashAnimation();
+                playerMovement.UpdateDash();
+                break;
+        }
+    }
+    private void DoState(InariState state)
+    {
+        switch(state)
+        {
+            case InariState.Neutral:
+                CalculateMovementInputSmoothing();
+                UpdatePlayerMovement();
+                UpdatePlayerJump();
+                UpdatePlayerBasicAttack();
+                break;
+            case InariState.Dashing:
+                //CalculateMovementInputSmoothing();
+                //UpdatePlayerMovement();
+                break;
+        }
     }
 }
