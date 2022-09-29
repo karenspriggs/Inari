@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody2D playerRigidbody;
     CapsuleCollider2D playerCollider;
+    PlayerController playerController;
 
 
     // Start is called before the first frame update
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<CapsuleCollider2D>();
+        playerController = GetComponent<PlayerController>();
 
         groundMask = LayerMask.GetMask("Ground");
         canDash = true;
@@ -120,15 +122,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpdateDash()
     {
-        if (canDash)
-        {
-            Dash();
+        
+        Dash();
 
-            if (!dashTimerOn)
-            {
-                dashTimerOn = true;
-                StartCoroutine(DashCoroutine());
-            }
+        if (!dashTimerOn)
+        {
+            dashTimerOn = true;
+            StartCoroutine(DashCoroutine());
         }
     }
 
@@ -188,5 +188,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(DashTimer);
         canDash = true;
         dashTimerOn = false;
+        playerController.SwitchState(InariState.Neutral);
+        
     }
 }
