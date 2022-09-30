@@ -1117,16 +1117,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: DashSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: DashTimer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: JumpHeight
-      value: 10
+      value: 18.9
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: AirFriction
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: MaxRunSpeed
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: DashDistance
-      value: 501.2
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: DashFriction
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: DeccelFactor
@@ -1137,8 +1153,20 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: GroundFriction
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: HorizontalAccel
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: RisingGravityScale
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -5133691418867621831, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: FallingGravityScale
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -2889860059966569433, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: maxHP
@@ -1162,6 +1190,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888231057575403146, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
       propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 888231057575403146, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}
+      propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 888231057575403147, guid: 4076ea6d83735894985a5902d8776a5e, type: 3}

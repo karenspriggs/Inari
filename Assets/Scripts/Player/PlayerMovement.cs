@@ -7,25 +7,26 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float MovementSpeed;
-    public float DashDistance;
-    public float DeccelFactor;
-    public float JumpHeight;
+    public float HorizontalAccel;
+    public float MaxRunSpeed;
+
+    public float DashSpeed;
     public float DashTimer;
+    public float DashFriction;
+
+    public float JumpHeight;
+
+    public float RisingGravityScale;
     public float FallingGravityScale;
 
-    private bool canMove = true;
-    public bool canJump = true;
-    public bool canDoubleJump = true;
-    public bool canDash = true;
-    private bool canWallJump = false;
-    private bool dashTimerOn = false;
-    private bool isFacingRight = true;
-    private bool isGrounded = true;
+    public float GroundFriction;
+    public float AirFriction;
+
+    
 
     private LayerMask groundMask;
 
-    private Vector2 movementInput;
+    private float inputMovement;
 
     Rigidbody2D playerRigidbody;
     CapsuleCollider2D playerCollider;
@@ -40,102 +41,158 @@ public class PlayerMovement : MonoBehaviour
         playerController = GetComponent<PlayerController>();
 
         groundMask = LayerMask.GetMask("Ground");
-        canDash = true;
+        playerController.canDash = true;
     }
 
-    private void FixedUpdate()
+
+    public void MoveHorizontal(float maxSpeed)
     {
-        MovePlayer();
-        //UpdateGrouding();
-        UpdateGravity();
-        movementInput = Vector2.zero;
+        float hsp = playerRigidbody.velocity.x;
+
+        float fricAmount = GroundFriction;
+        
+        if (playerController.isGrounded)
+        {
+            fricAmount = GroundFriction;
+        }
+        else
+        {
+            fricAmount = AirFriction;
+        }
+
+        if (inputMovement != 0)
+        {
+            // we move!
+
+            float actingHorizontalAccel = HorizontalAccel;
+
+            if (hsp != 0 && System.Math.Sign(hsp) != System.Math.Sign(inputMovement))
+            {
+                //if we are trying to change directions, give extra traction.
+                actingHorizontalAccel += fricAmount;
+            }
+
+            if (System.Math.Abs(hsp) < maxSpeed || System.Math.Sign(inputMovement) != System.Math.Sign(hsp))
+            {
+                hsp += actingHorizontalAccel * inputMovement * Time.deltaTime;
+            }
+            else
+            {
+                // cap speed
+                // TODO: maybe soft cap speed? like if ur going over your max speed, just slow down over time until you get back to max speed
+                hsp = maxSpeed * System.Math.Sign(hsp);
+            }
+        }
+        else
+        {
+            // we are not moving.
+            hsp = ApplyHorizontalFriction(fricAmount, hsp);
+        }
+
+        playerRigidbody.velocity = new Vector2(hsp, playerRigidbody.velocity.y);
     }
 
-    void MovePlayer()
+    private float ApplyHorizontalFriction(float fricAmount, float hsp)
     {
-        if (!canMove) return;
-
-        Vector2 movementThisFrame = new Vector2(movementInput.x, 0) * MovementSpeed * Time.deltaTime;
-
-        if (!isFacingRight && movementInput.x > 0f)
+        if (System.Math.Abs(hsp) >= fricAmount*Time.deltaTime)
         {
-            FlipPlayer();
+            hsp -= System.Math.Sign(hsp) * fricAmount * Time.deltaTime;
         }
-        else if (isFacingRight && movementInput.x < 0f)
+        else
         {
-            FlipPlayer();
+            hsp = 0f;
         }
 
-        if (movementInput == Vector2.zero)
-        {
-            movementThisFrame *= DeccelFactor;
-        }
-
-        playerRigidbody.velocity = movementThisFrame + new Vector2(0, playerRigidbody.velocity.y);
+        return hsp;
     }
+
 
     void Jump()
     {
-        //playerRigidbody.AddForce(Vector2.up * JumpHeight, ForceMode2D.Impulse);
         playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, JumpHeight);
     }
 
-    public void UpdateMovementData(Vector2 newMovementDirection)
+    public void UpdateMovementData(float newMovementDirection)
     {
-        movementInput = newMovementDirection;
+        inputMovement = newMovementDirection;
     }
 
-    public void Dash()
+    private void Dash()
     {
-        float dashDistanceThisFrame = DashDistance;
+        float dashSpeedThisFrame = DashSpeed;
 
-        if (!isFacingRight)
+        bool dashRight = true;
+        if (inputMovement == 0)
         {
-            dashDistanceThisFrame = -dashDistanceThisFrame;
+            dashRight = playerController.isFacingRight;
         }
-
-        //playerRigidbody.AddForce(Vector2.right * dashDistanceThisFrame);
-        playerRigidbody.velocity = new Vector2(dashDistanceThisFrame, playerRigidbody.velocity.y);
-        canDash = false;
-    }
-
-    public void UpdateJump()
-    {
-        if (canJump)
+        else
         {
-            Debug.Log("Jump");
-            Jump();
-            canJump = false;
-            isGrounded = false;
-        } else
-        {
-            if (canDoubleJump)
+            if (inputMovement < 0)
             {
-                Debug.Log("Double jump");
-                Jump();
-                canDoubleJump = false;
-                isGrounded = false;
+                dashRight = false;
             }
-            
+            else
+            {
+                dashRight = true;
+            }
         }
+
+        if (!dashRight)
+        {
+            dashSpeedThisFrame = -dashSpeedThisFrame;
+        }
+
+        playerRigidbody.velocity = new Vector2(dashSpeedThisFrame, playerRigidbody.velocity.y);
+        playerController.canDash = false;
     }
 
-    public void UpdateDash()
+
+    public void DoTheJump()
     {
-        
+        Jump();
+    }
+
+
+    public void DoTheDash()
+    {
         Dash();
 
-        if (!dashTimerOn)
+        if (!playerController.dashTimerOn)
         {
-            dashTimerOn = true;
+            playerController.dashTimerOn = true;
             StartCoroutine(DashCoroutine());
+        }
+    }
+
+    public void DoDashFriction()
+    { 
+        float hsp = ApplyHorizontalFriction(DashFriction, playerRigidbody.velocity.x);
+        playerRigidbody.velocity = new Vector2(hsp, playerRigidbody.velocity.y);
+    }
+
+    public bool ShouldEndDash()
+    {
+        if (System.Math.Abs(playerRigidbody.velocity.x) <= MaxRunSpeed)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void FaceVelocityDir()
+    {
+        if (playerRigidbody.velocity.x != 0)
+        {
+            bool shouldFaceRight = playerRigidbody.velocity.x > 0;
+            if (shouldFaceRight != playerController.isFacingRight) FlipPlayer();
         }
     }
 
     void FlipPlayer()
     {
         // Flip the player
-        isFacingRight = !isFacingRight;
+        playerController.isFacingRight = !playerController.isFacingRight;
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
@@ -145,40 +202,38 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            canJump = true;
-            canDoubleJump = true;
-            isGrounded = true;
+            playerController.canJump = true;
+            playerController.canDoubleJump = true;
+            playerController.isGrounded = true;
         }
     }
 
-    //void UpdateGrouding()
-    //{
-    //    if (playerCollider.IsTouchingLayers(groundMask))
-    //    {
-    //        isGrounded = true;
-    //    }
-    //    else
-    //    {
-    //        isGrounded = false;
-    //    }
-    //}
 
-    void UpdateGravity()
+    public void UpdateGravity()
     {
         if (playerRigidbody.velocity.y <= 0f)
         {
-            //Debug.Log("Gravity scale set");
             playerRigidbody.gravityScale = FallingGravityScale;
         } else
         {
-        //    playerRigidbody.gravityScale = 1;
+            playerRigidbody.gravityScale = RisingGravityScale;
 
         }
 
-        if (isGrounded)
+        if (playerController.isGrounded)
         {
-       //     playerRigidbody.gravityScale = 1;
+            playerRigidbody.gravityScale = 1;
         }
+    }
+
+    public void AirPause()
+    {
+        playerRigidbody.gravityScale = 0;
+    }
+
+    public void HaltAirVelocity()
+    {
+        playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, 0);
     }
 
     IEnumerator DashCoroutine()
@@ -186,9 +241,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Dash coroutine started");
 
         yield return new WaitForSeconds(DashTimer);
-        canDash = true;
-        dashTimerOn = false;
-        playerController.SwitchState(InariState.Neutral);
-        
+        playerController.canDash = true;
+        playerController.dashTimerOn = false;
     }
 }

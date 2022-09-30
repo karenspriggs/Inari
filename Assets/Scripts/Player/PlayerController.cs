@@ -7,7 +7,10 @@ using UnityEngine.EventSystems;
 public enum InariState
 {
     Neutral,
-    Dashing
+    Dashing,
+    Jumping,
+    DoubleJumping,
+    Air
 }
 
 public class PlayerController : MonoBehaviour
@@ -22,9 +25,9 @@ public class PlayerController : MonoBehaviour
     private InputControls playerInput;
     private InputControls.PlayerActions playerActions;
 
-    private Vector2 inputMovement;
+    private float inputMovement;
     private Vector3 rawInputMovement;
-    private Vector3 smoothInputMovement;
+    private Vector3 smoothInputMovement; 
 
     private bool hasJumped = false;
     private float isJumping;
@@ -33,14 +36,28 @@ public class PlayerController : MonoBehaviour
 
     public InariState currentState = InariState.Neutral;
 
+    public bool canMove = true;
+    public bool canJump = true;
+    public bool canDoubleJump = true;
+    public bool canDash = true;
+    public bool canWallJump = false;
+    public bool dashTimerOn = false;
+    public bool isFacingRight = true;
+    public bool isGrounded = true;
+
+    // state transition flags
+    // set these in SwitchState()
+    private bool jumpsEnabled = true;
+    private bool dashEnabled = true;
+    private bool attacksEnabled = true;
+
     private void OnEnable()
     {
         playerInput = new InputControls();
         playerActions = playerInput.Player;
         playerActions.Enable();
 
-        playerActions.Move.performed += ctx => rawInputMovement = ctx.ReadValue<Vector2>();
-        playerActions.Move.canceled += ctx => rawInputMovement = Vector2.zero;
+        playerActions.Move.performed += ctx => inputMovement = ctx.ReadValue<float>();
 
         playerActions.Jump.performed += ctx => isJumping = ctx.ReadValue<float>();
         playerActions.Jump.canceled += ctx => isJumping = ctx.ReadValue<float>();
@@ -54,8 +71,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        playerActions.Move.performed -= ctx => rawInputMovement = ctx.ReadValue<Vector2>();
-        playerActions.Move.canceled -= ctx => rawInputMovement = Vector2.zero;
+        playerActions.Move.performed += ctx => inputMovement = ctx.ReadValue<float>();
 
         playerActions.Jump.performed -= ctx => isJumping = ctx.ReadValue<float>();
         playerActions.Jump.canceled -= ctx => isJumping = ctx.ReadValue<float>();
@@ -74,62 +90,70 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void CalculateMovementInputSmoothing()
+    
+    void SetMovementInput()
     {
-        smoothInputMovement = Vector2.Lerp(smoothInputMovement, rawInputMovement, Time.deltaTime * movementSmoothingSpeed);
-        playerAnimator.UpdateMoveAnimation(smoothInputMovement);
+        playerMovement.UpdateMovementData(inputMovement);
     }
 
-    void UpdatePlayerMovement()
+    void PlayerRun()
     {
-        // Updating the movement data for movement class
-        playerMovement.UpdateMovementData(smoothInputMovement);
+        playerMovement.MoveHorizontal(playerMovement.MaxRunSpeed);
     }
 
-    void UpdatePlayerDash()
-    {
-        bool hasDashInputThisFrame = isDashing > 0.1f;
-        
-        if (hasDashInputThisFrame)
-        {
-            if (playerMovement.canDash)
-            {
-                playerAnimator.UpdateDashAnimation();
-
-            }
-            playerMovement.UpdateDash();
-        }
-    }
-
-    void CheckForDash()
+    private bool CheckForDash()
     {
         bool hasDashInputThisFrame = isDashing > 0.1f;
         if (hasDashInputThisFrame)
         {
-            if (playerMovement.canDash)
+            if (canDash)
             {
                 SwitchState(InariState.Dashing);
+                return true;
             }
             
         }
+        return false;
     }
 
-    void UpdatePlayerJump()
+
+    private bool CheckForJump()
     {
+        
         bool hasJumpInputThisFrame = isJumping == 1;
+        bool r = false;
 
-        if (hasJumpInputThisFrame && !hasJumped)
+        if (jumpsEnabled)
         {
-            Debug.Log("jump");
-            playerMovement.UpdateJump();
-            hasJumped = true;
-            playerAnimator.UpdateJumpAnimation();
-        }
+            if (hasJumpInputThisFrame && !hasJumped) //jump pressed this frame
+            {
+                if (canJump)
+                {
+                    SwitchState(InariState.Jumping);
+                    canJump = false;
+                    isGrounded = false;
+                    r = true;
+                }
+                else
+                {
+                    if (canDoubleJump)
+                    {
+                        SwitchState(InariState.DoubleJumping);
+                        canDoubleJump = false;
+                        isGrounded = false;
+                        r = true;
+                    }
 
-        if (hasJumped == true)
-        {
-            hasJumped = hasJumpInputThisFrame; 
+                }
+                
+                hasJumped = true;
+            }
+            if (hasJumped == true)
+            {
+                hasJumped = hasJumpInputThisFrame;
+            }
         }
+        return r;
     }
 
     void UpdatePlayerBasicAttack()
@@ -139,16 +163,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckForDash();
+        
+        CheckForInputs();
+        
         DoState(currentState);
 
-        /*
-        CalculateMovementInputSmoothing();
-        UpdatePlayerMovement();
-        UpdatePlayerJump();
-        UpdatePlayerDash();
-        UpdatePlayerBasicAttack();
-        */
     }
 
     public void SwitchState(InariState newState)
@@ -157,10 +176,40 @@ public class PlayerController : MonoBehaviour
         switch (newState)
         {
             case InariState.Neutral:
+                jumpsEnabled = true;
+                dashEnabled = true;
+                attacksEnabled = true;
                 break;
             case InariState.Dashing:
+                jumpsEnabled = true;
+                dashEnabled = true;
+                attacksEnabled = true;
+                playerMovement.HaltAirVelocity();
                 playerAnimator.UpdateDashAnimation();
-                playerMovement.UpdateDash();
+                playerMovement.DoTheDash();
+                break;
+            case InariState.Jumping:
+                jumpsEnabled = true;
+                dashEnabled = true;
+                attacksEnabled = true;
+                playerMovement.DoTheJump();
+                playerAnimator.UpdateJumpAnimation();
+                SwitchState(InariState.Air);
+                break;
+            case InariState.DoubleJumping:
+                jumpsEnabled = true;
+                dashEnabled = true;
+                attacksEnabled = true;
+                playerMovement.DoTheJump();
+                playerAnimator.UpdateJumpAnimation();
+                SwitchState(InariState.Air);
+                break;
+            case InariState.Air:
+                jumpsEnabled = true;
+                dashEnabled = true;
+                attacksEnabled = true;
+                break;
+            default:
                 break;
         }
     }
@@ -169,15 +218,54 @@ public class PlayerController : MonoBehaviour
         switch(state)
         {
             case InariState.Neutral:
-                CalculateMovementInputSmoothing();
-                UpdatePlayerMovement();
-                UpdatePlayerJump();
-                UpdatePlayerBasicAttack();
+                playerMovement.UpdateGravity();
+                AllowHorizontalMovement();
                 break;
             case InariState.Dashing:
-                //CalculateMovementInputSmoothing();
-                //UpdatePlayerMovement();
+                playerMovement.AirPause();
+                playerMovement.DoDashFriction();
+                if (playerMovement.ShouldEndDash())
+                {
+                    ReturnToNeutral();
+                }
                 break;
+            case InariState.Jumping:
+                playerMovement.UpdateGravity();
+                AllowHorizontalMovement();
+                break;
+            case InariState.DoubleJumping:
+                playerMovement.UpdateGravity();
+                AllowHorizontalMovement();
+                break;
+            case InariState.Air:
+                playerMovement.UpdateGravity();
+                AllowHorizontalMovement();
+                break;
+        }
+    }
+
+    private void CheckForInputs()
+    {
+        if (CheckForDash()) return;
+        if (CheckForJump()) return;
+    }
+
+    private void AllowHorizontalMovement()
+    {
+        SetMovementInput();
+        PlayerRun();
+        playerMovement.FaceVelocityDir();
+    }
+
+    private void ReturnToNeutral()
+    {
+        if (isGrounded)
+        {
+            SwitchState(InariState.Neutral);
+        }
+        else
+        {
+            SwitchState(InariState.Air);
         }
     }
 }
