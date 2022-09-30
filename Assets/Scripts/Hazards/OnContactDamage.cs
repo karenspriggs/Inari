@@ -23,9 +23,22 @@ public class OnContactDamage : MonoBehaviour
     {
         Debug.Log($"dealt {damage} damage to {collision.gameObject.name}");
         if (collision.gameObject.name == player.name && damagePlayer)
-            playerdata.TakeDamage(damage);
- 
+        { DamagePlayer(); }
         else
-            enemydata.TakeDamage(damage);
-    }   
+        {
+          DamageEnemy();
+        }
+        Destroy(gameObject);
+    }  
+    
+    private void DamagePlayer()
+    {
+        playerdata.TakeDamage(damage);
+    }
+
+    private void DamageEnemy()
+    {
+        enemydata.TakeDamage(damage);
+    }
+
 }
