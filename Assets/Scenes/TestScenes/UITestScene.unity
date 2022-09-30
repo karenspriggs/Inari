@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 146784604}
   - component: {fileID: 146784603}
   - component: {fileID: 146784605}
+  - component: {fileID: 146784606}
   m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
@@ -325,6 +326,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!225 &146784606
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146784601}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &226687686
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +997,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mask: {fileID: 146784603}
+  healthShakeRate: 2
+  canvasGroup: {fileID: 0}
 --- !u!1001 &888231057816129489
 PrefabInstance:
   m_ObjectHideFlags: 0
