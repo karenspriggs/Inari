@@ -570,8 +570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5e3b4496213d1429a75667176d49bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 3
-  currentHP: 3
+  maxHP: 5
+  currentHP: 5
   Attack: 0
 --- !u!95 &587178192
 Animator:
@@ -609,7 +609,7 @@ MonoBehaviour:
   chaseDistance: 10
   stopDistance: 0
   target: {fileID: 888231057816129490}
-  isGrounded: 0
+  hitStun: 0
 --- !u!1 &650910476
 GameObject:
   m_ObjectHideFlags: 0

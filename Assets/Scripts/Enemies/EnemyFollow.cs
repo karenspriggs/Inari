@@ -11,6 +11,7 @@ public class EnemyFollow : MonoBehaviour
     public float chaseDistance;
     public float stopDistance;
     public GameObject target;
+    public bool hitStun = false;
 
     private float targetDistance;
     // Start is called before the first frame update
@@ -39,19 +40,34 @@ public class EnemyFollow : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
-            //Hitstun
+            hitStun = true;
+            StartCoroutine(HitStun());
+            StopCoroutine(HitStun());
         }
     }
 
     private void ChasePlayer()
     {
-        if (transform.position.x < target.transform.position.x)
+        if (hitStun == false)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
-        }
-        else
-            GetComponent<SpriteRenderer>().flipX = false;
+            if (transform.position.x < target.transform.position.x)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else
+                GetComponent<SpriteRenderer>().flipX = false;
 
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+        }
+    }
+
+    private IEnumerator HitStun()
+    {
+        if (hitStun == true)
+        {
+            yield return new WaitForSeconds(0.2f);
+            hitStun = false;
+        }
+        yield return null;
     }
 }
