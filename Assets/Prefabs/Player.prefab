@@ -211,6 +211,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 3390d740-7bd2-488e-846f-2961cf02765a
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 18a8b7c4-ec8d-471e-a5f7-1de45ffe446d
+    m_ActionName: Debug/SlowmoToggle[/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -229,6 +233,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSmoothingSpeed: 10
+  currentState: 0
+  canMove: 1
+  canJump: 1
+  canDoubleJump: 1
+  canDash: 1
+  canWallJump: 0
+  dashTimerOn: 0
+  isFacingRight: 1
+  isGrounded: 1
 --- !u!114 &-5133691418867621831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,15 +254,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 755506be535a1564eb00b5632865571a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 200
-  DashDistance: 0
-  DeccelFactor: 0.2
-  JumpHeight: 8000
+  HorizontalAccel: 0
+  MaxRunSpeed: 0
+  DashSpeed: 0
   DashTimer: 0
+  DashFriction: 0
+  JumpHeight: 8000
+  RisingGravityScale: 0
   FallingGravityScale: 0
-  canJump: 0
-  canDoubleJump: 0
-  canDash: 0
+  GroundFriction: 0
+  AirFriction: 0
 --- !u!114 &-2889860059966569433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +334,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7133036944476775417}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
