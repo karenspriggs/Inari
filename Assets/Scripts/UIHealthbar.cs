@@ -12,6 +12,10 @@ public class UIHealthbar : MonoBehaviour
     float maxHPValue;
     float currentValue;
 
+    public float healthShakeRate = 2.0f;
+
+    public CanvasGroup canvasGroup;
+
     void Awake()
     {
         instance = this;
@@ -21,6 +25,7 @@ public class UIHealthbar : MonoBehaviour
     void Start()
     {
         originalSize = mask.rectTransform.rect.width;
+        canvasGroup = mask.GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
@@ -51,6 +56,12 @@ public class UIHealthbar : MonoBehaviour
     {
         Debug.Log("Setting health bar value");
         currentValue -= damage;
-        mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * currentValue/maxHPValue);
+        mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * currentValue / maxHPValue);
+
+        //LeanTween.alphaCanvas(canvasGroup, 0.1f, 0.6f);
+
+        LeanTween.cancel(mask.gameObject);
+        
+        LeanTween.scaleX(mask.gameObject, currentValue / maxHPValue, 1.0f).setEasePunch();
     }
 }
