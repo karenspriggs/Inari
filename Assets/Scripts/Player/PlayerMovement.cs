@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float RisingGravityScale;
     public float FallingGravityScale;
+    public float DashStartupGravityScale = 0.3f;
 
     public float GroundFriction;
     public float AirFriction;
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     CapsuleCollider2D playerCollider;
     PlayerController playerController;
 
+    public float _dashTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveHorizontal(float maxSpeed)
     {
+        MoveHorizontal(maxSpeed, inputMovement);
+    }
+    public void MoveHorizontal(float maxSpeed, float _inputMovement)
+    {
+
         float hsp = playerRigidbody.velocity.x;
 
         float fricAmount = GroundFriction;
@@ -60,21 +67,21 @@ public class PlayerMovement : MonoBehaviour
             fricAmount = AirFriction;
         }
 
-        if (inputMovement != 0)
+        if (_inputMovement != 0)
         {
             // we move!
 
             float actingHorizontalAccel = HorizontalAccel;
 
-            if (hsp != 0 && System.Math.Sign(hsp) != System.Math.Sign(inputMovement))
+            if (hsp != 0 && System.Math.Sign(hsp) != System.Math.Sign(_inputMovement))
             {
                 //if we are trying to change directions, give extra traction.
                 actingHorizontalAccel += fricAmount;
             }
 
-            if (System.Math.Abs(hsp) < maxSpeed || System.Math.Sign(inputMovement) != System.Math.Sign(hsp))
+            if (System.Math.Abs(hsp) < maxSpeed || System.Math.Sign(_inputMovement) != System.Math.Sign(hsp))
             {
-                hsp += actingHorizontalAccel * inputMovement * Time.deltaTime;
+                hsp += actingHorizontalAccel * _inputMovement * Time.deltaTime;
             }
             else
             {
@@ -161,13 +168,14 @@ public class PlayerMovement : MonoBehaviour
         if (!playerController.dashTimerOn)
         {
             playerController.dashTimerOn = true;
-            StartCoroutine(DashCoroutine());
+            //StartCoroutine(DashCoroutine());
+            ResetDashTimer();
         }
     }
 
-    public void DoDashFriction()
-    { 
-        float hsp = ApplyHorizontalFriction(DashFriction, playerRigidbody.velocity.x);
+    public void DoFriction(float frictionAmount)
+    {
+        float hsp = ApplyHorizontalFriction(frictionAmount, playerRigidbody.velocity.x);
         playerRigidbody.velocity = new Vector2(hsp, playerRigidbody.velocity.y);
     }
 
@@ -213,22 +221,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerRigidbody.velocity.y <= 0f)
         {
-            playerRigidbody.gravityScale = FallingGravityScale;
+            SetGravity(FallingGravityScale);
         } else
         {
-            playerRigidbody.gravityScale = RisingGravityScale;
+            SetGravity(RisingGravityScale);
 
         }
 
         if (playerController.isGrounded)
         {
-            playerRigidbody.gravityScale = 1;
+            SetGravity(1f);
         }
     }
 
     public void AirPause()
     {
-        playerRigidbody.gravityScale = 0;
+        SetGravity(0f);
+    }
+
+    public void SetGravity(float gravScale)
+    {
+        playerRigidbody.gravityScale = gravScale;
     }
 
     public void HaltAirVelocity()
@@ -241,7 +254,52 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Dash coroutine started");
 
         yield return new WaitForSeconds(DashTimer);
+        ResetDash(); 
+    }
+
+    public void ResetDash()
+    {
         playerController.canDash = true;
         playerController.dashTimerOn = false;
+
     }
+
+    public void ResetDashTimer()
+    {
+        _dashTimer = DashTimer;
+    }
+
+    /// <summary>
+    /// Updates cooldown timers like dash cooldown, etc. Call in playercontroller update!
+    /// </summary>
+    public void UpdateTimers()
+    {
+        UpdateDashTimer();
+    }
+
+    public void UpdateDashTimer()
+    {
+        if (_dashTimer > 0)
+        {
+            _dashTimer -= 1 * Time.deltaTime;
+
+            if (_dashTimer <= 0)
+            {
+                //just now passed below the timer
+                _dashTimer = 0f;
+                ResetDash();
+            }
+        }
+    }
+
+    public bool CheckDashTimer()
+    {
+        if (_dashTimer > 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+
 }

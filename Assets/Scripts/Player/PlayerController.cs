@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public enum InariState
 {
     Neutral,
+    DashStartup,
     Dashing,
     Jumping,
     DoubleJumping,
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private float isBasicAttacking;
 
     public InariState currentState = InariState.Neutral;
+    public float DashStartupTimerMax = 0.5f;
+    private float stateTimer = 0f; //state timer counts up
 
     public bool canMove = true;
     public bool canJump = true;
@@ -103,15 +106,18 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckForDash()
     {
-        bool hasDashInputThisFrame = isDashing > 0.1f;
-        if (hasDashInputThisFrame)
+        if (dashEnabled)
         {
-            if (canDash)
+            bool hasDashInputThisFrame = isDashing > 0.1f;
+            if (hasDashInputThisFrame)
             {
-                SwitchState(InariState.Dashing);
-                return true;
+                if (canDash && currentState != InariState.DashStartup)
+                {
+                    SwitchState(InariState.DashStartup);
+                    return true;
+                }
+
             }
-            
         }
         return false;
     }
@@ -165,7 +171,10 @@ public class PlayerController : MonoBehaviour
     {
         
         CheckForInputs();
+
+        UpdateTimers();
         
+
         DoState(currentState);
 
     }
@@ -180,6 +189,12 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = true;
                 attacksEnabled = true;
                 break;
+            case InariState.DashStartup:
+                jumpsEnabled = true;
+                dashEnabled = true;
+                attacksEnabled = true;
+                playerMovement.HaltAirVelocity();
+                break;
             case InariState.Dashing:
                 jumpsEnabled = true;
                 dashEnabled = true;
@@ -189,13 +204,6 @@ public class PlayerController : MonoBehaviour
                 playerMovement.DoTheDash();
                 break;
             case InariState.Jumping:
-                jumpsEnabled = true;
-                dashEnabled = true;
-                attacksEnabled = true;
-                playerMovement.DoTheJump();
-                playerAnimator.UpdateJumpAnimation();
-                SwitchState(InariState.Air);
-                break;
             case InariState.DoubleJumping:
                 jumpsEnabled = true;
                 dashEnabled = true;
@@ -212,6 +220,7 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+        stateTimer = 0f;
     }
     private void DoState(InariState state)
     {
@@ -221,9 +230,14 @@ public class PlayerController : MonoBehaviour
                 playerMovement.UpdateGravity();
                 AllowHorizontalMovement();
                 break;
+            case InariState.DashStartup:
+                playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
+                playerMovement.DoFriction(playerMovement.GroundFriction);
+                TimeTransitionToNextState(DashStartupTimerMax, InariState.Dashing);
+                break;
             case InariState.Dashing:
                 playerMovement.AirPause();
-                playerMovement.DoDashFriction();
+                playerMovement.DoFriction(playerMovement.DashFriction);
                 if (playerMovement.ShouldEndDash())
                 {
                     ReturnToNeutral();
@@ -246,13 +260,13 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForInputs()
     {
+        SetMovementInput();
         if (CheckForDash()) return;
         if (CheckForJump()) return;
     }
 
     private void AllowHorizontalMovement()
     {
-        SetMovementInput();
         PlayerRun();
         playerMovement.FaceVelocityDir();
     }
@@ -268,4 +282,34 @@ public class PlayerController : MonoBehaviour
             SwitchState(InariState.Air);
         }
     }
+
+    private void UpdateTimers()
+    {
+        UpdateStateTimer();
+        playerMovement.UpdateTimers();
+    }
+
+    private void UpdateStateTimer()
+    {
+        stateTimer += 1 * Time.deltaTime;
+    }
+
+    private bool CheckStateTimer(float stateTimerMax)
+    {
+        if (stateTimer >= stateTimerMax)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void TimeTransitionToNextState(float stateTimerMax, InariState nextState)
+    {
+        if (CheckStateTimer(stateTimerMax))
+        {
+            SwitchState(nextState);
+        }
+    }
+
+    
 }
