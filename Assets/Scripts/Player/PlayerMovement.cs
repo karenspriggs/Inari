@@ -266,14 +266,6 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, 0);
     }
 
-    IEnumerator DashCoroutine()
-    {
-        Debug.Log("Dash coroutine started");
-
-        yield return new WaitForSeconds(DashTimer);
-        ResetDash(); 
-    }
-
     public void ResetDash()
     {
         playerController.canDash = true;
@@ -318,8 +310,19 @@ public class PlayerMovement : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// sets isGrounded based on if there is something w the ground layer beneath inari's feet
+    /// </summary>
     public void CheckForGroundedness()
     {
         playerController.isGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + groundCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - groundCheckXDistance, playerCapsule.bounds.min.y - groundCheckYDistance), groundMask);
+    }
+
+    /// <summary>
+    /// sets isWalled based on if there is something w the ground layer in front of inari
+    /// </summary>
+    public void CheckForWalledness()
+    {
+
     }
 }
