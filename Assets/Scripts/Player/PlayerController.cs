@@ -237,6 +237,7 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
+                playerMovement.HaltAirVelocity();
                 playerAnimator.SwitchState(newState);
                 break;
             default:
@@ -261,7 +262,7 @@ public class PlayerController : MonoBehaviour
                 TimeTransitionToNextState(DashStartupTimerMax, InariState.Dashing);
                 break;
             case InariState.Dashing:
-                playerMovement.AirPause();
+                playerMovement.TurnOffGravity();
                 playerMovement.DoFriction(playerMovement.DashFriction);
                 if (playerMovement.ShouldEndDash())
                 {
@@ -285,7 +286,7 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case InariState.BasicGroundAttack1:
-                playerMovement.AirPause();
+                playerMovement.TurnOffGravity();
                 playerMovement.DoFriction(playerMovement.GroundFriction);
                 AnimationEndTransitionToNextState(InariState.Neutral);
                 break;

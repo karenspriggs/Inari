@@ -243,15 +243,9 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        /*
-        if (playerController.isGrounded)
-        {
-            SetGravity(1f);
-        }
-        */
     }
 
-    public void AirPause()
+    public void TurnOffGravity()
     {
         SetGravity(0f);
     }
