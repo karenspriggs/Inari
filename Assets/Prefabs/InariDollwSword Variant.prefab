@@ -682,7 +682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8734922317007001859, guid: 2f2906dbce79046478220c5ae379c568, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -84.897
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: 2f2906dbce79046478220c5ae379c568, type: 3}
       propertyPath: m_Name
@@ -821,8 +821,20 @@ PrefabInstance:
       value: 0.9914525
       objectReference: {fileID: 0}
     - target: {fileID: -6825212169063417619, guid: 2f2906dbce79046478220c5ae379c568, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6825212169063417619, guid: 2f2906dbce79046478220c5ae379c568, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6825212169063417619, guid: 2f2906dbce79046478220c5ae379c568, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.13046801
+      objectReference: {fileID: 0}
+    - target: {fileID: -6825212169063417619, guid: 2f2906dbce79046478220c5ae379c568, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -14.993
       objectReference: {fileID: 0}
     - target: {fileID: -6445208627748087615, guid: 2f2906dbce79046478220c5ae379c568, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -1386,7 +1398,23 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!70 &4953785924020543185
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3498604255579356603}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.3582077, y: 1.4961703}
+  m_Size: {x: 0.67031765, y: 2.5770755}
+  m_Direction: 0
 --- !u!95 &365282204
 Animator:
   serializedVersion: 4
@@ -1434,6 +1462,43 @@ MonoBehaviour:
     showGizmo: 1
   - color: {r: 0, g: 1, b: 0, a: 1}
     showGizmo: 1
+--- !u!114 &82323403160457215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3498604255579356603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755506be535a1564eb00b5632865571a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HorizontalAccel: 0
+  MaxRunSpeed: 0
+  DashSpeed: 0
+  DashTimer: 0
+  DashFriction: 0
+  JumpHeight: 0
+  RisingGravityScale: 0
+  FallingGravityScale: 0
+  DashStartupGravityScale: 0.3
+  GroundFriction: 0
+  AirFriction: 0
+  _dashTimer: 0
+--- !u!114 &1648618516322206545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3498604255579356603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02532ba357e57248a86af750f1f88c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocityToStopMovingAnim: 0
 --- !u!114 &6876212695173824051
 MonoBehaviour:
   m_ObjectHideFlags: 0

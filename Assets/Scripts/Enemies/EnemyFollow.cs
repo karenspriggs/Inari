@@ -13,11 +13,15 @@ public class EnemyFollow : MonoBehaviour
     public GameObject target;
     public bool hitStun = false;
 
+    Vector2 currentMovement;
+    float currentSpeed;
+    //EnemyAnimator enemyAnimator;
+
     private float targetDistance;
     // Start is called before the first frame update
     void Start()
     {
-        
+        //enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     // Update is called once per frame
@@ -28,10 +32,13 @@ public class EnemyFollow : MonoBehaviour
             ChasePlayer();
         else
             StopChasePlayer();
+
+        //enemyAnimator.UpdateMoveAnimation(currentSpeed);
     }
 
     private void StopChasePlayer()
     {
+        currentSpeed = 0;
         //Do Nothing
     }
 
@@ -41,6 +48,7 @@ public class EnemyFollow : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             hitStun = true;
+            //enemyAnimator.StartHitAnimation();
             StartCoroutine(HitStun());
             StopCoroutine(HitStun());
         }
@@ -52,12 +60,14 @@ public class EnemyFollow : MonoBehaviour
         {
             if (transform.position.x < target.transform.position.x)
             {
-                GetComponent<SpriteRenderer>().flipX = true;
+                //GetComponent<SpriteRenderer>().flipX = true;
             }
             else
-                GetComponent<SpriteRenderer>().flipX = false;
+                //GetComponent<SpriteRenderer>().flipX = false;
 
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            currentMovement = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            currentSpeed = Mathf.Abs(currentMovement.x);
+            transform.position = currentMovement;
         }
     }
 

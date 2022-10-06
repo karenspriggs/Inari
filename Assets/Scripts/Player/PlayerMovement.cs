@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MoveHorizontal(maxSpeed, inputMovement);
     }
+
     public void MoveHorizontal(float maxSpeed, float _inputMovement)
     {
 
