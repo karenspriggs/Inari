@@ -17,7 +17,7 @@ public class PlayerAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         animatorMoveBool = Animator.StringToHash("IsMoving");
         animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
         animatorJumpTrigger = Animator.StringToHash("IsJumping");
