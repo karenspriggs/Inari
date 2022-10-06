@@ -451,6 +451,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.7131192
       objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789265, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789271, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: velocityToStopMovingAnim
       value: 0.001
@@ -460,12 +464,44 @@ PrefabInstance:
       value: InariPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: DashSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: DashTimer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: JumpHeight
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: AirFriction
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: MaxRunSpeed
-      value: 5
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: DashFriction
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: GroundFriction
+      value: 69
       objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: HorizontalAccel
-      value: 13
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: RisingGravityScale
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: FallingGravityScale
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789291, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: m_RootOrder
