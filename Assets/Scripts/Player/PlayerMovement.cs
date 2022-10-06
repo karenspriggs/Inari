@@ -26,12 +26,16 @@ public class PlayerMovement : MonoBehaviour
     
 
     private LayerMask groundMask;
+    public float groundCheckXDistance = 0.25f;
+    public float groundCheckYDistance = 0.25f;
+    
 
     private float inputMovement;
 
     Rigidbody2D playerRigidbody;
     CapsuleCollider2D playerCollider;
     PlayerController playerController;
+    CapsuleCollider2D playerCapsule;
 
     public float _dashTimer = 0f;
 
@@ -41,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<CapsuleCollider2D>();
         playerController = GetComponent<PlayerController>();
+        playerCapsule = GetComponent<CapsuleCollider2D>();
 
         groundMask = LayerMask.GetMask("Ground");
         playerController.canDash = true;
@@ -207,16 +212,25 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = localScale;
     }
 
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            playerController.canJump = true;
-            playerController.canDoubleJump = true;
+            //playerController.canJump = true; // let the state machine handle these
+            //playerController.canDoubleJump = true;
             playerController.isGrounded = true;
         }
     }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            playerController.isGrounded = false;
+        }
+    }
+    */
 
     public void UpdateGravity()
     {
@@ -229,10 +243,12 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+        /*
         if (playerController.isGrounded)
         {
             SetGravity(1f);
         }
+        */
     }
 
     public void AirPause()
@@ -302,5 +318,8 @@ public class PlayerMovement : MonoBehaviour
         return true;
     }
 
-
+    public void CheckForGroundedness()
+    {
+        playerController.isGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + groundCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - groundCheckXDistance, playerCapsule.bounds.min.y - groundCheckYDistance), groundMask);
+    }
 }

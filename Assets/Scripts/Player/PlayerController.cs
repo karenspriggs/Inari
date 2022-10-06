@@ -173,7 +173,8 @@ public class PlayerController : MonoBehaviour
         CheckForInputs();
 
         UpdateTimers();
-        
+
+        playerMovement.CheckForGroundedness();
 
         DoState(currentState);
 
@@ -216,6 +217,7 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
+                canJump = false;
                 break;
             default:
                 break;
@@ -229,6 +231,8 @@ public class PlayerController : MonoBehaviour
             case InariState.Neutral:
                 playerMovement.UpdateGravity();
                 AllowHorizontalMovement();
+                AllowFalling();
+                AllowGroundToResetJumps();
                 break;
             case InariState.DashStartup:
                 playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
@@ -254,6 +258,7 @@ public class PlayerController : MonoBehaviour
             case InariState.Air:
                 playerMovement.UpdateGravity();
                 AllowHorizontalMovement();
+                AllowLanding();
                 break;
         }
     }
@@ -269,6 +274,31 @@ public class PlayerController : MonoBehaviour
     {
         PlayerRun();
         playerMovement.FaceVelocityDir();
+    }
+
+    private void AllowGroundToResetJumps()
+    {
+        if (isGrounded)
+        {
+            canJump = true; // let the state machine handle these
+            canDoubleJump = true;
+        }
+    }
+
+    private void AllowFalling()
+    {
+        if (!isGrounded)
+        {
+            SwitchState(InariState.Air);
+        }
+    }
+
+    private void AllowLanding()
+    {
+        if (isGrounded)
+        {
+            SwitchState(InariState.Neutral);
+        }
     }
 
     private void ReturnToNeutral()
