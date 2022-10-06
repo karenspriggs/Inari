@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
     void SetMovementInput()
     {
         playerMovement.UpdateMovementData(inputMovement);
