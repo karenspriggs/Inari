@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
     void SetMovementInput()
     {
         playerMovement.UpdateMovementData(inputMovement);
+        playerAnimator.UpdateMoveAnimation(inputMovement);
     }
 
     void PlayerRun()

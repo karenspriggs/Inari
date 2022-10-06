@@ -24,11 +24,11 @@ public class PlayerAnimator : MonoBehaviour
         animatorDashTrigger = Animator.StringToHash("IsDashing");
     }
 
-    public void UpdateMoveAnimation(Vector2 moveInput)
+    public void UpdateMoveAnimation(float moveInput)
     {
         bool isMoving = true;
 
-        if ((moveInput.x < velocityToStopMovingAnim && moveInput.x >= -velocityToStopMovingAnim) && (moveInput.y < velocityToStopMovingAnim && moveInput.y >= -velocityToStopMovingAnim))
+        if ((moveInput < velocityToStopMovingAnim && moveInput >= -velocityToStopMovingAnim))
         {
             isMoving = false;
         }
