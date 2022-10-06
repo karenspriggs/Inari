@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
     void SetMovementInput()
     {
         playerMovement.UpdateMovementData(inputMovement);
-        playerAnimator.UpdateMoveAnimation(inputMovement);
+        playerAnimator.AnimationUpdateMoveBool(inputMovement);
     }
 
     void PlayerRun()
@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerBasicAttack()
     {
-        playerAnimator.UpdateBaseAttackAnimation(isBasicAttacking);
+        //playerAnimator.UpdateBaseAttackAnimation(isBasicAttacking);
     }
 
     private void FixedUpdate()
@@ -189,19 +189,20 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
+                playerAnimator.SwitchState(newState);
                 break;
             case InariState.DashStartup:
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
                 playerMovement.HaltAirVelocity();
+                playerAnimator.SwitchState(newState);
                 break;
             case InariState.Dashing:
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
                 playerMovement.HaltAirVelocity();
-                playerAnimator.UpdateDashAnimation();
                 playerMovement.DoTheDash();
                 break;
             case InariState.Jumping:
@@ -210,7 +211,7 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = true;
                 attacksEnabled = true;
                 playerMovement.DoTheJump();
-                playerAnimator.UpdateJumpAnimation();
+                playerAnimator.SwitchState(newState);
                 SwitchState(InariState.Air);
                 break;
             case InariState.Air:
@@ -222,6 +223,7 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+        
         stateTimer = 0f;
     }
     private void DoState(InariState state)
@@ -258,7 +260,10 @@ public class PlayerController : MonoBehaviour
             case InariState.Air:
                 playerMovement.UpdateGravity();
                 AllowHorizontalMovement();
-                AllowLanding();
+                if (stateTimer > 0.1f)
+                {
+                    AllowLanding();
+                }
                 break;
         }
     }

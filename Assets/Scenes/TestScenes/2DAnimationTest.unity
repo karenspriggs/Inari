@@ -171,7 +171,7 @@ Animator:
   m_GameObject: {fileID: 1227274888}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b27f1fde875a7bc4d98d49aa190a8e10, type: 2}
+  m_Controller: {fileID: 9100000, guid: 41f2c448d067d0d4dbd8757ed3305b59, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -455,6 +455,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789268, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: DashStartupTimerMax
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789271, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: velocityToStopMovingAnim
       value: 0.001
@@ -462,6 +466,10 @@ PrefabInstance:
     - target: {fileID: 6534854772515789288, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: m_Name
       value: InariPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789288, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789290, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: DashSpeed

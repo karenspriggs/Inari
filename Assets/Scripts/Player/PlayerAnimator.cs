@@ -19,12 +19,12 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animatorMoveBool = Animator.StringToHash("IsMoving");
-        animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
-        animatorJumpTrigger = Animator.StringToHash("IsJumping");
-        animatorDashTrigger = Animator.StringToHash("IsDashing");
+        //animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
+        //animatorJumpTrigger = Animator.StringToHash("IsJumping");
+        //animatorDashTrigger = Animator.StringToHash("IsDashing");
     }
 
-    public void UpdateMoveAnimation(float moveInput)
+    public void AnimationUpdateMoveBool(float moveInput)
     {
         bool isMoving = true;
 
@@ -35,7 +35,7 @@ public class PlayerAnimator : MonoBehaviour
 
         animator.SetBool(animatorMoveBool, isMoving);
     }
-
+    /*
     public void UpdateJumpAnimation()
     {
         animator.SetTrigger(animatorJumpTrigger);
@@ -45,6 +45,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         Debug.Log("Dash animation");
         animator.SetTrigger(animatorDashTrigger);
+
     }
 
     public void UpdateBaseAttackAnimation(float isAttacking)
@@ -54,6 +55,49 @@ public class PlayerAnimator : MonoBehaviour
         if (isAttacking == 0f) isAttackingThisFrame = false;
 
         animator.SetBool(animatorBasicAttackBool, isAttackingThisFrame);
+    }
+    */
+
+    public void SwitchState(InariState newState)
+    {
+        switch (newState)
+        {
+            case InariState.Neutral:
+                StartAnimation("PlayerDollIdle");
+                break;
+            case InariState.DashStartup:
+                StartAnimation("PlayerDollDash");
+                break;
+            case InariState.Dashing:
+                break;
+            case InariState.Jumping:
+            case InariState.DoubleJumping:
+                StartAnimation("PlayerDollJump");
+                break;
+            case InariState.Air:
+                break;
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// starts the animation
+    /// </summary>
+    /// <param name="animationStateName"></param>
+    public void StartAnimation(string animationStateName)
+    {
+        StartAnimation(animationStateName, 0.0f);
+    }
+
+    /// <summary>
+    /// Starts the animation at a given starting point of the animation.
+    /// </summary>
+    /// <param name="animationStateName"></param>
+    /// <param name="normalizedTime"> Starts the animation part way through. 0.0 is begining, 1.0 is end, 0.5 is 50% through etc.</param>
+    public void StartAnimation(string animationStateName, float normalizedTime)
+    {
+        animator.Play(animationStateName, -1, normalizedTime);
     }
 
     // Update is called once per frame
