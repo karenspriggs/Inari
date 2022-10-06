@@ -11,7 +11,8 @@ public enum InariState
     Dashing,
     Jumping,
     DoubleJumping,
-    Air
+    Air,
+    BasicGroundAttack1
 }
 
 public class PlayerController : MonoBehaviour
@@ -161,10 +162,22 @@ public class PlayerController : MonoBehaviour
         }
         return r;
     }
-
-    void UpdatePlayerBasicAttack()
+    private bool CheckForBasicAttack()
     {
-        //playerAnimator.UpdateBaseAttackAnimation(isBasicAttacking);
+        if (attacksEnabled)
+        {
+            bool hasAttackInputThisFrame = isBasicAttacking > 0.1f;
+            if (hasAttackInputThisFrame)
+            {
+                if (currentState != InariState.BasicGroundAttack1)
+                {
+                    SwitchState(InariState.BasicGroundAttack1);
+                    return true;
+                }
+
+            }
+        }
+        return false;
     }
 
     private void FixedUpdate()
@@ -220,6 +233,12 @@ public class PlayerController : MonoBehaviour
                 attacksEnabled = true;
                 canJump = false;
                 break;
+            case InariState.BasicGroundAttack1:
+                jumpsEnabled = false;
+                dashEnabled = false;
+                attacksEnabled = false;
+                playerAnimator.SwitchState(newState);
+                break;
             default:
                 break;
         }
@@ -265,6 +284,11 @@ public class PlayerController : MonoBehaviour
                     AllowLanding();
                 }
                 break;
+            case InariState.BasicGroundAttack1:
+                playerMovement.AirPause();
+                playerMovement.DoFriction(playerMovement.GroundFriction);
+                AnimationEndTransitionToNextState(InariState.Neutral);
+                break;
         }
     }
 
@@ -273,6 +297,7 @@ public class PlayerController : MonoBehaviour
         SetMovementInput();
         if (CheckForDash()) return;
         if (CheckForJump()) return;
+        if (CheckForBasicAttack()) return;
     }
 
     private void AllowHorizontalMovement()
@@ -346,5 +371,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+    private void AnimationEndTransitionToNextState(InariState nextState)
+    {
+        if (playerAnimator.CheckIfAnimationEnded())
+        {
+            SwitchState(nextState);
+        }
+    }
 }

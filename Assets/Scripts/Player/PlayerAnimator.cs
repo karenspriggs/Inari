@@ -63,7 +63,7 @@ public class PlayerAnimator : MonoBehaviour
         switch (newState)
         {
             case InariState.Neutral:
-                StartAnimation("PlayerDollIdle");
+                StartAnimation("PlayerDollWalk");
                 break;
             case InariState.DashStartup:
                 StartAnimation("PlayerDollDash");
@@ -75,6 +75,9 @@ public class PlayerAnimator : MonoBehaviour
                 StartAnimation("PlayerDollJump");
                 break;
             case InariState.Air:
+                break;
+            case InariState.BasicGroundAttack1:
+                StartAnimation("PlayerDollBasicAttack");
                 break;
             default:
                 break;
@@ -100,9 +103,9 @@ public class PlayerAnimator : MonoBehaviour
         animator.Play(animationStateName, -1, normalizedTime);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public bool CheckIfAnimationEnded()
     {
-        
+        return (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
     }
 }
