@@ -18,6 +18,6 @@ public class EnemyDeath : MonoBehaviour
 
     public void EnemyDeathEvent()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }
