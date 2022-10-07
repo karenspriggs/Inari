@@ -10,6 +10,7 @@ public class EnemyAnimator : MonoBehaviour
     private int animatorMoveSpeed;
     private int animatorAttackBool;
     private int animatorHitTrigger;
+    private int animatorDeathTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class EnemyAnimator : MonoBehaviour
 
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
         animatorHitTrigger = Animator.StringToHash("IsHit");
+        animatorDeathTrigger = Animator.StringToHash("IsDead");
     }
 
     public void UpdateMoveAnimation(float _moveSpeed)
@@ -28,6 +30,11 @@ public class EnemyAnimator : MonoBehaviour
     public void StartHitAnimation()
     {
         animator.SetTrigger(animatorHitTrigger);
+    }
+
+    public void StartDeathAnimation()
+    {
+        animator.SetTrigger(animatorDeathTrigger);
     }
 
     // Update is called once per frame

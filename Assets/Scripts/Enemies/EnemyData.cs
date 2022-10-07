@@ -14,6 +14,8 @@ public class EnemyData : MonoBehaviour
     [SerializeField]
     private int Attack;
 
+    EnemyAnimator enemyAnimator;
+
     public static Action EnemyKilled;
 
     private void OnEnable()
@@ -30,6 +32,7 @@ public class EnemyData : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
+        enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -56,6 +59,6 @@ public class EnemyData : MonoBehaviour
 
     void OnEnemyKilled()
     {
-        Destroy(gameObject);
+        enemyAnimator.StartDeathAnimation();
     }
 }
