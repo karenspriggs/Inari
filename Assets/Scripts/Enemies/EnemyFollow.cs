@@ -15,13 +15,13 @@ public class EnemyFollow : MonoBehaviour
 
     Vector2 currentMovement;
     float currentSpeed;
-    //EnemyAnimator enemyAnimator;
+    EnemyAnimator enemyAnimator;
 
     private float targetDistance;
     // Start is called before the first frame update
     void Start()
     {
-        //enemyAnimator = GetComponent<EnemyAnimator>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class EnemyFollow : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             hitStun = true;
-            //enemyAnimator.StartHitAnimation();
+            enemyAnimator.StartHitAnimation();
             StartCoroutine(HitStun());
             StopCoroutine(HitStun());
         }

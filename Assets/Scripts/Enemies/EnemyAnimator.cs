@@ -14,7 +14,7 @@ public class EnemyAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
         animatorHitTrigger = Animator.StringToHash("IsHit");
