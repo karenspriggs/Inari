@@ -12,6 +12,7 @@ public class EnemyFollow : MonoBehaviour
     public float stopDistance;
     public GameObject target;
     public bool hitStun = false;
+    public bool isFacingRight;
 
     Vector2 currentMovement;
     float currentSpeed;
@@ -56,19 +57,32 @@ public class EnemyFollow : MonoBehaviour
 
     private void ChasePlayer()
     {
+        Vector3 localScale = transform.localScale;
+
         if (hitStun == false)
         {
-            if (transform.position.x < target.transform.position.x)
+            if (transform.position.x < target.transform.position.x && !isFacingRight)
             {
-                //GetComponent<SpriteRenderer>().flipX = true;
+                FlipEnemy();
             }
-            else
-                //GetComponent<SpriteRenderer>().flipX = false;
+            
+            if (transform.position.x > target.transform.position.x && isFacingRight)
+            {
+                FlipEnemy();
+            }
 
             currentMovement = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
             currentSpeed = Mathf.Abs(currentMovement.x);
             transform.position = currentMovement;
         }
+    }
+
+    private void FlipEnemy()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
     }
 
     private IEnumerator HitStun()
