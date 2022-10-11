@@ -15,7 +15,7 @@ public class EnemyFollow : MonoBehaviour
     public bool isFacingRight;
 
     Vector2 currentMovement;
-    float currentSpeed;
+    bool isMoving;
     EnemyAnimator enemyAnimator;
 
     private float targetDistance;
@@ -30,19 +30,20 @@ public class EnemyFollow : MonoBehaviour
     {
         targetDistance = Vector2.Distance(transform.position, target.transform.position);
         if (targetDistance < chaseDistance && targetDistance > stopDistance)
+        {
             ChasePlayer();
+            isMoving = true;
+        }
         else
             StopChasePlayer();
 
-        //enemyAnimator.UpdateMoveAnimation(currentSpeed);
+        enemyAnimator.UpdateMoveAnimation(isMoving);
     }
 
     private void StopChasePlayer()
     {
-        currentSpeed = 0;
-        //Do Nothing
+        isMoving = false;
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -72,7 +73,6 @@ public class EnemyFollow : MonoBehaviour
             }
 
             currentMovement = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-            currentSpeed = Mathf.Abs(currentMovement.x);
             transform.position = currentMovement;
         }
     }
