@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public float DashFriction;
 
     public float JumpHeight;
+    public float DoubleJumpHeight;
+    public float WallJumpHeight;
+    public float WallJumpSpeedHorizontal;
 
     public float RisingGravityScale;
     public float FallingGravityScale;
@@ -119,17 +122,11 @@ public class PlayerMovement : MonoBehaviour
         return hsp;
     }
 
-
-    void Jump()
-    {
-        playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, JumpHeight);
-    }
-
     public void UpdateMovementData(float newMovementDirection)
     {
         inputMovement = newMovementDirection;
     }
-
+    #region DASHING
     private void Dash()
     {
         float dashSpeedThisFrame = DashSpeed;
@@ -159,14 +156,6 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.velocity = new Vector2(dashSpeedThisFrame, playerRigidbody.velocity.y);
         playerController.canDash = false;
     }
-
-
-    public void DoTheJump()
-    {
-        Jump();
-    }
-
-
     public void DoTheDash()
     {
         Dash();
@@ -178,13 +167,6 @@ public class PlayerMovement : MonoBehaviour
             ResetDashTimer();
         }
     }
-
-    public void DoFriction(float frictionAmount)
-    {
-        float hsp = ApplyHorizontalFriction(frictionAmount, playerRigidbody.velocity.x);
-        playerRigidbody.velocity = new Vector2(hsp, playerRigidbody.velocity.y);
-    }
-
     public bool ShouldEndDash()
     {
         if (System.Math.Abs(playerRigidbody.velocity.x) <= MaxRunSpeed)
@@ -193,6 +175,59 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
+    public void ResetDash()
+    {
+        playerController.canDash = true;
+        playerController.dashTimerOn = false;
+
+    }
+
+    public void ResetDashTimer()
+    {
+        _dashTimer = DashTimer;
+    }
+    #endregion
+
+    #region JUMPING
+    private void Jump()
+    {
+        playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, JumpHeight);
+    }
+
+    private void DoubleJump()
+    {
+        playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, DoubleJumpHeight);
+    }
+
+    private void WallJump()
+    {
+        playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x + (WallJumpSpeedHorizontal * -GetSignFromRightBool(playerController.isFacingRight)), WallJumpHeight);
+    }
+
+    public void DoTheJump(InariState jumpType)
+    {
+        switch (jumpType)
+        {
+            case InariState.WallJumping:
+                WallJump();
+                break;
+            case InariState.DoubleJumping:
+                DoubleJump();
+                break;
+            case InariState.Jumping:
+            default:
+                Jump();
+                break;
+        }
+    }
+    #endregion
+
+    public void DoFriction(float frictionAmount)
+    {
+        float hsp = ApplyHorizontalFriction(frictionAmount, playerRigidbody.velocity.x);
+        playerRigidbody.velocity = new Vector2(hsp, playerRigidbody.velocity.y);
+    }
+
 
     public void FaceVelocityDir()
     {
@@ -212,25 +247,6 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            //playerController.canJump = true; // let the state machine handle these
-            //playerController.canDoubleJump = true;
-            playerController.isGrounded = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            playerController.isGrounded = false;
-        }
-    }
-    */
 
     public void UpdateGravity()
     {
@@ -260,17 +276,6 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, 0);
     }
 
-    public void ResetDash()
-    {
-        playerController.canDash = true;
-        playerController.dashTimerOn = false;
-
-    }
-
-    public void ResetDashTimer()
-    {
-        _dashTimer = DashTimer;
-    }
 
     /// <summary>
     /// Updates cooldown timers like dash cooldown, etc. Call in playercontroller update!
@@ -326,6 +331,12 @@ public class PlayerMovement : MonoBehaviour
         {
             wallCheckX = playerCapsule.bounds.min.x;
         }
-        playerController.nextToWall = Physics2D.OverlapArea(new Vector2(wallCheckX, playerCapsule.bounds.min.y + groundCheckYDistance), new Vector2(wallCheckX + groundCheckXDistance, playerCapsule.bounds.max.y - groundCheckYDistance), groundMask);
+        playerController.nextToWall = Physics2D.OverlapArea(new Vector2(wallCheckX, playerCapsule.bounds.min.y + groundCheckYDistance), new Vector2(wallCheckX + groundCheckXDistance * GetSignFromRightBool(playerController.isFacingRight), playerCapsule.bounds.max.y - groundCheckYDistance), groundMask);
+    }
+
+    public int GetSignFromRightBool(bool b)
+    {
+        if (b) return 1;
+        return -1;
     }
 }

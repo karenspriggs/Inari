@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (canWallJump && nextToWall && !isGrounded)
                 {
-                    SwitchState(InariState.Jumping);
+                    SwitchState(InariState.WallJumping);
                     canWallJump = false;
                     isGrounded = false;
                     r = true;
@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
-                playerMovement.DoTheJump();
+                playerMovement.DoTheJump(newState);
                 playerAnimator.SwitchState(newState);
                 SwitchState(InariState.Air);
                 break;
