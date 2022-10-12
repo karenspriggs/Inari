@@ -11,6 +11,8 @@ public enum InariState
     Dashing,
     Jumping,
     DoubleJumping,
+    WallJumping,
+    WallSliding,
     Air,
     BasicGroundAttack1
 }
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public bool dashTimerOn = false;
     public bool isFacingRight = true;
     public bool isGrounded = true;
+    public bool nextToWall = false;
 
     // state transition flags
     // set these in SwitchState()
@@ -127,30 +130,33 @@ public class PlayerController : MonoBehaviour
     private bool CheckForJump()
     {
         
-        bool hasJumpInputThisFrame = isJumping == 1;
+        bool hasJumpInputThisFrame = (isJumping == 1);
         bool r = false;
 
         if (jumpsEnabled)
         {
             if (hasJumpInputThisFrame && !hasJumped) //jump pressed this frame
             {
-                if (canJump)
+                if (canWallJump && nextToWall && !isGrounded)
+                {
+                    SwitchState(InariState.Jumping);
+                    canWallJump = false;
+                    isGrounded = false;
+                    r = true;
+                }
+                else if (canJump)
                 {
                     SwitchState(InariState.Jumping);
                     canJump = false;
                     isGrounded = false;
                     r = true;
                 }
-                else
+                else if (canDoubleJump)
                 {
-                    if (canDoubleJump)
-                    {
-                        SwitchState(InariState.DoubleJumping);
-                        canDoubleJump = false;
-                        isGrounded = false;
-                        r = true;
-                    }
-
+                    SwitchState(InariState.DoubleJumping);
+                    canDoubleJump = false;
+                    isGrounded = false;
+                    r = true;
                 }
                 
                 hasJumped = true;
@@ -220,6 +226,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case InariState.Jumping:
             case InariState.DoubleJumping:
+            case InariState.WallJumping:
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
@@ -280,6 +287,7 @@ public class PlayerController : MonoBehaviour
             case InariState.Air:
                 playerMovement.UpdateGravity();
                 AllowHorizontalMovement();
+                playerMovement.CheckForWalledness();
                 if (stateTimer > 0.1f)
                 {
                     AllowLanding();
@@ -313,6 +321,7 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true; // let the state machine handle these
             canDoubleJump = true;
+            canWallJump = true;
         }
     }
 

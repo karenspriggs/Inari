@@ -317,6 +317,15 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void CheckForWalledness()
     {
-
+        float wallCheckX;
+        if (playerController.isFacingRight)
+        {
+            wallCheckX = playerCapsule.bounds.max.x;
+        }
+        else
+        {
+            wallCheckX = playerCapsule.bounds.min.x;
+        }
+        playerController.nextToWall = Physics2D.OverlapArea(new Vector2(wallCheckX, playerCapsule.bounds.min.y + groundCheckYDistance), new Vector2(wallCheckX + groundCheckXDistance, playerCapsule.bounds.max.y - groundCheckYDistance), groundMask);
     }
 }
