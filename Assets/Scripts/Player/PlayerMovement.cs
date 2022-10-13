@@ -82,13 +82,18 @@ public class PlayerMovement : MonoBehaviour
 
             float actingHorizontalAccel = HorizontalAccel;
 
+            /*
             if (hsp != 0 && System.Math.Sign(hsp) != System.Math.Sign(_inputMovement))
             {
                 //if we are trying to change directions, give extra traction.
                 actingHorizontalAccel += fricAmount;
             }
+            */
 
-            if (System.Math.Abs(hsp) < maxSpeed || System.Math.Sign(_inputMovement) != System.Math.Sign(hsp))
+            if (
+                (System.Math.Abs(hsp) <= (maxSpeed - (actingHorizontalAccel * System.Math.Abs(_inputMovement) * Time.deltaTime))) || //if you can accelerate
+                (System.Math.Sign(_inputMovement) != System.Math.Sign(hsp)) // or if you are trying to change directions
+                )
             {
                 hsp += actingHorizontalAccel * _inputMovement * Time.deltaTime;
             }
@@ -96,7 +101,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 // cap speed
                 // TODO: maybe soft cap speed? like if ur going over your max speed, just slow down over time until you get back to max speed
-                hsp = maxSpeed * System.Math.Sign(hsp);
+                //hsp = maxSpeed * System.Math.Sign(hsp);
+                hsp = ApplyHorizontalFriction(fricAmount, hsp, maxSpeed * System.Math.Sign(hsp));
             }
         }
         else
@@ -110,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float ApplyHorizontalFriction(float fricAmount, float hsp)
     {
+        /*
         if (System.Math.Abs(hsp) >= fricAmount*Time.deltaTime)
         {
             hsp -= System.Math.Sign(hsp) * fricAmount * Time.deltaTime;
@@ -120,7 +127,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return hsp;
+        */
+
+        return ApplyHorizontalFriction(fricAmount, hsp, 0f);
+
     }
+    private float ApplyHorizontalFriction(float fricAmount, float hsp, float goalhsp)
+    {
+        if (System.Math.Abs(hsp) >= System.Math.Abs(goalhsp) + (fricAmount * Time.deltaTime))
+        {
+            hsp -= System.Math.Sign(hsp) * fricAmount * Time.deltaTime;
+        }
+        else
+        {
+            hsp = goalhsp;
+        }
+
+        return hsp;
+    }
+
 
     public void UpdateMovementData(float newMovementDirection)
     {
