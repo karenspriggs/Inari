@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using System.Security.Cryptography;
 
 public class PlayerData : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class PlayerData : MonoBehaviour
     private float maxEnergy;
     [SerializeField]
     private Weapon currentWeapon;
-
     public float currentEnergy;
+    private Transform currentCheckpoint;
 
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
@@ -44,6 +45,11 @@ public class PlayerData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    public void Respawn()
+    {
         
     }
 
@@ -59,11 +65,29 @@ public class PlayerData : MonoBehaviour
         if (currentHP >= 0)
         {
             PlayerDied?.Invoke();
+           // transform.position = respawnPoint;
+        }
+        if (currentHP <= 0)
+        {
+            transform.position = currentCheckpoint.position;
+            currentHP = 2;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TakeDamage(1f);
+        if (collision.gameObject.tag == "EnemyAttackHitbox")
+        {
+            TakeDamage(1f);
+        }
+
+        if (collision.gameObject.tag == "Checkpoint")
+        {
+            currentCheckpoint = collision.transform;
+            collision.GetComponent<Collider2D>().enabled = false; //Deactivates checkpoint collider
+        }
+
+
     }
+
 }
