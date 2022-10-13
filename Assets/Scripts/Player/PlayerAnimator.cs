@@ -72,8 +72,12 @@ public class PlayerAnimator : MonoBehaviour
                 break;
             case InariState.Jumping:
             case InariState.DoubleJumping:
+            case InariState.WallJumping:
                 StartAnimation("PlayerDollJump");
                 break;
+            //case InariState.WallJumping:
+                //StartAnimation("PlayerDollWallJump");
+                //break;
             case InariState.Air:
                 break;
             case InariState.BasicGroundAttack1:

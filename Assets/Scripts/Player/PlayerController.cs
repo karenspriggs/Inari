@@ -139,24 +139,25 @@ public class PlayerController : MonoBehaviour
             {
                 if (canWallJump && nextToWall && !isGrounded)
                 {
-                    SwitchState(InariState.WallJumping);
                     canWallJump = false;
+                    canDoubleJump = true; // give back double jump on wall jump
                     isGrounded = false;
                     r = true;
+                    SwitchState(InariState.WallJumping);
                 }
                 else if (canJump)
                 {
-                    SwitchState(InariState.Jumping);
                     canJump = false;
                     isGrounded = false;
                     r = true;
+                    SwitchState(InariState.Jumping);
                 }
                 else if (canDoubleJump)
                 {
-                    SwitchState(InariState.DoubleJumping);
                     canDoubleJump = false;
                     isGrounded = false;
                     r = true;
+                    SwitchState(InariState.DoubleJumping);
                 }
                 
                 hasJumped = true;
@@ -239,6 +240,7 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = true;
                 attacksEnabled = true;
                 canJump = false;
+                canWallJump = true;
                 break;
             case InariState.BasicGroundAttack1:
                 jumpsEnabled = false;
