@@ -36,19 +36,19 @@ public class PlayerMovement : MonoBehaviour
     private float inputMovement;
 
     Rigidbody2D playerRigidbody;
-    CapsuleCollider2D playerCollider;
     PlayerController playerController;
     CapsuleCollider2D playerCapsule;
-
+    //BoxCollider2D playerCapsule;
     public float _dashTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<CapsuleCollider2D>();
+        
         playerController = GetComponent<PlayerController>();
         playerCapsule = GetComponent<CapsuleCollider2D>();
+        //playerCapsule = GetComponent<BoxCollider2D>();
 
         groundMask = LayerMask.GetMask("Ground");
         playerController.canDash = true;
