@@ -212,16 +212,16 @@ public class PlayerController : MonoBehaviour
                 playerAnimator.SwitchState(newState);
                 break;
             case InariState.DashStartup:
-                jumpsEnabled = true;
-                dashEnabled = true;
-                attacksEnabled = true;
+                jumpsEnabled = false;
+                dashEnabled = false;
+                attacksEnabled = false;
                 playerMovement.HaltAirVelocity();
                 playerAnimator.SwitchState(newState);
                 break;
             case InariState.Dashing:
-                jumpsEnabled = true;
-                dashEnabled = true;
-                attacksEnabled = true;
+                jumpsEnabled = false;
+                dashEnabled = false;
+                attacksEnabled = false;
                 playerMovement.HaltAirVelocity();
                 playerMovement.DoTheDash();
                 break;
