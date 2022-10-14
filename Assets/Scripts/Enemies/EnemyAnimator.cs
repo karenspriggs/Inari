@@ -8,7 +8,7 @@ public class EnemyAnimator : MonoBehaviour
 
     [Header("Animator Values")]
     private int animatorMoveBool;
-    private int animatorAttackBool;
+    private int animatorAttackTrigger;
     private int animatorHitTrigger;
     private int animatorDeathTrigger;
 
@@ -20,6 +20,7 @@ public class EnemyAnimator : MonoBehaviour
         animatorMoveBool = Animator.StringToHash("IsMoving");
         animatorHitTrigger = Animator.StringToHash("IsHit");
         animatorDeathTrigger = Animator.StringToHash("IsDead");
+        animatorAttackTrigger = Animator.StringToHash("IsAttacking");
     }
 
     public void UpdateMoveAnimation(bool isMoving)
@@ -39,7 +40,7 @@ public class EnemyAnimator : MonoBehaviour
 
     public void StartAttackAnimation()
     {
-
+        animator.SetTrigger("IsAttacking");
     }
 
     // Update is called once per frame

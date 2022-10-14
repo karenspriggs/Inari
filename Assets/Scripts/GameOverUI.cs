@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject GameOverUIPanel;
+
+    private void OnEnable()
     {
-        
+        PlayerData.PlayerDied += ShowGameOverUI;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        PlayerData.PlayerDied -= ShowGameOverUI;
+    }
+
+    void ShowGameOverUI()
+    {
+        Time.timeScale = 0f;
+        GameOverUIPanel.SetActive(true);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -26,7 +26,17 @@ public class BakenekoAttacks : MonoBehaviour
     private LayerMask playerLayer;
     private float cooldownTimer = Mathf.Infinity;
 
+    EnemyAnimator enemyAnimator;
+    public float cooldownTime;
+    bool canAttack = true;
+    bool cooldownTimerStarted = false;
+
     //References
+
+    private void Start()
+    {
+        enemyAnimator = GetComponent<EnemyAnimator>();
+    }
 
     private void Update()
     {
@@ -39,6 +49,8 @@ public class BakenekoAttacks : MonoBehaviour
             {
                 cooldownTimer = 0;
             }
+
+            StartAttack();
         }
     }
 
@@ -64,5 +76,33 @@ public class BakenekoAttacks : MonoBehaviour
      //   if (PlayerInSight())
       //     PlayerData.TakeDamage(1f);
       //   Debug.Log("Player attacked");
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && canAttack)
+        {
+            StartAttack();
+
+            if (!cooldownTimerStarted)
+            {
+                // make this shit better
+                cooldownTimerStarted = true;
+                StartCoroutine(AttackCooldownTimer());
+            }
+        }
+    }
+
+    IEnumerator AttackCooldownTimer()
+    {
+        canAttack = true;
+        cooldownTimerStarted = false;
+        yield return new WaitForSeconds(cooldownTime);
+
+    }
+
+    private void StartAttack()
+    {
+        enemyAnimator.StartAttackAnimation();
     }
 }

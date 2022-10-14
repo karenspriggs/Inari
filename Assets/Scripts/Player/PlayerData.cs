@@ -21,6 +21,8 @@ public class PlayerData : MonoBehaviour
     public float currentEnergy;
     private Transform currentCheckpoint;
 
+    public bool usingCheckpoints = true;
+
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
     /// </summary>
@@ -62,15 +64,20 @@ public class PlayerData : MonoBehaviour
 
     void CheckIfDead()
     {
-        if (currentHP >= 0)
-        {
-            PlayerDied?.Invoke();
-           // transform.position = respawnPoint;
-        }
         if (currentHP <= 0)
         {
-            transform.position = currentCheckpoint.position;
-            currentHP = 2;
+            PlayerDied?.Invoke();
+
+            if (usingCheckpoints)
+            {
+                transform.position = currentCheckpoint.position;
+                currentHP = 2;
+            }
+        }
+        // If they are alive what do
+        if (currentHP >= 0)
+        {
+            
         }
     }
 
@@ -86,8 +93,5 @@ public class PlayerData : MonoBehaviour
             currentCheckpoint = collision.transform;
             collision.GetComponent<Collider2D>().enabled = false; //Deactivates checkpoint collider
         }
-
-
     }
-
 }
