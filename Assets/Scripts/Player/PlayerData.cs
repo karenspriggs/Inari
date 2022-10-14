@@ -19,18 +19,27 @@ public class PlayerData : MonoBehaviour
     [SerializeField]
     private Weapon currentWeapon;
     public float currentEnergy;
+    public float dashEnergyCost;
     private Transform currentCheckpoint;
 
     public bool usingCheckpoints = true;
 
     /// <summary>
-    /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
+    /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the max amount for health
     /// </summary>
     public static Action<float> InitializedPlayerHealth;
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
     /// </summary>
     public static Action<float> PlayerTookDamage;
+    /// <summary>
+    /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
+    /// </summary>
+    public static Action<float> InitializedPlayerEnergy;
+    /// <summary>
+    /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
+    /// </summary>
+    public static Action<float> PlayerUsedEnergy;
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player died
     /// </summary>
@@ -42,6 +51,7 @@ public class PlayerData : MonoBehaviour
         currentHP = maxHP;
         currentEnergy = maxEnergy;
         InitializedPlayerHealth?.Invoke(currentHP);
+        InitializedPlayerEnergy?.Invoke(currentEnergy);
     }
 
     // Update is called once per frame
@@ -60,6 +70,23 @@ public class PlayerData : MonoBehaviour
         currentHP -= damage;
         PlayerTookDamage?.Invoke(damage);
         CheckIfDead();
+    }
+
+    public bool TryDashing()
+    {
+        if (currentEnergy - dashEnergyCost < 0)
+        {
+            return false;
+        }
+
+        UseEnergy(dashEnergyCost);
+        return true;
+    }
+
+    public void UseEnergy(float energycost)
+    {
+        currentEnergy -= energycost;
+        PlayerUsedEnergy?.Invoke(energycost);
     }
 
     void CheckIfDead()
