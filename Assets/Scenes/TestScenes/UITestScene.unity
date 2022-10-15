@@ -553,6 +553,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 342619544621165301, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
+      propertyPath: maxHP
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 342619544621165302, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
       propertyPath: speed
       value: 3
@@ -2668,7 +2672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mask: {fileID: 431422996}
-  energyShakeRate: 2
+  energyShakeRate: 10
   canvasGroup: {fileID: 0}
 --- !u!1 &2043361121
 GameObject:

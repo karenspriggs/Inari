@@ -13,6 +13,10 @@ public class EnemyData : MonoBehaviour
     private int currentHP;
     [SerializeField]
     private int Attack;
+    [SerializeField]
+    private int EnemyKillCoins;
+    [SerializeField]
+    private int EnemyKillEnergy;
 
     EnemyAnimator enemyAnimator;
 
@@ -51,8 +55,9 @@ public class EnemyData : MonoBehaviour
 
     void CheckIfDead()
     {
-        if (currentHP <= 0)
+        if (currentHP == 0)
         {
+            Debug.Log("Enemy died");
             EnemyKilled?.Invoke();
         }
     }
