@@ -40,18 +40,18 @@ public class EnemyAttack : MonoBehaviour
 
     private void Update()
     {
-        cooldownTimer += Time.deltaTime;
+    //    cooldownTimer += Time.deltaTime;
 
-        //Attack only when player in sight?
-        if (PlayerInSight())
-        {
-            if (cooldownTimer >= attackCooldown)
-            {
-                cooldownTimer = 0;
-            }
+    //    //Attack only when player in sight?
+    //    if (PlayerInSight())
+    //    {
+    //        if (cooldownTimer >= attackCooldown)
+    //        {
+    //            cooldownTimer = 0;
+    //        }
 
-            StartAttack();
-        }
+    //        StartAttack();
+    //    }
     }
 
     private bool PlayerInSight()
@@ -71,22 +71,14 @@ public class EnemyAttack : MonoBehaviour
             new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
     }
 
-    private void DamagePlayer()
-    {
-     //   if (PlayerInSight())
-      //     PlayerData.TakeDamage(1f);
-      //   Debug.Log("Player attacked");
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && canAttack)
         {
             StartAttack();
-
+            Debug.Log(canAttack);
             if (!cooldownTimerStarted)
             {
-                // make this shit better
                 cooldownTimerStarted = true;
                 StartCoroutine(AttackCooldownTimer());
             }
@@ -95,14 +87,14 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator AttackCooldownTimer()
     {
+        yield return new WaitForSeconds(cooldownTime);
         canAttack = true;
         cooldownTimerStarted = false;
-        yield return new WaitForSeconds(cooldownTime);
-
     }
 
     private void StartAttack()
     {
+        canAttack = false;
         enemyAnimator.StartAttackAnimation();
     }
 }
