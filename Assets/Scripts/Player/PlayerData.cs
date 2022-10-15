@@ -16,10 +16,14 @@ public class PlayerData : MonoBehaviour
     private float Attack;
     [SerializeField]
     private float maxEnergy;
-    [SerializeField]
-    private Weapon currentWeapon;
+
     public float currentEnergy;
     public float dashEnergyCost;
+    public float energyForKillingEnemy;
+
+    [SerializeField]
+    private Weapon currentWeapon;
+
     private Transform currentCheckpoint;
 
     public bool usingCheckpoints = true;
@@ -52,6 +56,16 @@ public class PlayerData : MonoBehaviour
         currentEnergy = maxEnergy;
         InitializedPlayerHealth?.Invoke(currentHP);
         InitializedPlayerEnergy?.Invoke(currentEnergy);
+    }
+
+    private void OnEnable()
+    {
+        EnemyData.EnemyKilled += OnEnemyKilled;
+    }
+
+    private void OnDisable()
+    {
+        EnemyData.EnemyKilled -= OnEnemyKilled;
     }
 
     // Update is called once per frame
@@ -106,6 +120,19 @@ public class PlayerData : MonoBehaviour
         {
             
         }
+    }
+
+    void OnEnemyKilled()
+    {
+        float energyGained = energyForKillingEnemy;
+
+        if (maxEnergy < currentEnergy + energyForKillingEnemy)
+        {
+            energyGained = maxEnergy - currentEnergy;
+        }
+
+        currentEnergy += energyGained;
+        PlayerUsedEnergy?.Invoke(-energyGained);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

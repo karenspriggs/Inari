@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [Header("Sub Behaviors")]
     PlayerMovement playerMovement;
     PlayerAnimator playerAnimator;
+    PlayerData playerData;
 
     [Header("Input Settings")]
     public float movementSmoothingSpeed = 1f;
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponent<PlayerAnimator>();
-
+        playerData = GetComponent<PlayerData>();
     }
 
     void SetMovementInput()
@@ -115,12 +116,14 @@ public class PlayerController : MonoBehaviour
             bool hasDashInputThisFrame = isDashing > 0.1f;
             if (hasDashInputThisFrame)
             {
-                if (canDash && currentState != InariState.DashStartup)
+                if (playerData.TryDashing())
                 {
-                    SwitchState(InariState.DashStartup);
-                    return true;
-                }
-
+                    if (canDash && currentState != InariState.DashStartup)
+                    {
+                        SwitchState(InariState.DashStartup);
+                        return true;
+                    }
+                }   
             }
         }
         return false;

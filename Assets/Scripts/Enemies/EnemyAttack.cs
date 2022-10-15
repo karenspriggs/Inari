@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using System;
 
 
-public class BakenekoAttacks : MonoBehaviour
+public class EnemyAttack : MonoBehaviour
 {
     [Header("Attack Parameters")]
     [SerializeField]
