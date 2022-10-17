@@ -435,6 +435,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1802970693990016260, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2138198423761789010, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -585,7 +589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789269, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: maxHP
-      value: 10
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789269, guid: 5cbdf03e0666d5242b34683659fba2e4, type: 3}
       propertyPath: currentHP
@@ -1748,7 +1752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 342619544621165297, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 342619544621165302, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
       propertyPath: speed

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7198817352821095738}
   m_Layer: 0
   m_Name: BakenekoEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,6 +64,8 @@ MonoBehaviour:
   maxHP: 3
   currentHP: 0
   Attack: 0
+  EnemyKillCoins: 0
+  EnemyKillEnergy: 0
 --- !u!114 &342619544621165302
 MonoBehaviour:
   m_ObjectHideFlags: 0

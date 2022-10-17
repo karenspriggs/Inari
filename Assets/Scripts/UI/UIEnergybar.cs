@@ -54,7 +54,6 @@ public class UIEnergybar : MonoBehaviour
 
     public void SetValue(float energy)
     {
-        Debug.Log("Setting health bar value");
         currentValue -= energy;
         mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * currentValue / maxEnergyValue);
 

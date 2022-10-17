@@ -95,7 +95,6 @@ public class PlayerData : MonoBehaviour
             return false;
         }
 
-        UseEnergy(dashEnergyCost);
         return true;
     }
 

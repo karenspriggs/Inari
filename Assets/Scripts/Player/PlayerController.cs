@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
 
         PlayerData.PlayerTookDamage += SetHit;
-        PlayerData.PlayerDied += SetDead;
+        //PlayerData.PlayerDied += SetDead;
     }
 
     private void OnDisable()
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
         playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
 
         PlayerData.PlayerTookDamage -= SetHit;
-        PlayerData.PlayerDied -= SetDead;
+        //PlayerData.PlayerDied -= SetDead;
     }
 
     public void Start()
@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (canDash && currentState != InariState.DashStartup)
                     {
+                        playerData.UseEnergy(playerData.dashEnergyCost);
                         SwitchState(InariState.DashStartup);
                         return true;
                     }
@@ -428,5 +429,13 @@ public class PlayerController : MonoBehaviour
         {
             SwitchState(nextState);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), collision.gameObject.GetComponent<CapsuleCollider2D>(), (currentState==InariState.Dashing));
+        } 
     }
 }
