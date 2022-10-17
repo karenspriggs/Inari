@@ -90,10 +90,11 @@ MonoBehaviour:
   maxHP: 4
   currentHP: 4
   Attack: 1
-  maxEnergy: 4
-  currentEnergy: 4
-  dashEnergyCost: 0
-  energyForKillingEnemy: 0
+  maxEnergy: 10
+  currentEnergy: 0
+  dashEnergyCost: 5
+  energyForKillingEnemy: 5
+  invulnTime: 1
   isInvincible: 0
   currentWeapon: {fileID: 0}
   usingCheckpoints: 1
