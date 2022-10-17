@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
 
         PlayerData.PlayerTookDamage += SetHit;
-        //PlayerData.PlayerDied += SetDead;
+        PlayerData.PlayerDied += SetDead;
     }
 
     private void OnDisable()
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
         playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
 
         PlayerData.PlayerTookDamage -= SetHit;
-        //PlayerData.PlayerDied -= SetDead;
+        PlayerData.PlayerDied -= SetDead;
     }
 
     public void Start()

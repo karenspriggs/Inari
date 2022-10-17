@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerDeathAnimationEvents : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static Action PlayerDeathAnimationFinished;
 
-    // Update is called once per frame
-    void Update()
+    public void CallDeathEvent()
     {
-        
+        Debug.Log("Death event called");
+        PlayerDeathAnimationFinished?.Invoke();
     }
 }
