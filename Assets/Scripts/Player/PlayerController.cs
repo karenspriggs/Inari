@@ -14,7 +14,9 @@ public enum InariState
     WallJumping,
     WallSliding,
     Air,
-    BasicGroundAttack1
+    BasicGroundAttack1,
+    Hit,
+    Dead
 }
 
 public class PlayerController : MonoBehaviour
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private float inputMovement;
     private Vector3 rawInputMovement;
-    private Vector3 smoothInputMovement; 
+    private Vector3 smoothInputMovement;
 
     private bool hasJumped = false;
     private float isJumping;
@@ -75,6 +77,9 @@ public class PlayerController : MonoBehaviour
 
         playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
         playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
+
+        PlayerData.PlayerTookDamage += SetHit;
+        PlayerData.PlayerDied += SetDead;
     }
 
     private void OnDisable()
@@ -89,6 +94,9 @@ public class PlayerController : MonoBehaviour
 
         playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
         playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
+
+        PlayerData.PlayerTookDamage -= SetHit;
+        PlayerData.PlayerDied -= SetDead;
     }
 
     public void Start()
@@ -123,12 +131,11 @@ public class PlayerController : MonoBehaviour
                         SwitchState(InariState.DashStartup);
                         return true;
                     }
-                }   
+                }
             }
         }
         return false;
     }
-
 
     private bool CheckForJump()
     {
@@ -190,9 +197,18 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    private void SetDead()
+    {
+        SwitchState(InariState.Dead);
+    }
+
+    private void SetHit(float hitDamage)
+    {
+        SwitchState(InariState.Hit);
+    }
+
     private void FixedUpdate()
     {
-        
         CheckForInputs();
 
         UpdateTimers();
@@ -212,6 +228,7 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
+                playerData.isInvincible = false;
                 playerAnimator.SwitchState(newState);
                 break;
             case InariState.DashStartup:
@@ -249,6 +266,22 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
+                playerMovement.HaltAirVelocity();
+                playerAnimator.SwitchState(newState);
+                break;
+            case InariState.Hit:
+                jumpsEnabled = false;
+                dashEnabled = false;
+                attacksEnabled = false;
+                playerData.isInvincible = true;
+                playerMovement.HaltAirVelocity();
+                playerAnimator.SwitchState(newState);
+                break;
+            case InariState.Dead:
+                jumpsEnabled = false;
+                dashEnabled = false;
+                attacksEnabled = false;
+                playerData.isInvincible = true;
                 playerMovement.HaltAirVelocity();
                 playerAnimator.SwitchState(newState);
                 break;
@@ -301,6 +334,9 @@ public class PlayerController : MonoBehaviour
             case InariState.BasicGroundAttack1:
                 playerMovement.TurnOffGravity();
                 playerMovement.DoFriction(playerMovement.GroundFriction);
+                AnimationEndTransitionToNextState(InariState.Neutral);
+                break;
+            case InariState.Hit:
                 AnimationEndTransitionToNextState(InariState.Neutral);
                 break;
         }

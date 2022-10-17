@@ -21,6 +21,8 @@ public class PlayerData : MonoBehaviour
     public float dashEnergyCost;
     public float energyForKillingEnemy;
 
+    public bool isInvincible = false;
+
     [SerializeField]
     private Weapon currentWeapon;
 
@@ -139,7 +141,10 @@ public class PlayerData : MonoBehaviour
     {
         if (collision.gameObject.tag == "EnemyAttackHitbox")
         {
-            TakeDamage(1f);
+            if (!isInvincible)
+            {
+                TakeDamage(1);
+            }
         }
 
         if (collision.gameObject.tag == "Checkpoint")

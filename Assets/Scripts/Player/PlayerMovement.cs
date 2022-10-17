@@ -26,8 +26,6 @@ public class PlayerMovement : MonoBehaviour
     public float GroundFriction;
     public float AirFriction;
 
-    
-
     private LayerMask groundMask;
     public float groundCheckXDistance = 0.25f;
     public float groundCheckYDistance = 0.25f;

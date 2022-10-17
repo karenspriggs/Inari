@@ -35,28 +35,6 @@ public class PlayerAnimator : MonoBehaviour
 
         animator.SetBool(animatorMoveBool, isMoving);
     }
-    /*
-    public void UpdateJumpAnimation()
-    {
-        animator.SetTrigger(animatorJumpTrigger);
-    }
-
-    public void UpdateDashAnimation()
-    {
-        Debug.Log("Dash animation");
-        animator.SetTrigger(animatorDashTrigger);
-
-    }
-
-    public void UpdateBaseAttackAnimation(float isAttacking)
-    {
-        bool isAttackingThisFrame = true;
-
-        if (isAttacking == 0f) isAttackingThisFrame = false;
-
-        animator.SetBool(animatorBasicAttackBool, isAttackingThisFrame);
-    }
-    */
 
     public void SwitchState(InariState newState)
     {
@@ -82,6 +60,12 @@ public class PlayerAnimator : MonoBehaviour
                 break;
             case InariState.BasicGroundAttack1:
                 StartAnimation("PlayerDollBasicAttack");
+                break;
+            case InariState.Hit:
+                StartAnimation("PlayerDollHit");
+                break;
+            case InariState.Dead:
+                StartAnimation("PlayerDollDeath");
                 break;
             default:
                 break;
