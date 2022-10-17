@@ -229,7 +229,6 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
-                playerData.isInvincible = false;
                 playerAnimator.SwitchState(newState);
                 break;
             case InariState.DashStartup:

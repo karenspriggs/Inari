@@ -20,8 +20,10 @@ public class PlayerData : MonoBehaviour
     public float currentEnergy;
     public float dashEnergyCost;
     public float energyForKillingEnemy;
+    public float invulnTime;
 
     public bool isInvincible = false;
+    bool isInvincibleCoroutineRunning = false;
 
     [SerializeField]
     private Weapon currentWeapon;
@@ -116,11 +118,6 @@ public class PlayerData : MonoBehaviour
                 currentHP = 2;
             }
         }
-        // If they are alive what do
-        if (currentHP >= 0)
-        {
-            
-        }
     }
 
     void OnEnemyKilled()
@@ -136,6 +133,13 @@ public class PlayerData : MonoBehaviour
         PlayerUsedEnergy?.Invoke(-energyGained);
     }
 
+    IEnumerator InvulnCoroutine()
+    {
+        yield return new WaitForSeconds(invulnTime);
+        isInvincible = false;
+        isInvincibleCoroutineRunning = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "EnemyAttackHitbox")
@@ -143,6 +147,13 @@ public class PlayerData : MonoBehaviour
             if (!isInvincible)
             {
                 TakeDamage(1);
+
+                if (!isInvincibleCoroutineRunning)
+                {
+                    isInvincibleCoroutineRunning = true;
+                    isInvincible = true;
+                    StartCoroutine(InvulnCoroutine());
+                }
             }
         }
 
