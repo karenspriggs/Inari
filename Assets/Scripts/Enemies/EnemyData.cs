@@ -21,6 +21,7 @@ public class EnemyData : MonoBehaviour
     EnemyAnimator enemyAnimator;
 
     public static Action EnemyKilled;
+    public bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class EnemyData : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
+            Debug.Log("Enemy took damage");
             currentHP--;
             CheckIfDead();
         }
@@ -49,7 +51,16 @@ public class EnemyData : MonoBehaviour
         {
             Debug.Log("Enemy died");
             enemyAnimator.StartDeathAnimation();
+            isDead = true;
             EnemyKilled?.Invoke();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isDead && collision.gameObject.CompareTag("Player"))
+        {
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), this.gameObject.GetComponent<CapsuleCollider2D>());
         }
     }
 }

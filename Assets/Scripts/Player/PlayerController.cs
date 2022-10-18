@@ -432,9 +432,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
-        {
-            Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), collision.gameObject.GetComponent<CapsuleCollider2D>(), (currentState==InariState.Dashing));
-        } 
+        //if(collision.gameObject.CompareTag("Enemy"))
+        //{
+        //    Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), collision.gameObject.GetComponent<CapsuleCollider2D>(), (currentState==InariState.Dashing));
+        //} 
     }
 }
