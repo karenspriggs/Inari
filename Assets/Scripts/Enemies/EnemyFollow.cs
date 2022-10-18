@@ -13,7 +13,6 @@ public class EnemyFollow : MonoBehaviour
     public GameObject target;
     public bool hitStun = false;
     public bool isFacingRight;
-    bool isDead = false;
 
     Vector2 currentMovement;
     bool isMoving;
@@ -26,21 +25,9 @@ public class EnemyFollow : MonoBehaviour
         enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
-    private void OnEnable()
-    {
-        EnemyData.EnemyKilled += OnEnemyKilled;
-    }
-
-    private void OnDisable()
-    {
-        EnemyData.EnemyKilled -= OnEnemyKilled;
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (isDead) return;
-
         targetDistance = Vector2.Distance(transform.position, target.transform.position);
         if (targetDistance < chaseDistance && targetDistance > stopDistance)
         {
@@ -60,7 +47,7 @@ public class EnemyFollow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerAttackHitbox") && !isDead)
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             hitStun = true;
             enemyAnimator.StartHitAnimation();
@@ -96,11 +83,6 @@ public class EnemyFollow : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
-    }
-
-    void OnEnemyKilled()
-    {
-        isDead = true;
     }
 
     private IEnumerator HitStun()
