@@ -22,6 +22,7 @@ public class EnemyData : MonoBehaviour
 
     public static Action EnemyKilled;
     public bool isDead = false;
+    public bool wasHit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +36,17 @@ public class EnemyData : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             Debug.Log("Enemy took damage");
+            wasHit = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (wasHit)
+        {
             currentHP--;
             CheckIfDead();
+            wasHit = false;
         }
     }
 
