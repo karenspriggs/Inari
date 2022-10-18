@@ -22,16 +22,6 @@ public class EnemyData : MonoBehaviour
 
     public static Action EnemyKilled;
 
-    private void OnEnable()
-    {
-        EnemyKilled += OnEnemyKilled;
-    }
-
-    private void OnDisable()
-    {
-        EnemyKilled -= OnEnemyKilled;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -58,12 +48,8 @@ public class EnemyData : MonoBehaviour
         if (currentHP == 0)
         {
             Debug.Log("Enemy died");
+            enemyAnimator.StartDeathAnimation();
             EnemyKilled?.Invoke();
         }
-    }
-
-    void OnEnemyKilled()
-    {
-        enemyAnimator.StartDeathAnimation();
     }
 }
