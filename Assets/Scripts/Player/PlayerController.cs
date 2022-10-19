@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerAnimator playerAnimator;
     PlayerData playerData;
+    PlayerAttacks playerAttacks;
 
     [Header("Input Settings")]
     public float movementSmoothingSpeed = 1f;
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded = true;
     public bool nextToWall = false;
     bool hasEnabledEnemyCollision = false;
+    //public bool canAttack = true;
 
     // state transition flags
     // set these in SwitchState()
@@ -112,6 +114,7 @@ public class PlayerController : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimator = GetComponent<PlayerAnimator>();
         playerData = GetComponent<PlayerData>();
+        playerAttacks = GetComponent<PlayerAttacks>();
     }
 
     void SetMovementInput()
@@ -197,8 +200,18 @@ public class PlayerController : MonoBehaviour
             {
                 if (currentState != InariState.BasicAttacking)
                 {
+                    playerAttacks.basicAttacksIndex = 0;
                     SwitchState(InariState.BasicAttacking);
                     return true;
+                }
+                else
+                {
+                    //was already attacking, see if we can combo
+                    if (playerAttacks.CanBasicAttackCombo())
+                    {
+                        playerAttacks.basicAttacksIndex += 1;
+                        SwitchState(InariState.BasicAttacking);
+                    }
                 }
 
             }
@@ -275,7 +288,7 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = false;
                 attacksEnabled = false;
                 playerMovement.HaltAirVelocity();
-                playerAnimator.SwitchState(newState);
+                playerAnimator.StartAnimation(playerAttacks.basicAttacks[playerAttacks.basicAttacksIndex].Name);
                 break;
             case InariState.Hit:
                 jumpsEnabled = false;
@@ -476,12 +489,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttackActive()
     {
-        Debug.Log("OnAttackActive Received");
+        //Debug.Log("OnAttackActive Received");
     }
 
     public void OnAttackRecovery()
     {
-        Debug.Log("OnAttackRecovery Received");
+        //Debug.Log("OnAttackRecovery Received");
+        attacksEnabled = true;
     }
 
     #endregion
