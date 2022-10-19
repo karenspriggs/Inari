@@ -31,6 +31,15 @@ public class EnemyData : MonoBehaviour
         enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
+        {
+            Debug.Log("Enemy took damage");
+            wasHit = true;
+        }
+    }
+
     private void Update()
     {
         if (wasHit)
@@ -54,15 +63,6 @@ public class EnemyData : MonoBehaviour
             enemyAnimator.StartDeathAnimation();
             isDead = true;
             EnemyKilled?.Invoke();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
-        {
-            Debug.Log("Enemy took damage");
-            wasHit = true;
         }
     }
 

@@ -30,7 +30,6 @@ public class EnemyAnimator : MonoBehaviour
 
     public void StartHitAnimation()
     {
-        Debug.Log("Hit animation");
         animator.SetTrigger(animatorHitTrigger);
     }
 
