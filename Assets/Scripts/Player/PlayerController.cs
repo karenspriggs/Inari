@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
         PlayerData.PlayerTookDamage += SetHit;
         PlayerData.PlayerDied += SetDead;
+        GameOverUI.PlayerRestarted += ResetInari;
 
         PlayerAnimationEvents.PlayerAttackActiveStarted += OnAttackActive;
         PlayerAnimationEvents.PlayerAttackRecoveryStarted += OnAttackRecovery;
@@ -104,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         PlayerData.PlayerTookDamage -= SetHit;
         PlayerData.PlayerDied -= SetDead;
-
+        GameOverUI.PlayerRestarted -= ResetInari;
 
         PlayerAnimationEvents.PlayerAttackActiveStarted -= OnAttackActive;
         PlayerAnimationEvents.PlayerAttackRecoveryStarted -= OnAttackRecovery;
@@ -453,6 +454,11 @@ public class PlayerController : MonoBehaviour
         {
             SwitchState(nextState);
         }
+    }
+
+    void ResetInari()
+    {
+        SwitchState(InariState.Neutral);
     }
 
     void DisableEnemyCollision()

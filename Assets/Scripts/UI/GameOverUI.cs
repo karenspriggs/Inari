@@ -9,6 +9,7 @@ public class GameOverUI : MonoBehaviour
 {
     public GameObject GameOverUIPanel;
     public static Action PlayerRestarted;
+    public int sceneIndex;
 
     private void OnEnable()
     {
@@ -28,6 +29,9 @@ public class GameOverUI : MonoBehaviour
 
     public void ReloadScene()
     {
+        GameOverUIPanel.SetActive(false);
+        Time.timeScale = 1f;
         PlayerRestarted?.Invoke();
+        //SceneManager.LoadScene(sceneIndex);
     }
 }
