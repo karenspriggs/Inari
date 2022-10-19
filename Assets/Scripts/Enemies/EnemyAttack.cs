@@ -7,13 +7,13 @@ using System;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [Header("Attack Parameters")]
-    [SerializeField]
-    private float attackCooldown;
+    //[Header("Attack Parameters")]
+    //[SerializeField]
+    //private float attackCooldown;
     [SerializeField]
     private float range;
-    [SerializeField]
-    private int damage;
+    //[SerializeField]
+    //private int damage;
 
     [Header("Collider Parameters")]
     [SerializeField]
