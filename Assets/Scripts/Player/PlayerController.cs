@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
 
         PlayerAnimationEvents.PlayerAttackActiveStarted += OnAttackActive;
         PlayerAnimationEvents.PlayerAttackRecoveryStarted += OnAttackRecovery;
+        PlayerAnimationEvents.PlayerAnimationVelocityImpulse += OnVelocityImpulse;
     }
 
     private void OnDisable()
@@ -107,6 +108,7 @@ public class PlayerController : MonoBehaviour
 
         PlayerAnimationEvents.PlayerAttackActiveStarted -= OnAttackActive;
         PlayerAnimationEvents.PlayerAttackRecoveryStarted -= OnAttackRecovery;
+        PlayerAnimationEvents.PlayerAnimationVelocityImpulse -= OnVelocityImpulse;
     }
 
     public void Start()
@@ -496,6 +498,16 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("OnAttackRecovery Received");
         attacksEnabled = true;
+    }
+
+    public void OnVelocityImpulse(object sender, AnimationVelocityEventArgs e)
+    {
+        Vector2 impulse = e.velocity;
+        if (!isFacingRight)
+        {
+            impulse.x = -impulse.x;
+        }
+        playerMovement.ApplyVelocityImpulse(impulse);
     }
 
     #endregion

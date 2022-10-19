@@ -362,4 +362,9 @@ public class PlayerMovement : MonoBehaviour
         if (b) return 1;
         return -1;
     }
+
+    public void ApplyVelocityImpulse(Vector2 impulse)
+    {
+        playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x + impulse.x, playerRigidbody.velocity.y + impulse.y);
+    }
 }

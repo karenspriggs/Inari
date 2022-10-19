@@ -33,7 +33,7 @@ public class PlayerAttacks : MonoBehaviour
 
     public bool CanBasicAttackCombo()
     {
-        if (basicAttacksIndex < basicAttacks.Count) return true;
+        if (basicAttacksIndex < basicAttacks.Count-1) return true;
         return false;
     }
 }
