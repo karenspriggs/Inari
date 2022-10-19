@@ -11,8 +11,7 @@ public class EnemyData : MonoBehaviour
     private int maxHP;
     [SerializeField]
     private int currentHP;
-    [SerializeField]
-    private int Attack;
+    public int Attack;
     [SerializeField]
     private int EnemyKillCoins;
     [SerializeField]

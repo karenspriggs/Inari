@@ -148,7 +148,8 @@ public class PlayerData : MonoBehaviour
         {
             if (!isInvincible)
             {
-                TakeDamage(1);
+                int damage = collision.GetComponentInParent<EnemyData>().Attack;
+                TakeDamage(damage);
 
                 if (!isInvincibleCoroutineRunning)
                 {
