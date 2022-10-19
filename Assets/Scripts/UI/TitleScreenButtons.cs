@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleScreenButtons : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int StartingSceneBuildIndex;
+    
+    public void StartGame()
     {
-        
+        SceneManager.LoadScene(StartingSceneBuildIndex);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void QuitGame()
     {
-        
+        Application.Quit();
     }
 }
