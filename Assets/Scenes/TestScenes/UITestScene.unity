@@ -1029,6 +1029,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.19881836
       objectReference: {fileID: 0}
+    - target: {fileID: 8809269286858373901, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
+      propertyPath: cooldownTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809269286858373901, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
+      propertyPath: attackCooldown
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9059803535723635911, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1043,6 +1051,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 342619544621165303, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
+    - {fileID: 8809269286858373901, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
+    - {fileID: 5949409489290400617, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9c4077ea3d0fc634598ffd68978206da, type: 3}
 --- !u!1 &238305376 stripped
 GameObject:
@@ -1079,7 +1089,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  cooldownTime: 0
+  cooldownTime: 10
 --- !u!61 &238305380
 BoxCollider2D:
   m_ObjectHideFlags: 0

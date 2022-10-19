@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     public bool isFacingRight = true;
     public bool isGrounded = true;
     public bool nextToWall = false;
+    bool hasEnabledEnemyCollision = false;
 
     // state transition flags
     // set these in SwitchState()
@@ -300,11 +301,13 @@ public class PlayerController : MonoBehaviour
                 AllowHorizontalMovement();
                 AllowFalling();
                 AllowGroundToResetJumps();
+                EnableEnemyCollision();
                 break;
             case InariState.DashStartup:
                 playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
                 playerMovement.DoFriction(playerMovement.GroundFriction);
                 TimeTransitionToNextState(DashStartupTimerMax, InariState.Dashing);
+                DisableEnemyCollision();
                 break;
             case InariState.Dashing:
                 playerMovement.TurnOffGravity();
@@ -430,11 +433,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void DisableEnemyCollision()
     {
-        //if(collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), collision.gameObject.GetComponent<CapsuleCollider2D>(), (currentState==InariState.Dashing));
-        //} 
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if (enemies != null)
+        {
+            foreach(GameObject g in enemies)
+            {
+                Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), g.GetComponent<CapsuleCollider2D>(), true);
+            }
+        }
+
+        hasEnabledEnemyCollision = false;
+    }
+
+    void EnableEnemyCollision()
+    {
+        if (!hasEnabledEnemyCollision)
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            if (enemies != null)
+            {
+                foreach (GameObject g in enemies)
+                {
+                    Physics2D.IgnoreCollision(GetComponent<CapsuleCollider2D>(), g.GetComponent<CapsuleCollider2D>(), false);
+                }
+            }
+            hasEnabledEnemyCollision = true;
+        }
     }
 }
