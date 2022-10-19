@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+
 
 public class GameOverUI : MonoBehaviour
 {
     public GameObject GameOverUIPanel;
+    public static Action PlayerRestarted;
 
     private void OnEnable()
     {
@@ -25,6 +28,6 @@ public class GameOverUI : MonoBehaviour
 
     public void ReloadScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PlayerRestarted?.Invoke();
     }
 }
