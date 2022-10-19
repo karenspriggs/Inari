@@ -17,12 +17,14 @@ public class EnemyFollow : MonoBehaviour
     Vector2 currentMovement;
     bool isMoving;
     EnemyAnimator enemyAnimator;
+    EnemyData enemyData;
 
     private float targetDistance;
     // Start is called before the first frame update
     void Start()
     {
         enemyAnimator = GetComponent<EnemyAnimator>();
+        enemyData = GetComponent<EnemyData>();
     }
 
     // Update is called once per frame
@@ -31,13 +33,19 @@ public class EnemyFollow : MonoBehaviour
         targetDistance = Vector2.Distance(transform.position, target.transform.position);
         if (targetDistance < chaseDistance && targetDistance > stopDistance)
         {
-            ChasePlayer();
-            isMoving = true;
+            if (!enemyData.isDead)
+            {
+                ChasePlayer();
+                isMoving = true;
+            }
         }
         else
             StopChasePlayer();
 
-        enemyAnimator.UpdateMoveAnimation(isMoving);
+        if (!enemyData.isDead)
+        {
+            enemyAnimator.UpdateMoveAnimation(isMoving);
+        }
     }
 
     private void StopChasePlayer()
@@ -47,7 +55,7 @@ public class EnemyFollow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox") && !enemyData.isDead)
         {
             hitStun = true;
             enemyAnimator.StartHitAnimation();

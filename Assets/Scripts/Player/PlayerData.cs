@@ -65,11 +65,13 @@ public class PlayerData : MonoBehaviour
     private void OnEnable()
     {
         EnemyData.EnemyKilled += OnEnemyKilled;
+        GameOverUI.PlayerRestarted += RestartAtCheckPoint;
     }
 
     private void OnDisable()
     {
         EnemyData.EnemyKilled -= OnEnemyKilled;
+        GameOverUI.PlayerRestarted -= RestartAtCheckPoint;
     }
 
     // Update is called once per frame
@@ -111,12 +113,6 @@ public class PlayerData : MonoBehaviour
         if (currentHP <= 0)
         {
             PlayerDied?.Invoke();
-
-            if (usingCheckpoints)
-            {
-                transform.position = currentCheckpoint.position;
-                currentHP = 2;
-            }
         }
     }
 
@@ -138,6 +134,12 @@ public class PlayerData : MonoBehaviour
         yield return new WaitForSeconds(invulnTime);
         isInvincible = false;
         isInvincibleCoroutineRunning = false;
+    }
+
+    public void RestartAtCheckPoint()
+    {
+        transform.position = currentCheckpoint.position;
+        currentHP = 2;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
