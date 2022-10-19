@@ -14,7 +14,7 @@ public enum InariState
     WallJumping,
     WallSliding,
     Air,
-    BasicGroundAttack1,
+    BasicAttacking,
     Hit,
     Dead
 }
@@ -81,6 +81,9 @@ public class PlayerController : MonoBehaviour
 
         PlayerData.PlayerTookDamage += SetHit;
         PlayerData.PlayerDied += SetDead;
+
+        PlayerAnimationEvents.PlayerAttackActiveStarted += OnAttackActive;
+        PlayerAnimationEvents.PlayerAttackRecoveryStarted += OnAttackRecovery;
     }
 
     private void OnDisable()
@@ -98,6 +101,10 @@ public class PlayerController : MonoBehaviour
 
         PlayerData.PlayerTookDamage -= SetHit;
         PlayerData.PlayerDied -= SetDead;
+
+
+        PlayerAnimationEvents.PlayerAttackActiveStarted -= OnAttackActive;
+        PlayerAnimationEvents.PlayerAttackRecoveryStarted -= OnAttackRecovery;
     }
 
     public void Start()
@@ -188,9 +195,9 @@ public class PlayerController : MonoBehaviour
             bool hasAttackInputThisFrame = isBasicAttacking > 0.1f;
             if (hasAttackInputThisFrame)
             {
-                if (currentState != InariState.BasicGroundAttack1)
+                if (currentState != InariState.BasicAttacking)
                 {
-                    SwitchState(InariState.BasicGroundAttack1);
+                    SwitchState(InariState.BasicAttacking);
                     return true;
                 }
 
@@ -263,7 +270,7 @@ public class PlayerController : MonoBehaviour
                 canJump = false;
                 canWallJump = true;
                 break;
-            case InariState.BasicGroundAttack1:
+            case InariState.BasicAttacking:
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
@@ -334,7 +341,7 @@ public class PlayerController : MonoBehaviour
                     AllowLanding();
                 }
                 break;
-            case InariState.BasicGroundAttack1:
+            case InariState.BasicAttacking:
                 playerMovement.TurnOffGravity();
                 playerMovement.DoFriction(playerMovement.GroundFriction);
                 AnimationEndTransitionToNextState(InariState.Neutral);
@@ -464,4 +471,18 @@ public class PlayerController : MonoBehaviour
             hasEnabledEnemyCollision = true;
         }
     }
+
+    #region attacks combos
+
+    public void OnAttackActive()
+    {
+        Debug.Log("OnAttackActive Received");
+    }
+
+    public void OnAttackRecovery()
+    {
+        Debug.Log("OnAttackRecovery Received");
+    }
+
+    #endregion
 }

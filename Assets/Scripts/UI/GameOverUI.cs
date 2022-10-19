@@ -12,12 +12,12 @@ public class GameOverUI : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerDeathAnimationEvents.PlayerDeathAnimationFinished += ShowGameOverUI;
+        PlayerAnimationEvents.PlayerDeathAnimationFinished += ShowGameOverUI;
     }
 
     private void OnDisable()
     {
-        PlayerDeathAnimationEvents.PlayerDeathAnimationFinished -= ShowGameOverUI;
+        PlayerAnimationEvents.PlayerDeathAnimationFinished -= ShowGameOverUI;
     }
 
     void ShowGameOverUI()
