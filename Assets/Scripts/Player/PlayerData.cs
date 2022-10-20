@@ -30,8 +30,6 @@ public class PlayerData : MonoBehaviour
 
     private Transform currentCheckpoint;
 
-    public bool usingCheckpoints = true;
-
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the max amount for health
     /// </summary>
@@ -140,6 +138,7 @@ public class PlayerData : MonoBehaviour
     {
         transform.position = currentCheckpoint.position;
         currentHP = 2;
+        PlayerTookDamage?.Invoke(-2);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
