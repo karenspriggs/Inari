@@ -354,6 +354,45 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menus"",
+            ""id"": ""e0b71576-7a10-4da5-a9d2-62170a207ec3"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c133ebb-05c2-4785-bbef-36cc9a0da0f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2cc54984-34b0-40c0-8ffd-f87dba5e3dec"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a2fb958-2d70-437e-8956-dfdd0fbdf7ee"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -375,6 +414,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SlowmoToggle = m_Debug.FindAction("SlowmoToggle", throwIfNotFound: true);
+        // Menus
+        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
+        m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -536,6 +578,39 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         }
     }
     public DebugActions @Debug => new DebugActions(this);
+
+    // Menus
+    private readonly InputActionMap m_Menus;
+    private IMenusActions m_MenusActionsCallbackInterface;
+    private readonly InputAction m_Menus_Pause;
+    public struct MenusActions
+    {
+        private @InputControls m_Wrapper;
+        public MenusActions(@InputControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_Menus_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Menus; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
+        public void SetCallbacks(IMenusActions instance)
+        {
+            if (m_Wrapper.m_MenusActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_MenusActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public MenusActions @Menus => new MenusActions(this);
     private int m_MainInputSchemeIndex = -1;
     public InputControlScheme MainInputScheme
     {
@@ -557,5 +632,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnSlowmoToggle(InputAction.CallbackContext context);
+    }
+    public interface IMenusActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }
