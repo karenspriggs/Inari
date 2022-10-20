@@ -24,7 +24,6 @@ public class EnemyAttack : MonoBehaviour
     [Header("Player Layer")]
     [SerializeField]
     private LayerMask playerLayer;
-    private float cooldownTimer = Mathf.Infinity;
 
     EnemyAnimator enemyAnimator;
     public float cooldownTime;
@@ -53,7 +52,7 @@ public class EnemyAttack : MonoBehaviour
     //        StartAttack();
     //    }
     }
-
+    /*
     private bool PlayerInSight()
     {
         RaycastHit2D hit =
@@ -70,7 +69,7 @@ public class EnemyAttack : MonoBehaviour
         Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
             new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
     }
-
+    */
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && canAttack)

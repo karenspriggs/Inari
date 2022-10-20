@@ -132,7 +132,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &6147243303499613763
@@ -163,9 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4558c1f415f1b62458fc762b3b9a195a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0
   range: 0
-  damage: 0
   colliderDistance: 0
   boxCollider: {fileID: 5949489783467133575}
   playerLayer:
