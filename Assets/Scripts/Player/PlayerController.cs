@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     PlayerAnimator playerAnimator;
     PlayerData playerData;
     PlayerAttacks playerAttacks;
+    PlayerSound playerSound;
 
     [Header("Input Settings")]
     public float movementSmoothingSpeed = 1f;
@@ -118,6 +119,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<PlayerAnimator>();
         playerData = GetComponent<PlayerData>();
         playerAttacks = GetComponent<PlayerAttacks>();
+        playerSound = GetComponent<PlayerSound>();
     }
 
     void SetMovementInput()
@@ -266,6 +268,7 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
+                playerSound.PlaySound(playerSound.DashSound);
                 playerMovement.HaltAirVelocity();
                 playerMovement.DoTheDash();
                 break;
@@ -277,6 +280,7 @@ public class PlayerController : MonoBehaviour
                 attacksEnabled = true;
                 playerMovement.DoTheJump(newState);
                 playerAnimator.SwitchState(newState);
+                playerSound.PlaySound(playerSound.JumpSound);
                 SwitchState(InariState.Air);
                 break;
             case InariState.Air:
@@ -290,6 +294,7 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
+                playerSound.PlaySound(playerSound.AttackSound);
                 playerMovement.HaltAirVelocity();
                 playerAnimator.StartAnimation(playerAttacks.basicAttacks[playerAttacks.basicAttacksIndex].Name);
                 break;
@@ -404,6 +409,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
+            playerSound.PlaySound(playerSound.LandingSound);
             SwitchState(InariState.Neutral);
         }
     }
