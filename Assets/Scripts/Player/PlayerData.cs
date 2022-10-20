@@ -90,6 +90,19 @@ public class PlayerData : MonoBehaviour
         CheckIfDead();
     }
 
+    public void HealHealth(int healing)
+    {
+        if (currentHP + healing > maxHP)
+        {
+            currentHP = maxHP;
+        } else
+        {
+            currentHP += healing;
+        }
+
+        PlayerTookDamage?.Invoke(-healing);
+    }
+
     public bool TryDashing()
     {
         if (currentEnergy - dashEnergyCost < 0)
@@ -163,6 +176,12 @@ public class PlayerData : MonoBehaviour
         {
             currentCheckpoint = collision.transform;
             collision.GetComponent<Collider2D>().enabled = false; //Deactivates checkpoint collider
+        }
+
+        if (collision.gameObject.tag == "Food")
+        {
+            HealHealth(1);
+            Destroy(collision.gameObject);
         }
     }
 }
