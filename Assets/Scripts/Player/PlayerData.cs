@@ -39,6 +39,10 @@ public class PlayerData : MonoBehaviour
     /// </summary>
     public static Action<float> PlayerTookDamage;
     /// <summary>
+    /// Subscribe to this delegate for methods that want to know when a player regained health, it will also give you the amount of damage healed
+    /// </summary>
+    public static Action<float> PlayerRegainedHP;
+    /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the amount of damage taken
     /// </summary>
     public static Action<float> InitializedPlayerEnergy;
@@ -92,15 +96,19 @@ public class PlayerData : MonoBehaviour
 
     public void HealHealth(int healing)
     {
-        if (currentHP + healing > maxHP)
+        float healthGained = healing;
+
+        if (currentHP + healing >= maxHP)
         {
             currentHP = maxHP;
-        } else
+            healthGained = currentHP + healing - maxHP;
+        }
+        else
         {
             currentHP += healing;
         }
 
-        PlayerTookDamage?.Invoke(-healing);
+        PlayerRegainedHP?.Invoke(-healthGained);
     }
 
     public bool TryDashing()
@@ -181,7 +189,6 @@ public class PlayerData : MonoBehaviour
         if (collision.gameObject.tag == "Food")
         {
             HealHealth(1);
-            Destroy(collision.gameObject);
         }
     }
 }

@@ -32,12 +32,14 @@ public class UIHealthbar : MonoBehaviour
     {
         PlayerData.InitializedPlayerHealth += SetMaxHPValue;
         PlayerData.PlayerTookDamage += SetValue;
+        PlayerData.PlayerRegainedHP += SetValue;
     }
 
     private void OnDisable()
     {
         PlayerData.InitializedPlayerHealth -= SetMaxHPValue;
         PlayerData.PlayerTookDamage -= SetValue;
+        PlayerData.PlayerRegainedHP -= SetValue;
     }
 
     // Update is called once per frame
@@ -54,8 +56,13 @@ public class UIHealthbar : MonoBehaviour
 
     public void SetValue(float damage)
     {
-        Debug.Log("Setting health bar value");
         currentValue -= damage;
+
+        if (currentValue > maxHPValue)
+        {
+            return;
+        }
+
         mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * currentValue / maxHPValue);
 
         //LeanTween.alphaCanvas(canvasGroup, 0.1f, 0.6f);
