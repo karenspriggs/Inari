@@ -75,6 +75,7 @@ public class EnemyAttack : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && canAttack)
         {
             Debug.Log("Can attack");
+            canAttack = false;
             StartAttack();
             if (!cooldownTimerStarted)
             {

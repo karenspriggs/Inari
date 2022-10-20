@@ -80,7 +80,7 @@ public class EnemyFollow : MonoBehaviour
                 FlipEnemy();
             }
 
-            currentMovement = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            currentMovement = Vector2.MoveTowards(transform.position, new Vector2(target.transform.position.x, transform.position.y), speed * Time.deltaTime);
             transform.position = currentMovement;
         }
     }
