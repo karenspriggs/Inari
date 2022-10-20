@@ -97,7 +97,7 @@ public class EnemyFollow : MonoBehaviour
     {
         if (hitStun == true)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
             hitStun = false;
         }
         yield return null;
