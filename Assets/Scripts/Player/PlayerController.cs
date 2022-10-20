@@ -303,6 +303,7 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = false;
                 attacksEnabled = false;
                 playerData.isInvincible = true;
+                playerSound.PlaySound(playerSound.HitSound);
                 playerMovement.HaltAirVelocity();
                 playerAnimator.SwitchState(newState);
                 break;
@@ -311,6 +312,7 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = false;
                 attacksEnabled = false;
                 playerData.isInvincible = true;
+                playerSound.PlaySound(playerSound.DeathSound);
                 playerMovement.HaltAirVelocity();
                 playerAnimator.SwitchState(newState);
                 break;
@@ -462,7 +464,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void ResetInari()
+    public void ResetInari()
     {
         SwitchState(InariState.Neutral);
     }

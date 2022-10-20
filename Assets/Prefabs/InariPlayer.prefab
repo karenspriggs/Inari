@@ -100,7 +100,6 @@ MonoBehaviour:
   invulnTime: 1
   isInvincible: 0
   currentWeapon: {fileID: 0}
-  usingCheckpoints: 1
 --- !u!114 &6534854772515789290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +190,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -293,6 +292,8 @@ MonoBehaviour:
   JumpSound: {fileID: 8300000, guid: fe37c3b672b5b07428160e90ac78a189, type: 3}
   LandingSound: {fileID: 8300000, guid: 77c76f5a83202dd45abedf5f4f59f369, type: 3}
   DashSound: {fileID: 8300000, guid: 43ed5d79b45213641a6736566d03aa9f, type: 3}
+  HitSound: {fileID: 8300000, guid: eed29e2c90106604bab25cdf0a4934f1, type: 3}
+  DeathSound: {fileID: 8300000, guid: d6a3120cbf02469498f8d1302cabc78c, type: 3}
 --- !u!1001 &7915694399413364159
 PrefabInstance:
   m_ObjectHideFlags: 0

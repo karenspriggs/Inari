@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAnimator : MonoBehaviour
 {
     private Animator animator;
+    private EnemySound enemySound;
 
     [Header("Animator Values")]
     private int animatorMoveBool;
@@ -16,6 +17,7 @@ public class EnemyAnimator : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        enemySound = GetComponent<EnemySound>();
 
         animatorMoveBool = Animator.StringToHash("IsMoving");
         animatorHitTrigger = Animator.StringToHash("IsHit");
@@ -32,16 +34,19 @@ public class EnemyAnimator : MonoBehaviour
     {
         Debug.Log("Hit animation");
         animator.SetTrigger(animatorHitTrigger);
+        enemySound.PlaySound(enemySound.HitSound);
     }
 
     public void StartDeathAnimation()
     {
         animator.SetTrigger(animatorDeathTrigger);
+        enemySound.PlaySound(enemySound.DeathSound);
     }
 
     public void StartAttackAnimation()
     {
         animator.SetTrigger("IsAttacking");
+        enemySound.PlaySound(enemySound.AttackSound);
     }
 
     // Update is called once per frame
