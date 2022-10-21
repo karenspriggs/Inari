@@ -159,6 +159,7 @@ public class PlayerData : MonoBehaviour
     {
         transform.position = currentCheckpoint.position;
         currentHP = 2;
+        currentEnergy = 8;
         PlayerTookDamage?.Invoke(-2);
     }
 
