@@ -158,9 +158,11 @@ public class PlayerData : MonoBehaviour
     public void RestartAtCheckPoint()
     {
         transform.position = currentCheckpoint.position;
-        currentHP = 2;
-        currentEnergy = 8;
-        PlayerTookDamage?.Invoke(-2);
+        currentHP = maxHP;
+        float energyToRecover = maxEnergy - currentEnergy;
+        currentEnergy += energyToRecover;
+        PlayerTookDamage?.Invoke(-maxHP);
+        PlayerUsedEnergy?.Invoke(-energyToRecover);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
