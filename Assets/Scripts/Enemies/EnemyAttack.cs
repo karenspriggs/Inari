@@ -30,11 +30,14 @@ public class EnemyAttack : MonoBehaviour
     bool canAttack = true;
     bool cooldownTimerStarted = false;
 
+    EnemyData enemyData;
+
     //References
 
     private void Start()
     {
         enemyAnimator = GetComponent<EnemyAnimator>();
+        enemyData = GetComponent<EnemyData>();
     }
 
     private void Update()
@@ -72,7 +75,7 @@ public class EnemyAttack : MonoBehaviour
     */
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && canAttack)
+        if (collision.gameObject.CompareTag("Player") && canAttack && !enemyData.isDead)
         {
             Debug.Log("Can attack");
             canAttack = false;
