@@ -6,6 +6,7 @@ public class EnemyAnimator : MonoBehaviour
 {
     private Animator animator;
     private EnemySound enemySound;
+    float velocityToStopMovingAnim;
 
     [Header("Animator Values")]
     private int animatorMoveBool;
@@ -25,33 +26,34 @@ public class EnemyAnimator : MonoBehaviour
         animatorAttackTrigger = Animator.StringToHash("IsAttacking");
     }
 
-    public void UpdateMoveAnimation(bool isMoving)
+    public void AnimationUpdateMoveBool(float moveInput)
     {
+        bool isMoving = true;
+
+        if ((moveInput < velocityToStopMovingAnim && moveInput >= -velocityToStopMovingAnim))
+        {
+            isMoving = false;
+        }
+
         animator.SetBool(animatorMoveBool, isMoving);
     }
 
-    public void StartHitAnimation()
+    public void SwitchState(EnemyState newState)
     {
-        Debug.Log("Hit animation");
-        animator.SetTrigger(animatorHitTrigger);
-        enemySound.PlaySound(enemySound.HitSound);
-    }
-
-    public void StartDeathAnimation()
-    {
-        animator.SetTrigger(animatorDeathTrigger);
-        enemySound.PlaySound(enemySound.DeathSound);
-    }
-
-    public void StartAttackAnimation()
-    {
-        animator.SetTrigger("IsAttacking");
-        enemySound.PlaySound(enemySound.AttackSound);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        switch (newState)
+        {
+            case (EnemyState.Idle):
+                break;
+            case (EnemyState.Wander):
+                break;
+            case (EnemyState.Chase):
+                break;
+            case (EnemyState.Attack):
+                break;
+            case (EnemyState.Hit):
+                break;
+            case (EnemyState.Death):
+                break;
+        }
     }
 }
