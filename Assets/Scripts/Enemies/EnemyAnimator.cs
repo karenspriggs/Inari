@@ -26,6 +26,29 @@ public class EnemyAnimator : MonoBehaviour
         animatorAttackTrigger = Animator.StringToHash("IsAttacking");
     }
 
+    public void StartHitAnimation()
+    {
+        Debug.Log("Hit animation");
+        animator.SetTrigger(animatorHitTrigger);
+        enemySound.PlaySound(enemySound.HitSound);
+    }
+    public void StartDeathAnimation()
+    {
+        animator.SetTrigger(animatorDeathTrigger);
+        enemySound.PlaySound(enemySound.DeathSound);
+    }
+
+    public void UpdateMoveAnimation(bool isMoving)
+    {
+        animator.SetBool(animatorMoveBool, isMoving);
+    }
+
+    public void StartAttackAnimation()
+    {
+        animator.SetTrigger("IsAttacking");
+        enemySound.PlaySound(enemySound.AttackSound);
+    }
+
     public void AnimationUpdateMoveBool(float moveInput)
     {
         bool isMoving = true;
