@@ -76,8 +76,6 @@ public class EnemyController : MonoBehaviour
                 enemyAnimatior.SwitchState(EnemyState.Death);
                 break;
         }
-
-        attackTimer = 0f;
     }
 
     public void DoState(EnemyState state)
@@ -125,7 +123,6 @@ public class EnemyController : MonoBehaviour
         {
             SwitchState(EnemyState.Attack);
             shouldAttack = false;
-            canAttack = false;
         }
 
         if (shouldHitStun)
@@ -154,11 +151,8 @@ public class EnemyController : MonoBehaviour
     }
 
     void ResetAttack()
-    { 
-        if (!canAttack)
-        {
-            canAttack = true;
-        }
+    {
+        canAttack = true;
     }
 
     private void FlipEnemy()
@@ -178,15 +172,14 @@ public class EnemyController : MonoBehaviour
     {
         if (attackTimer > 0)
         {
-            Debug.Log(attackTimer);
             attackTimer -= 1 * Time.deltaTime;
-        }
 
-        if (attackTimer <= 0)
-        {
-            //just now passed below the timer
-            attackTimer = 0f;
-            ResetAttack();
+            if (attackTimer <= 0)
+            {
+                //just now passed below the timer
+                attackTimer = 0f;
+                ResetAttack();
+            }
         }
     }
 
