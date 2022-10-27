@@ -19,10 +19,10 @@ public class EnemyController : MonoBehaviour
     EnemyState currentState;
 
     bool canMove = true;
-    bool canAttack = true;
+    bool canAttack = false;
     bool shouldAttack = false;
     bool shouldHitStun = false;
-    float attackTimer = 0;
+    float attackTimer;
     float wanderTimer = 0;
     
     public bool isFacingRight;
@@ -39,6 +39,8 @@ public class EnemyController : MonoBehaviour
     {
         enemyAnimatior = GetComponent<EnemyAnimator>();
         enemyData = GetComponent<EnemyData>();
+        currentState = EnemyState.Idle;
+        attackTimer = attackCooldown;
     }
 
     private void FixedUpdate()
@@ -152,8 +154,11 @@ public class EnemyController : MonoBehaviour
     }
 
     void ResetAttack()
-    {
-        canAttack = true;
+    { 
+        if (!canAttack)
+        {
+            canAttack = true;
+        }
     }
 
     private void FlipEnemy()
@@ -173,14 +178,15 @@ public class EnemyController : MonoBehaviour
     {
         if (attackTimer > 0)
         {
+            Debug.Log(attackTimer);
             attackTimer -= 1 * Time.deltaTime;
+        }
 
-            if (attackTimer <= 0)
-            {
-                //just now passed below the timer
-                attackTimer = 0f;
-                ResetAttack();
-            }
+        if (attackTimer <= 0)
+        {
+            //just now passed below the timer
+            attackTimer = 0f;
+            ResetAttack();
         }
     }
 
