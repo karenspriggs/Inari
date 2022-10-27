@@ -61,21 +61,35 @@ public class EnemyAnimator : MonoBehaviour
         animator.SetBool(animatorMoveBool, isMoving);
     }
 
+    public bool CheckIfAnimationEnded()
+    {
+        return (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+    }
+
     public void SwitchState(EnemyState newState)
     {
         switch (newState)
         {
             case (EnemyState.Idle):
+                animator.SetBool(animatorMoveBool, false);
                 break;
             case (EnemyState.Wander):
+                animator.SetBool(animatorMoveBool, true);
                 break;
             case (EnemyState.Chase):
+                animator.SetBool(animatorMoveBool, true);
                 break;
             case (EnemyState.Attack):
+                animator.SetTrigger("IsAttacking");
+                enemySound.PlaySound(enemySound.AttackSound);
                 break;
             case (EnemyState.Hit):
+                animator.SetTrigger(animatorHitTrigger);
+                enemySound.PlaySound(enemySound.HitSound);
                 break;
             case (EnemyState.Death):
+                animator.SetTrigger(animatorDeathTrigger);
+                enemySound.PlaySound(enemySound.DeathSound);
                 break;
         }
     }
