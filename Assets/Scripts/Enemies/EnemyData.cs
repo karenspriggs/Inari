@@ -18,6 +18,7 @@ public class EnemyData : MonoBehaviour
     private int EnemyKillEnergy;
 
     EnemyAnimator enemyAnimator;
+    EnemyController enemyController;
 
     public static Action EnemyKilled;
     public bool isDead = false;
@@ -28,12 +29,14 @@ public class EnemyData : MonoBehaviour
     {
         currentHP = maxHP;
         enemyAnimator = GetComponent<EnemyAnimator>();
+        enemyController = GetComponent<EnemyController>();
     }
 
     private void Update()
     {
         if (wasHit)
         {
+            Debug.Log("Enemy took damage");
             currentHP--;
             CheckIfDead();
             wasHit = false;
@@ -50,7 +53,7 @@ public class EnemyData : MonoBehaviour
         if (currentHP == 0)
         {
             Debug.Log("Enemy died");
-            enemyAnimator.StartDeathAnimation();
+            enemyController.SwitchState(EnemyState.Death);
             isDead = true;
             EnemyKilled?.Invoke();
         }
@@ -60,7 +63,6 @@ public class EnemyData : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
-            Debug.Log("Enemy took damage");
             wasHit = true;
         }
     }
