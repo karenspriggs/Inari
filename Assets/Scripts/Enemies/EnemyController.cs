@@ -24,13 +24,19 @@ public class EnemyController : MonoBehaviour
     bool shouldHitStun = false;
     float attackTimer;
     float wanderTimer = 0;
-    
+
+    [SerializeField]
+    Vector2 currentWanderTarget;
+
+
     public bool isFacingRight;
 
-    public float speed;
+    public float ChaseSpeed;
+    public float WanderSpeed;
     public float chaseDistance;
     public float stopDistance;
     public float attackCooldown;
+    public int maxWanderDistance;
 
     public GameObject chaseTarget;
 
@@ -62,6 +68,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Wander):
                 enemyAnimatior.SwitchState(EnemyState.Wander);
+                //DetermineWanderDistance();
                 break;
             case (EnemyState.Chase):
                 enemyAnimatior.SwitchState(EnemyState.Chase);
@@ -84,8 +91,10 @@ public class EnemyController : MonoBehaviour
         {
             case (EnemyState.Idle):
                 canMove = true;
+                //DetermineIfShouldWander();
                 break;
             case (EnemyState.Wander):
+                Wander();
                 break;
             case (EnemyState.Chase):
                 ChasePlayer();
@@ -117,6 +126,24 @@ public class EnemyController : MonoBehaviour
             SwitchState(EnemyState.Idle);
     }
 
+    void DetermineIfShouldWander()
+    {
+        int randomNumber = Random.Range(1, 5);
+
+        if (randomNumber == 1 && currentState == EnemyState.Idle)
+        {
+            SwitchState(EnemyState.Wander);
+        }
+    }
+
+    void DetermineWanderDistance()
+    {
+        //switch to a timer lmao
+        float currentWanderDistance = Random.Range(-maxWanderDistance, maxWanderDistance);
+
+        currentWanderTarget = new Vector2(currentWanderDistance += transform.position.x, transform.position.y);
+    }
+
     void DetermineState()
     {
         if (shouldAttack)
@@ -129,6 +156,27 @@ public class EnemyController : MonoBehaviour
         {
             SwitchState(EnemyState.Hit);
             shouldHitStun = false;
+        }
+    }
+
+    void Wander()
+    {
+        if (transform.position.x < chaseTarget.transform.position.x && !isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        if (transform.position.x > chaseTarget.transform.position.x && isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        Vector2 currentMovement = Vector2.MoveTowards(transform.position, currentWanderTarget, WanderSpeed * Time.deltaTime);
+        transform.position = currentMovement;
+
+        if ((Vector2)transform.position == currentWanderTarget)
+        {
+            SwitchState(EnemyState.Idle);
         }
     }
 
@@ -146,7 +194,7 @@ public class EnemyController : MonoBehaviour
             FlipEnemy();
         }
 
-        Vector2 currentMovement = Vector2.MoveTowards(transform.position, new Vector2(chaseTarget.transform.position.x, transform.position.y), speed * Time.deltaTime);
+        Vector2 currentMovement = Vector2.MoveTowards(transform.position, new Vector2(chaseTarget.transform.position.x, transform.position.y), ChaseSpeed * Time.deltaTime);
         transform.position = currentMovement;
     }
 

@@ -408,6 +408,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7891217614231937650, guid: bc7acf4ea8158f5488df53ef93db0503, type: 3}
+      propertyPath: ChaseSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7891217614231937650, guid: bc7acf4ea8158f5488df53ef93db0503, type: 3}
+      propertyPath: WanderSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7891217614231937650, guid: bc7acf4ea8158f5488df53ef93db0503, type: 3}
       propertyPath: chaseTarget
       value: 
       objectReference: {fileID: 1567987518}
@@ -417,11 +425,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7891217614231937650, guid: bc7acf4ea8158f5488df53ef93db0503, type: 3}
       propertyPath: chaseDistance
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7891217614231937650, guid: bc7acf4ea8158f5488df53ef93db0503, type: 3}
       propertyPath: attackCooldown
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7891217614231937650, guid: bc7acf4ea8158f5488df53ef93db0503, type: 3}
+      propertyPath: maxWanderDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8520108985523861062, guid: bc7acf4ea8158f5488df53ef93db0503, type: 3}
       propertyPath: m_LocalPosition.x
