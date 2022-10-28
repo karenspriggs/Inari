@@ -182,6 +182,7 @@ public class EnemyController : MonoBehaviour
         {
             Debug.Log("Back to idle");
             targetChosen = false;
+            wanderTimer = WanderCooldown;
             SwitchState(EnemyState.Idle);
         }
     }
