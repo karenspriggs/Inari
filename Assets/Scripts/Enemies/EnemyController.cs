@@ -16,18 +16,20 @@ public class EnemyController : MonoBehaviour
 {
     EnemyAnimator enemyAnimatior;
     EnemyData enemyData;
+    [SerializeField]
     EnemyState currentState;
 
     bool canMove = true;
     bool canAttack = false;
+    bool shouldWander = false;
     bool shouldAttack = false;
     bool shouldHitStun = false;
+    bool targetChosen = false;
     float attackTimer;
-    float wanderTimer = 0;
+    float wanderTimer;
 
     [SerializeField]
     Vector2 currentWanderTarget;
-
 
     public bool isFacingRight;
 
@@ -36,6 +38,7 @@ public class EnemyController : MonoBehaviour
     public float chaseDistance;
     public float stopDistance;
     public float attackCooldown;
+    public float WanderCooldown;
     public int maxWanderDistance;
 
     public GameObject chaseTarget;
@@ -47,6 +50,7 @@ public class EnemyController : MonoBehaviour
         enemyData = GetComponent<EnemyData>();
         currentState = EnemyState.Idle;
         attackTimer = attackCooldown;
+        wanderTimer = WanderCooldown;
     }
 
     private void FixedUpdate()
@@ -68,7 +72,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Wander):
                 enemyAnimatior.SwitchState(EnemyState.Wander);
-                //DetermineWanderDistance();
+                DetermineWanderDistance();
                 break;
             case (EnemyState.Chase):
                 enemyAnimatior.SwitchState(EnemyState.Chase);
@@ -91,7 +95,7 @@ public class EnemyController : MonoBehaviour
         {
             case (EnemyState.Idle):
                 canMove = true;
-                //DetermineIfShouldWander();
+                DetermineIfShouldWander();
                 break;
             case (EnemyState.Wander):
                 Wander();
@@ -122,15 +126,11 @@ public class EnemyController : MonoBehaviour
         {
             SwitchState(EnemyState.Chase);
         }
-        else
-            SwitchState(EnemyState.Idle);
     }
 
     void DetermineIfShouldWander()
     {
-        int randomNumber = Random.Range(1, 5);
-
-        if (randomNumber == 1 && currentState == EnemyState.Idle)
+        if (shouldWander && currentState == EnemyState.Idle)
         {
             SwitchState(EnemyState.Wander);
         }
@@ -138,10 +138,14 @@ public class EnemyController : MonoBehaviour
 
     void DetermineWanderDistance()
     {
-        //switch to a timer lmao
-        float currentWanderDistance = Random.Range(-maxWanderDistance, maxWanderDistance);
+        if (!targetChosen)
+        {
+            //switch to a timer lmao
+            float currentWanderDistance = Random.Range(-maxWanderDistance, maxWanderDistance);
+            currentWanderTarget = new Vector2(currentWanderDistance += transform.position.x, transform.position.y);
 
-        currentWanderTarget = new Vector2(currentWanderDistance += transform.position.x, transform.position.y);
+            targetChosen = true;
+        }
     }
 
     void DetermineState()
@@ -161,12 +165,12 @@ public class EnemyController : MonoBehaviour
 
     void Wander()
     {
-        if (transform.position.x < chaseTarget.transform.position.x && !isFacingRight)
+        if (transform.position.x < currentWanderTarget.x && !isFacingRight)
         {
             FlipEnemy();
         }
 
-        if (transform.position.x > chaseTarget.transform.position.x && isFacingRight)
+        if (transform.position.x > currentWanderTarget.x && isFacingRight)
         {
             FlipEnemy();
         }
@@ -176,6 +180,8 @@ public class EnemyController : MonoBehaviour
 
         if ((Vector2)transform.position == currentWanderTarget)
         {
+            Debug.Log("Back to idle");
+            targetChosen = false;
             SwitchState(EnemyState.Idle);
         }
     }
@@ -203,6 +209,11 @@ public class EnemyController : MonoBehaviour
         canAttack = true;
     }
 
+    void ResetWander()
+    {
+        shouldWander = true;
+    }
+
     private void FlipEnemy()
     {
         isFacingRight = !isFacingRight;
@@ -214,6 +225,7 @@ public class EnemyController : MonoBehaviour
     private void UpdateTimers()
     {
         UpdateAttackTimer();
+        UpdateWanderTimer();
     }
 
     void UpdateAttackTimer()
@@ -227,6 +239,21 @@ public class EnemyController : MonoBehaviour
                 //just now passed below the timer
                 attackTimer = 0f;
                 ResetAttack();
+            }
+        }
+    }
+
+    void UpdateWanderTimer()
+    {
+        if (wanderTimer > 0)
+        {
+            wanderTimer -= 1 * Time.deltaTime;
+
+            if (wanderTimer <= 0)
+            {
+                //just now passed below the timer
+                wanderTimer = 0f;
+                ResetWander();
             }
         }
     }
