@@ -16,11 +16,15 @@ public class EnemyData : MonoBehaviour
     private int EnemyKillCoins;
     [SerializeField]
     private int EnemyKillEnergy;
+    [Serializable]
+    public int EnemyKillXP;
 
     EnemyAnimator enemyAnimator;
     EnemyController enemyController;
 
     public static Action EnemyKilled;
+    public static Action EnemyKilled(int currencyGained, int XPGained);
+
     public bool isDead = false;
     public bool wasHit = false;
 
@@ -56,6 +60,7 @@ public class EnemyData : MonoBehaviour
             enemyController.SwitchState(EnemyState.Death);
             isDead = true;
             EnemyKilled?.Invoke();
+            EnemyKilled?.Invoke(EnemyKillCoins, EnemyKillXP);
         }
     }
 
