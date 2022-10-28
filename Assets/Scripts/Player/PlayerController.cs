@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private float isJumping;
     private float isDashing;
     private float isBasicAttacking;
+    private bool b_isBasicAttacking;
 
     public InariState currentState = InariState.Neutral;
     public float DashStartupTimerMax = 0.5f;
@@ -79,8 +80,10 @@ public class PlayerController : MonoBehaviour
         playerActions.Dash.performed += ctx => isDashing = ctx.ReadValue<float>();
         playerActions.Dash.canceled += ctx => isDashing = ctx.ReadValue<float>();
 
-        playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
-        playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
+        //playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
+        //playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
+
+        playerActions.Attack.performed += ctx => onBasicAttackPressed();
 
         PlayerData.PlayerTookDamage += SetHit;
         PlayerData.PlayerDied += SetDead;
@@ -101,8 +104,10 @@ public class PlayerController : MonoBehaviour
         playerActions.Dash.performed -= ctx => isDashing = ctx.ReadValue<float>();
         playerActions.Dash.canceled -= ctx => isDashing = ctx.ReadValue<float>();
 
-        playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
-        playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
+        //playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
+        //playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
+        
+        playerActions.Attack.performed -= ctx => onBasicAttackPressed();
 
         PlayerData.PlayerTookDamage -= SetHit;
         PlayerData.PlayerDied -= SetDead;
@@ -196,11 +201,19 @@ public class PlayerController : MonoBehaviour
         }
         return r;
     }
+
+    private void onBasicAttackPressed()
+    {
+        b_isBasicAttacking = true;
+    }
     private bool CheckForBasicAttack()
     {
         if (attacksEnabled)
         {
-            bool hasAttackInputThisFrame = isBasicAttacking > 0.1f;
+            //bool hasAttackInputThisFrame = isBasicAttacking > 0.1f;
+            bool hasAttackInputThisFrame = b_isBasicAttacking;
+            b_isBasicAttacking = false;
+
             if (hasAttackInputThisFrame)
             {
                 if (currentState != InariState.BasicAttacking)
@@ -216,9 +229,9 @@ public class PlayerController : MonoBehaviour
                     {
                         playerAttacks.basicAttacksIndex += 1;
                         SwitchState(InariState.BasicAttacking);
+                        return true;
                     }
                 }
-
             }
         }
         return false;
@@ -256,6 +269,7 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = true;
                 attacksEnabled = true;
                 playerAnimator.SwitchState(newState);
+                
                 break;
             case InariState.DashStartup:
                 jumpsEnabled = false;
@@ -263,6 +277,7 @@ public class PlayerController : MonoBehaviour
                 attacksEnabled = false;
                 playerMovement.HaltAirVelocity();
                 playerAnimator.SwitchState(newState);
+                DisableEnemyCollision();
                 break;
             case InariState.Dashing:
                 jumpsEnabled = false;
@@ -331,13 +346,11 @@ public class PlayerController : MonoBehaviour
                 AllowHorizontalMovement();
                 AllowFalling();
                 AllowGroundToResetJumps();
-                EnableEnemyCollision();
                 break;
             case InariState.DashStartup:
                 playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
                 playerMovement.DoFriction(playerMovement.GroundFriction);
                 TimeTransitionToNextState(DashStartupTimerMax, InariState.Dashing);
-                DisableEnemyCollision();
                 break;
             case InariState.Dashing:
                 playerMovement.TurnOffGravity();
@@ -418,6 +431,7 @@ public class PlayerController : MonoBehaviour
 
     private void ReturnToNeutral()
     {
+        EnableEnemyCollision();
         if (isGrounded)
         {
             SwitchState(InariState.Neutral);

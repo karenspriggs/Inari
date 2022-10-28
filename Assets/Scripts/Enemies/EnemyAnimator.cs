@@ -10,6 +10,8 @@ public class EnemyAnimator : MonoBehaviour
 
     [Header("Animator Values")]
     private int animatorMoveBool;
+    private int animatorChaseBool;
+    private int animatorWanderBool;
     private int animatorAttackTrigger;
     private int animatorHitTrigger;
     private int animatorDeathTrigger;
@@ -21,6 +23,8 @@ public class EnemyAnimator : MonoBehaviour
         enemySound = GetComponent<EnemySound>();
 
         animatorMoveBool = Animator.StringToHash("IsMoving");
+        animatorWanderBool = Animator.StringToHash("IsWandering");
+        animatorChaseBool = Animator.StringToHash("IsChasing");
         animatorHitTrigger = Animator.StringToHash("IsHit");
         animatorDeathTrigger = Animator.StringToHash("IsDead");
         animatorAttackTrigger = Animator.StringToHash("IsAttacking");
@@ -71,13 +75,16 @@ public class EnemyAnimator : MonoBehaviour
         switch (newState)
         {
             case (EnemyState.Idle):
-                animator.SetBool(animatorMoveBool, false);
+                animator.SetBool(animatorChaseBool, false);
+                animator.SetBool(animatorWanderBool, false);
                 break;
             case (EnemyState.Wander):
-                animator.SetBool(animatorMoveBool, true);
+                animator.SetBool(animatorWanderBool, true);
+                animator.SetBool(animatorChaseBool, false);
                 break;
             case (EnemyState.Chase):
-                animator.SetBool(animatorMoveBool, true);
+                animator.SetBool(animatorChaseBool, true);
+                animator.SetBool(animatorWanderBool, false);
                 break;
             case (EnemyState.Attack):
                 animator.SetTrigger("IsAttacking");
