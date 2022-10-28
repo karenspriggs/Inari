@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
         //playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
         //playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
         
-        playerActions.Attack.performed += ctx => onBasicAttackPressed();
+        playerActions.Attack.performed -= ctx => onBasicAttackPressed();
 
         PlayerData.PlayerTookDamage -= SetHit;
         PlayerData.PlayerDied -= SetDead;
