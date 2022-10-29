@@ -33,7 +33,7 @@ public class EnemyData : MonoBehaviour
     {
         currentHP = maxHP;
         enemyAnimator = GetComponent<EnemyAnimator>();
-        enemyController = GetComponent<EnemyController>();
+        //enemyController = GetComponent<EnemyController>();
     }
 
     private void Update()
@@ -57,7 +57,8 @@ public class EnemyData : MonoBehaviour
         if (currentHP == 0)
         {
             Debug.Log("Enemy died");
-            enemyController.SwitchState(EnemyState.Death);
+            //enemyController.SwitchState(EnemyState.Death);
+            enemyAnimator.StartDeathAnimation();
             isDead = true;
             EnemyKilled?.Invoke();
             EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
