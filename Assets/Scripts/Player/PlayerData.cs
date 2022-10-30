@@ -13,7 +13,7 @@ public class PlayerData : MonoBehaviour
     [SerializeField]
     private float currentHP;
     [SerializeField]
-    private float Attack;
+    public float Attack;
     [SerializeField]
     private float maxEnergy;
 
