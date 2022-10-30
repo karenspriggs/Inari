@@ -138,7 +138,6 @@ public class PlayerData : MonoBehaviour
     void OnEnemyKilled()
     {
         float energyGained = energyForKillingEnemy;
-
         if (maxEnergy < currentEnergy + energyForKillingEnemy)
         {
             energyGained = maxEnergy - currentEnergy;

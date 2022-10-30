@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -14,16 +15,15 @@ public class PlayerLevelSystem : MonoBehaviour
     private float lerpTimer;
     private float delayTimer;
 
-    [Header("UI")]
     public Image frontXpBar;
     public Image backXpBar;
-    [Header("Multipliers")]
     [Range(1f, 300f)]
     public float additionMultiplier = 300;
     [Range(2f, 4f)]
     public float powerMultiplier = 2;
     [Range(7f, 14f)]
     public float divisionMultiplier = 7;
+    public float statGain = 1.25f;
 
     void Start()
     {
@@ -68,6 +68,11 @@ public class PlayerLevelSystem : MonoBehaviour
         currentXP += xpGained;
         lerpTimer = 0f;
         delayTimer = 0f;
+    }
+
+    public void GainedExperience()
+    {
+      
     }
 
     private void LevelUp()
