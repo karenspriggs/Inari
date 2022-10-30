@@ -17,10 +17,14 @@ public class PlayerData : MonoBehaviour
     [SerializeField]
     private float maxEnergy;
 
+    public PlayerStats playerStats;
+    public CheckpointManager checkpointManager;
+
     public float currentEnergy;
     public float dashEnergyCost;
     public float energyForKillingEnemy;
     public float invulnTime;
+    public int currentCheckpointID;
 
     public bool isInvincible = false;
     bool isInvincibleCoroutineRunning = false;
@@ -29,7 +33,7 @@ public class PlayerData : MonoBehaviour
     private Weapon currentWeapon;
 
     private Transform currentCheckpoint;
-
+    
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the max amount for health
     /// </summary>
@@ -156,7 +160,7 @@ public class PlayerData : MonoBehaviour
 
     public void RestartAtCheckPoint()
     {
-        transform.position = currentCheckpoint.position;
+        transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
         currentHP = maxHP;
         float energyToRecover = maxEnergy - currentEnergy;
         currentEnergy += energyToRecover;
