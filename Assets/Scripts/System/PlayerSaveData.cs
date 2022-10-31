@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public static class PlayerSaveData
+[Serializable]
+public class PlayerSaveData
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public PlayerStats playerStats;
+    public int currentLevelIndex;
 
-    // Update is called once per frame
-    void Update()
+    public PlayerSaveData()
     {
-        
+        playerStats = new PlayerStats();
+        currentLevelIndex = 0;
     }
 }

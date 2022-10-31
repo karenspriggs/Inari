@@ -12,4 +12,16 @@ public class PlayerStats
     public float CurrentXP;
     public int CurrentLevel;
     public int LatestCheckpointID;
+
+    public PlayerStats()
+    {
+        MaxHP = 6;
+        CurrentHP = MaxHP;
+        Attack = 1;
+        MaxEnergy = 20;
+        CurrencyCount = 0;
+        CurrentXP = 0;
+        CurrentLevel = 1;
+        LatestCheckpointID = 0;
+    }
 }

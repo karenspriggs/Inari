@@ -14,7 +14,7 @@ public class Checkpoint : MonoBehaviour
 
     private void Start()
     {
-        checkpointLight = GetComponent<Light2D>();
+        checkpointLight = GetComponentInChildren<Light2D>();
         checkpointLight.enabled = false;
         checkpointCollider = GetComponent<BoxCollider2D>();
     }
@@ -24,6 +24,8 @@ public class Checkpoint : MonoBehaviour
         checkpointLight.enabled = true;
         hasActivated = true;
         checkpointCollider.enabled = false;
+        PlayerSaveSystem.CurrentSaveData.playerStats.LatestCheckpointID = this.checkpointID;
+        PlayerSaveSystem.SaveGame();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

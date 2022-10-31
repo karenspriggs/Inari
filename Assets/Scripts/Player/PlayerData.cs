@@ -26,6 +26,7 @@ public class PlayerData : MonoBehaviour
     public float invulnTime;
     public int currentCheckpointID;
 
+    public bool isUsingSaveData = false;
     public bool isInvincible = false;
     bool isInvincibleCoroutineRunning = false;
 
@@ -58,6 +59,15 @@ public class PlayerData : MonoBehaviour
     /// Subscribe to this delegate for methods that want to know when a player died
     /// </summary>
     public static Action PlayerDied;
+
+    private void Awake()
+    {
+        if (isUsingSaveData)
+        {
+            currentCheckpointID = PlayerSaveSystem.CurrentSaveData.playerStats.LatestCheckpointID;
+            transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -160,12 +170,12 @@ public class PlayerData : MonoBehaviour
 
     public void RestartAtCheckPoint()
     {
-        transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
-        currentHP = maxHP;
-        float energyToRecover = maxEnergy - currentEnergy;
-        currentEnergy += energyToRecover;
-        PlayerTookDamage?.Invoke(-maxHP);
-        PlayerUsedEnergy?.Invoke(-energyToRecover);
+        //transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
+        //currentHP = maxHP;
+        //float energyToRecover = maxEnergy - currentEnergy;
+        //currentEnergy += energyToRecover;
+        //PlayerTookDamage?.Invoke(-maxHP);
+        //PlayerUsedEnergy?.Invoke(-energyToRecover);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
