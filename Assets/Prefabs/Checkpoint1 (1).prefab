@@ -205,6 +205,8 @@ GameObject:
   - component: {fileID: 6080896665345142064}
   - component: {fileID: 6080896665345142078}
   - component: {fileID: 6080896665345142065}
+  - component: {fileID: 8093680495952835990}
+  - component: {fileID: 885591450608186424}
   m_Layer: 0
   m_Name: Checkpoint1 (1)
   m_TagString: Checkpoint
@@ -268,5 +270,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkpointID: 2
+  lanternIntensityStepTime: 0.4
+  lanternIntensity: 14
   hasActivated: 0
   shouldLightUp: 1
+--- !u!114 &8093680495952835990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080896665345142067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b61ae3bdb1ab3b469afe2e5dbcdd5c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &885591450608186424
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080896665345142067}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 28d5fa7c13a27e44891cf405b790c82c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

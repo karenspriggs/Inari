@@ -7,10 +7,13 @@ using UnityEngine.Rendering.Universal;
 public class Checkpoint : MonoBehaviour
 {
     public int checkpointID = 0;
+    public float lanternIntensityStepTime;
+    public int lanternIntensity = 18;
     public bool hasActivated = false;
     public bool shouldLightUp = true;
 
     private Light2D checkpointLight;
+    private LightAnimator lanternAnimator;
 
     private BoxCollider2D checkpointCollider;
 
@@ -19,6 +22,7 @@ public class Checkpoint : MonoBehaviour
         checkpointLight = GetComponentInChildren<Light2D>();
         checkpointLight.enabled = false;
         checkpointCollider = GetComponent<BoxCollider2D>();
+        lanternAnimator = GetComponent<LightAnimator>();
 
         if (PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID > this.checkpointID)
         {
@@ -38,7 +42,13 @@ public class Checkpoint : MonoBehaviour
         if (shouldLightUp)
         {
             checkpointLight.enabled = true;
+            lanternAnimator.StartFadeAnimation();
         }
+        else
+        {
+            lanternAnimator.StartLightOnAnimation();
+        }
+
         hasActivated = true;
         checkpointCollider.enabled = false;
     }
