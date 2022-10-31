@@ -5,10 +5,12 @@ using UnityEngine;
 public enum EnemyState
 {
     Idle,
+    Pause,
     Wander,
     Chase,
     Attack,
     Hit,
+    Stun,
     Death
 }
 
@@ -30,6 +32,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField]
     Vector2 currentWanderTarget;
+    float currentWanderMin;
+    float currentWanderMax;
 
     public bool isFacingRight;
 
@@ -99,6 +103,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Wander):
                 Wander();
+                DetermineWanderBoundaries();
                 break;
             case (EnemyState.Chase):
                 ChasePlayer();
@@ -119,10 +124,16 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void DetermineWanderBoundaries()
+    {
+        currentWanderMin = transform.position.x - maxWanderDistance;
+        currentWanderMax = transform.position.x - maxWanderDistance;
+    }
+
     void DetermineIfShouldChase()
     {
         float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
-        if (targetDistance < chaseDistance && targetDistance > stopDistance)
+        if (targetDistance <= chaseDistance)
         {
             SwitchState(EnemyState.Chase);
         }
@@ -140,9 +151,16 @@ public class EnemyController : MonoBehaviour
     {
         if (!targetChosen)
         {
-            //switch to a timer lmao
-            float currentWanderDistance = Random.Range(-maxWanderDistance, maxWanderDistance);
-            currentWanderTarget = new Vector2(currentWanderDistance += transform.position.x, transform.position.y);
+            float wanderDirection = Random.Range(0,2);
+
+            // Goes right if random was 1, goes left if random was 0
+            if (wanderDirection == 0)
+            {
+                currentWanderTarget = new Vector2(currentWanderMin, transform.position.y);
+            } else
+            {
+                currentWanderTarget = new Vector2(currentWanderMax, transform.position.y);
+            }
 
             targetChosen = true;
         }
@@ -180,7 +198,6 @@ public class EnemyController : MonoBehaviour
 
         if ((Vector2)transform.position == currentWanderTarget)
         {
-            Debug.Log("Back to idle");
             targetChosen = false;
             wanderTimer = WanderCooldown;
             SwitchState(EnemyState.Idle);
@@ -202,7 +219,14 @@ public class EnemyController : MonoBehaviour
         }
 
         Vector2 currentMovement = Vector2.MoveTowards(transform.position, new Vector2(chaseTarget.transform.position.x, transform.position.y), ChaseSpeed * Time.deltaTime);
-        transform.position = currentMovement;
+
+        if (Mathf.Abs(chaseTarget.transform.position.x - transform.position.x) >= stopDistance)
+        {
+            Debug.Log("Out of range");
+            SwitchState(EnemyState.Idle);
+        }
+        else 
+            transform.position = currentMovement;
     }
 
     void ResetAttack()
