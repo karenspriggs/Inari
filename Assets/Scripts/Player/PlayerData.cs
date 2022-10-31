@@ -64,7 +64,7 @@ public class PlayerData : MonoBehaviour
     {
         if (isUsingSaveData)
         {
-            currentCheckpointID = PlayerSaveSystem.CurrentSaveData.playerStats.LatestCheckpointID;
+            currentCheckpointID = PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID;
             transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
         }
     }

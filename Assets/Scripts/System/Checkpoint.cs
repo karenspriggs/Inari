@@ -8,6 +8,8 @@ public class Checkpoint : MonoBehaviour
 {
     public int checkpointID = 0;
     public bool hasActivated = false;
+    public bool shouldLightUp = true;
+
     private Light2D checkpointLight;
 
     private BoxCollider2D checkpointCollider;
@@ -17,22 +19,35 @@ public class Checkpoint : MonoBehaviour
         checkpointLight = GetComponentInChildren<Light2D>();
         checkpointLight.enabled = false;
         checkpointCollider = GetComponent<BoxCollider2D>();
+
+        if (PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID > this.checkpointID)
+        {
+            DisableCheckpoint();
+        }
     }
 
-    void EnableCheckpoint()
+    void UseCheckpoint()
     {
-        checkpointLight.enabled = true;
+        DisableCheckpoint();
+        PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID = this.checkpointID;
+        PlayerSaveSystem.SaveGame();
+    }
+
+    public void DisableCheckpoint()
+    {
+        if (shouldLightUp)
+        {
+            checkpointLight.enabled = true;
+        }
         hasActivated = true;
         checkpointCollider.enabled = false;
-        PlayerSaveSystem.CurrentSaveData.playerStats.LatestCheckpointID = this.checkpointID;
-        PlayerSaveSystem.SaveGame();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!hasActivated && collision.CompareTag("Player"))
         {
-            EnableCheckpoint();
+            UseCheckpoint();
             collision.GetComponent<PlayerData>().currentCheckpointID = this.checkpointID;
         }
     }

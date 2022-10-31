@@ -9,15 +9,15 @@ using Newtonsoft.Json;
 
 public static class PlayerSaveSystem
 {
-    static PlayerSaveData currentSaveData;
+    static PlayerSaveData sessionSaveData;
     static bool saveDataExists => File.Exists(Application.persistentDataPath + saveFileName);
     static string saveFileName = "/SaveData.json";
 
-    public static PlayerSaveData CurrentSaveData
+    public static PlayerSaveData SessionSaveData
     {
         get
         {
-            if (currentSaveData == null)
+            if (sessionSaveData == null)
             {
                 if (saveDataExists)
                 {
@@ -28,7 +28,7 @@ public static class PlayerSaveSystem
                 }
             }
 
-            return currentSaveData;
+            return sessionSaveData;
         }
     }
 
@@ -36,20 +36,20 @@ public static class PlayerSaveSystem
     {
         string fileLocation = Application.persistentDataPath + saveFileName;
         string jsonString = File.ReadAllText(fileLocation);
-        currentSaveData = JsonConvert.DeserializeObject<PlayerSaveData>(jsonString);
+        sessionSaveData = JsonConvert.DeserializeObject<PlayerSaveData>(jsonString);
     }
 
     public static void MakeNewGame()
     {
         Debug.Log("Making new save data");
-        currentSaveData = new PlayerSaveData();
+        sessionSaveData = new PlayerSaveData();
     }
 
     public static void SaveGame()
     {
         Debug.Log("Trying to save");
         string fileLocation = Application.persistentDataPath + saveFileName;
-        string jsonFileData = JsonConvert.SerializeObject(CurrentSaveData);
+        string jsonFileData = JsonConvert.SerializeObject(SessionSaveData);
         File.WriteAllText(fileLocation, jsonFileData);
     }
 }
