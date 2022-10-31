@@ -29,9 +29,7 @@ public class GameOverUI : MonoBehaviour
 
     public void ReloadScene()
     {
-        GameOverUIPanel.SetActive(false);
+        SceneManager.LoadScene(sceneIndex);
         Time.timeScale = 1f;
-        PlayerRestarted?.Invoke();
-        //SceneManager.LoadScene(sceneIndex);
     }
 }

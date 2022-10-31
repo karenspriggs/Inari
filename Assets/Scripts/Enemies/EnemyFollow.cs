@@ -25,6 +25,7 @@ public class EnemyFollow : MonoBehaviour
     {
         enemyAnimator = GetComponent<EnemyAnimator>();
         enemyData = GetComponent<EnemyData>();
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
