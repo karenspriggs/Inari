@@ -127,7 +127,7 @@ public class EnemyController : MonoBehaviour
     void DetermineWanderBoundaries()
     {
         currentWanderMin = transform.position.x - maxWanderDistance;
-        currentWanderMax = transform.position.x - maxWanderDistance;
+        currentWanderMax = transform.position.x + maxWanderDistance;
     }
 
     void DetermineIfShouldChase()
@@ -181,6 +181,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void TurnAround()
+    {
+        if (currentState == EnemyState.Wander)
+        {
+            Debug.Log("Turning Around");
+            if (isFacingRight)
+            {
+                currentWanderTarget = new Vector2(currentWanderMin, transform.position.y);
+            } else
+            {
+                currentWanderTarget = new Vector2(currentWanderMax, transform.position.y);
+            }
+        }
+    }
+
     void Wander()
     {
         if (transform.position.x < currentWanderTarget.x && !isFacingRight)
@@ -199,6 +214,7 @@ public class EnemyController : MonoBehaviour
         if ((Vector2)transform.position == currentWanderTarget)
         {
             targetChosen = false;
+            shouldWander = false;
             wanderTimer = WanderCooldown;
             SwitchState(EnemyState.Idle);
         }
@@ -296,6 +312,11 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             shouldHitStun = true;
+        }
+
+        if (collision.gameObject.CompareTag("Bounds"))
+        {
+            TurnAround();
         }
     }
 
