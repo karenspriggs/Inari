@@ -9,13 +9,13 @@ public class PlayerData : MonoBehaviour
 {
     [Header("Player Stats")]
     [SerializeField]
-    private float maxHP;
+    public float maxHP;
     [SerializeField]
-    private float currentHP;
+    public float currentHP;
     [SerializeField]
     public float Attack;
     [SerializeField]
-    private float maxEnergy;
+    public float maxEnergy;
 
     public float currentEnergy;
     public float dashEnergyCost;

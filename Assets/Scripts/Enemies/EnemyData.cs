@@ -21,6 +21,9 @@ public class EnemyData : MonoBehaviour
 
     EnemyAnimator enemyAnimator;
     EnemyController enemyController;
+    [SerializeField]
+    PlayerLevelSystem playerLevel;
+
 
     public static Action EnemyKilled;
     public static Action<int, int> EnemyKilledValues;
@@ -61,7 +64,9 @@ public class EnemyData : MonoBehaviour
             enemyAnimator.StartDeathAnimation();
             isDead = true;
             EnemyKilled?.Invoke();
-            EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
+            //     EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
+            //  playerLevel.currentXP += EnemyKillXP;
+            GameObject.FindWithTag("Player").GetComponent<PlayerLevelSystem>().currentXP += EnemyKillXP;
         }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,7 +36,7 @@ public class PlayerLevelSystem : MonoBehaviour
     void Update()
     {
         UpdateXpUI();
-        GainExperienceFlatRate(1);
+       // GainExperienceFlatRate();
         if (currentXP > requiredXP)
             LevelUp();
 
@@ -44,23 +45,26 @@ public class PlayerLevelSystem : MonoBehaviour
     public void UpdateXpUI()
     {
         float xpFraction = currentXP / requiredXP;
-        float FXP = frontXpBar.fillAmount;
-        if (FXP < xpFraction)
-        {
-            delayTimer += Time.deltaTime;
-            backXpBar.fillAmount = xpFraction;
-            if (delayTimer > 3)
-            {
-                lerpTimer += Time.deltaTime;
-                backXpBar.fillAmount = xpFraction;
-                if (delayTimer > 3)
-                {
-                    lerpTimer += Time.deltaTime;
-                    float percentComplete = lerpTimer / 4;
-                    frontXpBar.fillAmount = Mathf.Lerp(FXP, backXpBar.fillAmount, percentComplete);
-                }
-            }
-        }
+        float FXP = frontXpBar.fillAmount = xpFraction;
+        //if (FXP < xpFraction)
+        //{
+        //    delayTimer += Time.deltaTime;
+        //    backXpBar.fillAmount = xpFraction;
+        //    if (delayTimer > 3)
+        //    {
+        //        lerpTimer += Time.deltaTime;
+        //        backXpBar.fillAmount = xpFraction;
+        //        if (delayTimer > 3)
+        //        {
+        //            lerpTimer += Time.deltaTime;
+        //            float percentComplete = lerpTimer / 4;
+        //            frontXpBar.fillAmount = Mathf.Lerp(FXP, backXpBar.fillAmount, percentComplete);
+        //        }
+        //    }
+        //}
+
+        UnityEngine.Debug.Log(xpFraction);
+        UnityEngine.Debug.Log(FXP);
     }
 
     public void GainExperienceFlatRate(float xpGained)
@@ -81,7 +85,9 @@ public class PlayerLevelSystem : MonoBehaviour
         frontXpBar.fillAmount = 0f;
         backXpBar.fillAmount = 0f;
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
-        GetComponent<PlayerData>().Attack += 1;
+        GetComponent<PlayerData>().Attack = Mathf.Ceil(1.25f * GetComponent<PlayerData>().Attack);
+        GetComponent<PlayerData>().maxEnergy = Mathf.Ceil(1.25f * GetComponent<PlayerData>().maxEnergy);
+        GetComponent<PlayerData>().maxHP = Mathf.Ceil(1.25f * GetComponent<PlayerData>().maxHP);
         requiredXP = CalculateRequiredXp();
     }
 
