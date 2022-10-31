@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -17,6 +18,8 @@ public class Checkpoint : MonoBehaviour
 
     private BoxCollider2D checkpointCollider;
 
+    public static Action PlayerPassedCheckpoint;
+
     private void Start()
     {
         checkpointLight = GetComponentInChildren<Light2D>();
@@ -24,7 +27,7 @@ public class Checkpoint : MonoBehaviour
         checkpointCollider = GetComponent<BoxCollider2D>();
         lanternAnimator = GetComponent<LightAnimator>();
 
-        if (PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID > this.checkpointID)
+        if (PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID >= this.checkpointID)
         {
             DisableCheckpoint();
         }
@@ -33,6 +36,7 @@ public class Checkpoint : MonoBehaviour
     void UseCheckpoint()
     {
         DisableCheckpoint();
+        PlayerPassedCheckpoint?.Invoke();
         PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID = this.checkpointID;
         PlayerSaveSystem.SaveGame();
     }

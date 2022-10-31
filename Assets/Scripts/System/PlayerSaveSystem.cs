@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 public static class PlayerSaveSystem
 {
     static PlayerSaveData sessionSaveData;
-    static bool saveDataExists => File.Exists(Application.persistentDataPath + saveFileName);
+    public static bool saveDataExists => File.Exists(Application.persistentDataPath + saveFileName);
     static string saveFileName = "/SaveData.json";
 
     public static PlayerSaveData SessionSaveData
