@@ -44,8 +44,8 @@ public class PlayerLevelSystem : MonoBehaviour
 
     public void UpdateXpUI()
     {
-        float xpFraction = currentXP / requiredXP;
-        float FXP = frontXpBar.fillAmount = xpFraction;
+          float xpFraction = currentXP / requiredXP;
+           float FXP = frontXpBar.fillAmount = xpFraction;
         //if (FXP < xpFraction)
         //{
         //    delayTimer += Time.deltaTime;
@@ -93,6 +93,7 @@ public class PlayerLevelSystem : MonoBehaviour
 
     private int CalculateRequiredXp()
     {
+
         int solveForRequiredXp = 0;
         for (int levelCycle = 1; levelCycle <= level; levelCycle++)
         {
