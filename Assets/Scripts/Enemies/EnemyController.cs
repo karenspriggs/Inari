@@ -59,10 +59,13 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        DetermineIfShouldChase();
-        UpdateTimers();
-        DetermineState();
-        DoState(currentState);
+        if (currentState != EnemyState.Death)
+        {
+            DetermineIfShouldChase();
+            UpdateTimers();
+            DetermineState();
+            DoState(currentState);
+        }   
     }
 
     public void SwitchState(EnemyState newState)
