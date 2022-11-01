@@ -16,6 +16,16 @@ public class EnemyAnimator : MonoBehaviour
     private int animatorHitTrigger;
     private int animatorDeathTrigger;
 
+    public string AnimatorIdleStateName;
+    public string AnimatorWalkStateName;
+    public string AnimatorChaseStateName;
+    public string AnimatorHitStateName;
+    public string AnimatorAttackStateName;
+    public string AnimatorStunStateName;
+    public string AnimatorDeathStateName;
+
+    public int StunTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +75,16 @@ public class EnemyAnimator : MonoBehaviour
         animator.SetBool(animatorMoveBool, isMoving);
     }
 
+    public void StartAnimation(string animationStateName)
+    {
+        StartAnimation(animationStateName, 0.0f);
+    }
+
+    public void StartAnimation(string animationStateName, float normalizedTime)
+    {
+        animator.Play(animationStateName, -1, normalizedTime);
+    }
+
     public bool CheckIfAnimationEnded()
     {
         return (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
@@ -75,28 +95,25 @@ public class EnemyAnimator : MonoBehaviour
         switch (newState)
         {
             case (EnemyState.Idle):
-                animator.SetBool(animatorChaseBool, false);
-                animator.SetBool(animatorWanderBool, false);
+                StartAnimation(AnimatorIdleStateName);
                 break;
             case (EnemyState.Wander):
-                animator.SetBool(animatorWanderBool, true);
-                animator.SetBool(animatorChaseBool, false);
+                StartAnimation(AnimatorWalkStateName);
                 break;
             case (EnemyState.Chase):
-                animator.SetBool(animatorChaseBool, true);
-                animator.SetBool(animatorWanderBool, false);
+                StartAnimation(AnimatorChaseStateName);
                 break;
             case (EnemyState.Attack):
-                animator.SetTrigger("IsAttacking");
-                enemySound.PlaySound(enemySound.AttackSound);
+                StartAnimation(AnimatorAttackStateName);
                 break;
             case (EnemyState.Hit):
-                animator.SetTrigger(animatorHitTrigger);
-                enemySound.PlaySound(enemySound.HitSound);
+                StartAnimation(AnimatorHitStateName);
+                break;
+            case (EnemyState.Stun):
+                StartAnimation(AnimatorStunStateName, StunTime);
                 break;
             case (EnemyState.Death):
-                animator.SetTrigger(animatorDeathTrigger);
-                enemySound.PlaySound(enemySound.DeathSound);
+                StartAnimation(AnimatorDeathStateName);
                 break;
         }
     }

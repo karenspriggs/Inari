@@ -87,6 +87,8 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Hit):
                 enemyAnimatior.SwitchState(EnemyState.Hit);
                 break;
+            case (EnemyState.Stun):
+                break;
             case (EnemyState.Death):
                 enemyAnimatior.SwitchState(EnemyState.Death);
                 break;
@@ -116,6 +118,8 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Hit):
                 canAttack = false;
                 attackTimer = attackCooldown;
+                break;
+            case (EnemyState.Stun):
                 break;
             case (EnemyState.Death):
                 canAttack = false;
