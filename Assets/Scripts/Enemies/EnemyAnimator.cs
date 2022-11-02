@@ -17,6 +17,7 @@ public class EnemyAnimator : MonoBehaviour
     private int animatorDeathTrigger;
 
     public string AnimatorIdleStateName;
+    public string AnimatorIdleAltStateName;
     public string AnimatorWalkStateName;
     public string AnimatorChaseStateName;
     public string AnimatorHitStateName;
@@ -90,12 +91,25 @@ public class EnemyAnimator : MonoBehaviour
         return (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
     }
 
+    void DetermineIdleAnimation()
+    {
+        int random = Random.Range(0, 2);
+
+        if (random == 0)
+        {
+            StartAnimation(AnimatorIdleStateName);
+        } else
+        {
+            StartAnimation(AnimatorIdleAltStateName);
+        }
+    }
+
     public void SwitchState(EnemyState newState)
     {
         switch (newState)
         {
             case (EnemyState.Idle):
-                StartAnimation(AnimatorIdleStateName);
+                DetermineIdleAnimation();
                 break;
             case (EnemyState.Wander):
                 StartAnimation(AnimatorWalkStateName);

@@ -28,6 +28,7 @@ public class EnemyData : MonoBehaviour
     public static Action EnemyKilled;
     public static Action<int, int> EnemyKilledValues;
 
+    public bool isNewController = false;
     public bool isDead = false;
     public bool wasHit = false;
 
@@ -36,23 +37,29 @@ public class EnemyData : MonoBehaviour
     {
         currentHP = maxHP;
         enemyAnimator = GetComponent<EnemyAnimator>();
-        //enemyController = GetComponent<EnemyController>();
+        if (isNewController)
+        {
+            enemyController = GetComponent<EnemyController>();
+        }
     }
 
     private void Update()
     {
-        if (wasHit)
+        if (!isNewController)
         {
-            Debug.Log("Enemy took damage");
-            currentHP--;
-            CheckIfDead();
-            wasHit = false;
+            if (wasHit)
+            {
+                Debug.Log("Enemy took damage");
+                currentHP--;
+                CheckIfDead();
+            }
         }
     }
 
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
+        CheckIfDead();
     }
 
     void CheckIfDead()
@@ -60,21 +67,18 @@ public class EnemyData : MonoBehaviour
         if (currentHP == 0)
         {
             Debug.Log("Enemy died");
-            //enemyController.SwitchState(EnemyState.Death);
-            enemyAnimator.StartDeathAnimation();
+            if (isNewController)
+            {
+                enemyController.SwitchState(EnemyState.Death);
+            }
             isDead = true;
             EnemyKilled?.Invoke();
             //     EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
             //  playerLevel.currentXP += EnemyKillXP;
-            GameObject.FindWithTag("Player").GetComponent<PlayerLevelSystem>().currentXP += EnemyKillXP;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
-        {
-            wasHit = true;
+            if (!isNewController)
+            {
+                GameObject.FindWithTag("Player").GetComponent<PlayerLevelSystem>().currentXP += EnemyKillXP;
+            }
         }
     }
 

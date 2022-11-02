@@ -5,7 +5,7 @@ using UnityEngine;
 public enum EnemyState
 {
     Idle,
-    Pause,
+    Confused,
     Wander,
     Chase,
     Attack,
@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
     bool shouldAttack = false;
     bool shouldHitStun = false;
     bool targetChosen = false;
+    [SerializeField]
     float attackTimer;
     float wanderTimer;
 
@@ -37,6 +38,7 @@ public class EnemyController : MonoBehaviour
 
     public bool isFacingRight;
 
+    public float AttackDistance;
     public float ChaseSpeed;
     public float WanderSpeed;
     public float chaseDistance;
@@ -61,9 +63,12 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState != EnemyState.Death)
         {
-            DetermineIfShouldChase();
+            if (currentState != EnemyState.Hit)
+            {
+                DetermineIfShouldChase();
+                DetermineState();
+            }
             UpdateTimers();
-            DetermineState();
             DoState(currentState);
         }   
     }
@@ -89,6 +94,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Hit):
                 enemyAnimatior.SwitchState(EnemyState.Hit);
+                enemyData.TakeDamage(1);
                 break;
             case (EnemyState.Stun):
                 break;
@@ -116,11 +122,12 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Attack):
                 canAttack = false;
                 attackTimer = attackCooldown;
-                AnimationEndTransitionToNextState(EnemyState.Idle);
+                AnimationEndTransitionToNextState(EnemyState.Chase);
                 break;
             case (EnemyState.Hit):
                 canAttack = false;
                 attackTimer = attackCooldown;
+                AnimationEndTransitionToNextState(EnemyState.Chase);
                 break;
             case (EnemyState.Stun):
                 break;
@@ -139,10 +146,13 @@ public class EnemyController : MonoBehaviour
 
     void DetermineIfShouldChase()
     {
-        float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
-        if (targetDistance <= chaseDistance)
+        if (currentState != EnemyState.Chase && currentState != EnemyState.Attack)
         {
-            SwitchState(EnemyState.Chase);
+            float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
+            if (targetDistance <= chaseDistance)
+            {
+                SwitchState(EnemyState.Chase);
+            }
         }
     }
 
@@ -175,12 +185,6 @@ public class EnemyController : MonoBehaviour
 
     void DetermineState()
     {
-        if (shouldAttack)
-        {
-            SwitchState(EnemyState.Attack);
-            shouldAttack = false;
-        }
-
         if (shouldHitStun)
         {
             SwitchState(EnemyState.Hit);
@@ -243,10 +247,17 @@ public class EnemyController : MonoBehaviour
 
         Vector2 currentMovement = Vector2.MoveTowards(transform.position, new Vector2(chaseTarget.transform.position.x, transform.position.y), ChaseSpeed * Time.deltaTime);
 
+        if (Mathf.Abs(chaseTarget.transform.position.x - transform.position.x) <= AttackDistance && canAttack)
+        {
+            SwitchState(EnemyState.Attack);
+            return;
+        }
+
         if (Mathf.Abs(chaseTarget.transform.position.x - transform.position.x) >= stopDistance)
         {
             Debug.Log("Out of range");
             SwitchState(EnemyState.Idle);
+            wanderTimer = WanderCooldown;
         }
         else 
             transform.position = currentMovement;
@@ -324,14 +335,6 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Bounds"))
         {
             TurnAround();
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") && canAttack)
-        {
-            shouldAttack = true;
         }
     }
 }
