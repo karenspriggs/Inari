@@ -38,7 +38,7 @@ public class PlayerLevelSystem : MonoBehaviour
     void Update()
     {
         UpdateXpUI();
-        GainExperienceFlatRate(100f * Time.deltaTime);
+        //GainExperienceFlatRate(100f * Time.deltaTime);
         if (currentXP > requiredXP)
             LevelUp();
 
@@ -65,8 +65,8 @@ public class PlayerLevelSystem : MonoBehaviour
         //    }
         //}
 
-        UnityEngine.Debug.Log(xpFraction);
-        UnityEngine.Debug.Log(FXP);
+        //UnityEngine.Debug.Log(xpFraction);
+        //UnityEngine.Debug.Log(FXP);
     }
 
     public void GainExperienceFlatRate(float xpGained)

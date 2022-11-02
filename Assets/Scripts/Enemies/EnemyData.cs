@@ -51,6 +51,7 @@ public class EnemyData : MonoBehaviour
             {
                 Debug.Log("Enemy took damage");
                 currentHP--;
+                wasHit = false;
                 CheckIfDead();
             }
         }
@@ -70,6 +71,9 @@ public class EnemyData : MonoBehaviour
             if (isNewController)
             {
                 enemyController.SwitchState(EnemyState.Death);
+            } else
+            {
+                enemyAnimator.StartDeathAnimation();
             }
             isDead = true;
             EnemyKilled?.Invoke();
@@ -87,6 +91,14 @@ public class EnemyData : MonoBehaviour
         if (isDead && collision.gameObject.CompareTag("Player"))
         {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), this.gameObject.GetComponent<CapsuleCollider2D>());
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
+        {
+            wasHit = true;
         }
     }
 }
