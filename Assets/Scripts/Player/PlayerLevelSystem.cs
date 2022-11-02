@@ -25,6 +25,8 @@ public class PlayerLevelSystem : MonoBehaviour
     [Range(7f, 14f)]
     public float divisionMultiplier = 7;
     public float statGain = 1.25f;
+    [SerializeField]
+    LevelUpScreen levelScreen;
 
     void Start()
     {
@@ -36,7 +38,7 @@ public class PlayerLevelSystem : MonoBehaviour
     void Update()
     {
         UpdateXpUI();
-       // GainExperienceFlatRate();
+        GainExperienceFlatRate(100f * Time.deltaTime);
         if (currentXP > requiredXP)
             LevelUp();
 
@@ -81,13 +83,11 @@ public class PlayerLevelSystem : MonoBehaviour
 
     private void LevelUp()
     {
+        levelScreen.ShowLevelUpUI();
         level++;
         frontXpBar.fillAmount = 0f;
         backXpBar.fillAmount = 0f;
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
-        GetComponent<PlayerData>().Attack = Mathf.Ceil(1.25f * GetComponent<PlayerData>().Attack);
-        GetComponent<PlayerData>().maxEnergy = Mathf.Ceil(1.25f * GetComponent<PlayerData>().maxEnergy);
-        GetComponent<PlayerData>().maxHP = Mathf.Ceil(1.25f * GetComponent<PlayerData>().maxHP);
         requiredXP = CalculateRequiredXp();
     }
 

@@ -16,6 +16,9 @@ public class PlayerData : MonoBehaviour
     public float Attack;
     [SerializeField]
     public float maxEnergy;
+    public float maxHPCap;
+    public float maxEnergyCap;
+    public float attackCap;
 
     public PlayerStats playerStats;
     public CheckpointManager checkpointManager;
