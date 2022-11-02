@@ -25,6 +25,11 @@ public class TitleScreenButtons : MonoBehaviour
         SceneManager.LoadScene(StartingSceneBuildIndex);
     }
 
+    public void OptionsMenu()
+    {
+        SceneManager.LoadScene("OptionsTesting");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
