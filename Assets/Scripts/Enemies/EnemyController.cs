@@ -7,6 +7,7 @@ public enum EnemyState
     Idle,
     Confused,
     Wander,
+    ChaseStartup,
     Chase,
     Attack,
     Hit,
@@ -86,6 +87,9 @@ public class EnemyController : MonoBehaviour
                 enemyAnimatior.SwitchState(EnemyState.Wander);
                 DetermineWanderDistance();
                 break;
+            case (EnemyState.ChaseStartup):
+                enemyAnimatior.SwitchState(EnemyState.ChaseStartup);
+                break;
             case (EnemyState.Chase):
                 enemyAnimatior.SwitchState(EnemyState.Chase);
                 break;
@@ -115,6 +119,9 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Wander):
                 Wander();
                 DetermineWanderBoundaries();
+                break;
+            case (EnemyState.ChaseStartup):
+                AnimationEndTransitionToNextState(EnemyState.Chase);
                 break;
             case (EnemyState.Chase):
                 ChasePlayer();
