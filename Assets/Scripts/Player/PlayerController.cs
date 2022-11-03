@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     PlayerData playerData;
     PlayerAttacks playerAttacks;
     PlayerSound playerSound;
+    PlayerParticles playerParticles;
 
     [Header("Input Settings")]
     public float movementSmoothingSpeed = 1f;
@@ -125,6 +126,7 @@ public class PlayerController : MonoBehaviour
         playerData = GetComponent<PlayerData>();
         playerAttacks = GetComponent<PlayerAttacks>();
         playerSound = GetComponent<PlayerSound>();
+        playerParticles = GetComponent<PlayerParticles>();
     }
 
     void SetMovementInput()
@@ -296,6 +298,7 @@ public class PlayerController : MonoBehaviour
                 playerMovement.DoTheJump(newState);
                 playerAnimator.SwitchState(newState);
                 playerSound.PlaySound(playerSound.JumpSound);
+                //playerParticles.CreateDust();
                 SwitchState(InariState.Air);
                 break;
             case InariState.Air:
@@ -425,6 +428,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             playerSound.PlaySound(playerSound.LandingSound);
+            playerParticles.CreateDust();
             SwitchState(InariState.Neutral);
         }
     }
