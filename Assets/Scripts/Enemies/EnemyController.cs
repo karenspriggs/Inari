@@ -19,6 +19,7 @@ public class EnemyController : MonoBehaviour
 {
     EnemyAnimator enemyAnimatior;
     EnemyData enemyData;
+    EnemyParticles enemyParticles;
     [SerializeField]
     EnemyState currentState;
 
@@ -50,14 +51,19 @@ public class EnemyController : MonoBehaviour
 
     public GameObject chaseTarget;
 
+    private Vector2 hitLocation;
+
     // Start is called before the first frame update
     void Start()
     {
         enemyAnimatior = GetComponent<EnemyAnimator>();
         enemyData = GetComponent<EnemyData>();
+        enemyParticles = GetComponent<EnemyParticles>();
         currentState = EnemyState.Idle;
         attackTimer = attackCooldown;
         wanderTimer = WanderCooldown;
+
+        hitLocation = Vector2.zero;
     }
 
     private void FixedUpdate()
@@ -97,6 +103,7 @@ public class EnemyController : MonoBehaviour
                 enemyAnimatior.SwitchState(EnemyState.Attack);
                 break;
             case (EnemyState.Hit):
+                enemyParticles.PlayHitParticles();
                 enemyAnimatior.SwitchState(EnemyState.Hit);
                 enemyData.TakeDamage(1);
                 break;
@@ -337,6 +344,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             shouldHitStun = true;
+            hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
         }
 
         if (collision.gameObject.CompareTag("Bounds"))
