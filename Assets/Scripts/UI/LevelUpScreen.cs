@@ -15,6 +15,7 @@ public class LevelUpScreen : MonoBehaviour
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI levelText;
+  //  public TextMeshProUGUI experienceText;
     [SerializeField]
     PlayerData playerStats;
     [SerializeField]
@@ -42,6 +43,8 @@ public class LevelUpScreen : MonoBehaviour
         healthText.text = "Health: " + playerStats.maxHP.ToString();
         energyText.text = "Energy: " + playerStats.maxEnergy.ToString();
         levelText.text = "Current Level: " + playerLevel.level.ToString();
+    //  experienceText.text = playerLevel.currentXP.ToString() + " / " + playerLevel.requiredXP.ToString();
+
     }
 
     public void CloseScreen()
