@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class PlayerLevelSystem : MonoBehaviour
@@ -15,7 +16,7 @@ public class PlayerLevelSystem : MonoBehaviour
 
     private float lerpTimer;
     private float delayTimer;
-
+    public TextMeshProUGUI experienceText;
     public Image frontXpBar;
     public Image backXpBar;
     [Range(1f, 300f)]
@@ -48,6 +49,7 @@ public class PlayerLevelSystem : MonoBehaviour
     {
           float xpFraction = currentXP / requiredXP;
            float FXP = frontXpBar.fillAmount = xpFraction;
+        experienceText.text = currentXP.ToString() + " / " + requiredXP.ToString();
         //if (FXP < xpFraction)
         //{
         //    delayTimer += Time.deltaTime;
