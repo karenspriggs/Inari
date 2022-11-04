@@ -36,6 +36,7 @@ public class PauseMenuUI : MonoBehaviour
 
     public void RestartButton()
     {
+        PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID = 0;
         UnPause();
         SceneManager.LoadScene(currentSceneIndex);
     }

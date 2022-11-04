@@ -50,7 +50,10 @@ public class Checkpoint : MonoBehaviour
         }
         else
         {
-            lanternAnimator.StartLightOnAnimation();
+            if (checkpointID != 0)
+            {
+                lanternAnimator.StartLightOnAnimation();
+            }
         }
 
         hasActivated = true;
