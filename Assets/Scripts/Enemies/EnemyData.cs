@@ -24,7 +24,7 @@ public class EnemyData : MonoBehaviour
     [SerializeField]
     PlayerLevelSystem playerLevel;
 
-
+    public static Action EnemyHit;
     public static Action EnemyKilled;
     public static Action<int, int> EnemyKilledValues;
 
@@ -99,6 +99,7 @@ public class EnemyData : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             wasHit = true;
+            EnemyHit?.Invoke();
         }
     }
 }
