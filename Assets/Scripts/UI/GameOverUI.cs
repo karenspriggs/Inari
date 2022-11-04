@@ -29,6 +29,7 @@ public class GameOverUI : MonoBehaviour
 
     public void ReloadScene()
     {
+        Debug.Log("Trying to reload scene");
         SceneManager.LoadScene(sceneIndex);
         Time.timeScale = 1f;
     }
