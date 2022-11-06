@@ -40,6 +40,11 @@ public class ComboSystem : MonoBehaviour
     void Update()
     {
         UpdateComboTimer();
+
+        if (comboTimer < comboResetTime)
+        {
+            comboUI.UpdateTimer(comboTimer);
+        }
     }
 
     void UpdateComboTimer()
@@ -52,6 +57,7 @@ public class ComboSystem : MonoBehaviour
             {
                 currentComboCount = 0;
                 comboUI.UpdateCounter(currentComboCount);
+                comboUI.ToggleTimerVisibility(false);
             }
         }
     }

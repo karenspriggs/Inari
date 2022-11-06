@@ -88,7 +88,8 @@ public class EnemyData : MonoBehaviour
     {
         if (isDead && collision.gameObject.CompareTag("Player"))
         {
-            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), this.gameObject.GetComponent<CapsuleCollider2D>());
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponentInChildren<CapsuleCollider2D>(), this.gameObject.GetComponent<CapsuleCollider2D>());
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponentInChildren<CapsuleCollider2D>(), this.gameObject.GetComponentInChildren<CapsuleCollider2D>());
         }
     }
 

@@ -9,8 +9,10 @@ public class ComboUI : MonoBehaviour
     public TMP_Text comboText;
     public float tweenIntensity;
     public float tweenTime;
+    public float maxComboTimer;
 
     public ParticleSystem comboParticles;
+    public Slider comboTimerSlider;
     
     float decentComboFraction;
     float highComboFraction;
@@ -26,6 +28,8 @@ public class ComboUI : MonoBehaviour
     public Color highComboColor;
     public Color highestComboColor;
 
+    int currentscore = 0;
+    bool isTimerVisible = false;
     Color currentColor;
 
     // Start is called before the first frame update
@@ -35,46 +39,64 @@ public class ComboUI : MonoBehaviour
         Debug.Log(decentComboFraction);
         highComboFraction = 1 / (highComboNumber - decentComboNumber);
         currentColor = startingColor;
+        ToggleTimerVisibility(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ToggleTimerVisibility(bool shouldBeVisible)
     {
-        
+        comboTimerSlider.gameObject.SetActive(shouldBeVisible);
+        isTimerVisible = shouldBeVisible;
+    }
+
+    public void UpdateTimer(float comboTimer)
+    {
+        if (!isTimerVisible && currentscore >= minimumComboNumber)
+        {
+            ToggleTimerVisibility(true);
+        }
+
+        if (isTimerVisible)
+        {
+            comboTimerSlider.value = comboTimer / maxComboTimer;
+        }
     }
 
     public void UpdateCounter(int currentScore)
     {
-        if (currentScore >= minimumComboNumber)
+        currentscore = currentScore;
+
+        if (currentscore >= minimumComboNumber)
         {
-            comboText.text = $"{currentScore} hit combo!";
+            comboText.text = $"{currentscore} hit combo!";
         } else
         {
             comboText.text = "";
+            ToggleTimerVisibility(false);
         }
 
-        if (currentScore != 0)
+        if (currentscore != 0)
         {
             TweenScore();
+            ToggleTimerVisibility(false);
         }
 
-        if (currentScore == 0)
+        if (currentscore == 0)
         {
             currentColor = startingColor;
             comboText.color = startingColor;
         }
 
-        if (0 < currentScore && currentScore <= decentComboNumber)
+        if (0 < currentscore && currentscore <= decentComboNumber)
         {
             UpdateTextColor(decentComboColor);
         }
 
-        if (currentScore <= highComboNumber && currentScore > decentComboNumber)
+        if (currentscore <= highComboNumber && currentscore > decentComboNumber)
         {
             UpdateTextColor(highComboColor);
         }
 
-        if (currentScore <= highestComboNumber && currentScore > highComboNumber)
+        if (currentscore <= highestComboNumber && currentscore > highComboNumber)
         {
             UpdateTextColor(highestComboColor);
         }
