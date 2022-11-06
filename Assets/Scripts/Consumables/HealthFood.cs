@@ -19,7 +19,7 @@ public class HealthFood : MonoBehaviour
             TurnOffFood();
         }
     }
-    
+
     void TurnOffFood()
     {
         GetComponent<SpriteRenderer>().enabled = false;
