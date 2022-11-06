@@ -105,7 +105,6 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Hit):
                 enemyParticles.PlayHitParticles();
                 enemyAnimatior.SwitchState(EnemyState.Hit);
-                enemyData.TakeDamage(1);
                 break;
             case (EnemyState.Stun):
                 break;

@@ -45,15 +45,13 @@ public class EnemyData : MonoBehaviour
 
     private void Update()
     {
-        if (!isNewController)
+        if (wasHit)
         {
-            if (wasHit)
-            {
-                Debug.Log("Enemy took damage");
-                currentHP--;
-                wasHit = false;
-                CheckIfDead();
-            }
+            Debug.Log("Enemy took damage");
+            currentHP--;
+            EnemyHit?.Invoke();
+            wasHit = false;
+            CheckIfDead();
         }
     }
 
@@ -99,7 +97,6 @@ public class EnemyData : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             wasHit = true;
-            EnemyHit?.Invoke();
         }
     }
 }
