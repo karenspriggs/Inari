@@ -9,11 +9,14 @@ public class ComboUI : MonoBehaviour
     public TMP_Text comboText;
     public float tweenIntensity;
     public float tweenTime;
+
+    public ParticleSystem comboParticles;
     
     float decentComboFraction;
     float highComboFraction;
     float highestComboFraction;
 
+    public int minimumComboNumber;
     public int decentComboNumber;
     public int highComboNumber;
     public int highestComboNumber;
@@ -42,7 +45,13 @@ public class ComboUI : MonoBehaviour
 
     public void UpdateCounter(int currentScore)
     {
-        comboText.text = $"{currentScore} hit combo!";
+        if (currentScore >= minimumComboNumber)
+        {
+            comboText.text = $"{currentScore} hit combo!";
+        } else
+        {
+            comboText.text = "";
+        }
 
         if (currentScore != 0)
         {
