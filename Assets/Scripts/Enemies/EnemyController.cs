@@ -29,6 +29,7 @@ public class EnemyController : MonoBehaviour
     bool shouldAttack = false;
     bool shouldHitStun = false;
     bool targetChosen = false;
+
     [SerializeField]
     float attackTimer;
     float wanderTimer;
@@ -48,6 +49,7 @@ public class EnemyController : MonoBehaviour
     public float attackCooldown;
     public float WanderCooldown;
     public int maxWanderDistance;
+    public bool willWander = true;
 
     public GameObject chaseTarget;
 
@@ -62,6 +64,11 @@ public class EnemyController : MonoBehaviour
         currentState = EnemyState.Idle;
         attackTimer = attackCooldown;
         wanderTimer = WanderCooldown;
+
+        if (stopDistance <= chaseDistance)
+        {
+            Debug.LogError($"{gameObject.name} has a stop distance that is shorter than their chase distance. This will cause their chase behavior to not work properly. Make the stop distance larger or I will nuclear strike your house - John Unity");
+        }
 
         hitLocation = Vector2.zero;
     }
@@ -171,7 +178,7 @@ public class EnemyController : MonoBehaviour
 
     void DetermineIfShouldWander()
     {
-        if (shouldWander && currentState == EnemyState.Idle)
+        if (shouldWander && willWander && currentState == EnemyState.Idle)
         {
             SwitchState(EnemyState.Wander);
         }
@@ -209,7 +216,7 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState == EnemyState.Wander)
         {
-            Debug.Log("Turning Around");
+            //Debug.Log("Turning Around");
             if (isFacingRight)
             {
                 currentWanderTarget = new Vector2(currentWanderMin, transform.position.y);
@@ -266,7 +273,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if (Mathf.Abs(chaseTarget.transform.position.x - transform.position.x) >= stopDistance)
+        if (Vector2.Distance(chaseTarget.transform.position, this.transform.position) >= stopDistance)
         {
             Debug.Log("Out of range");
             SwitchState(EnemyState.Idle);
