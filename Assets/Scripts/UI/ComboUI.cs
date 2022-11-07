@@ -10,10 +10,12 @@ public class ComboUI : MonoBehaviour
     public float tweenIntensity;
     public float tweenTime;
     public float maxComboTimer;
+    public float timerColorChangeRate;
 
     public ParticleSystem comboParticles;
     public Slider comboTimerSlider;
-    
+    public Image comboFillSlider;
+
     float decentComboFraction;
     float highComboFraction;
     float highestComboFraction;
@@ -23,6 +25,9 @@ public class ComboUI : MonoBehaviour
     public int highComboNumber;
     public int highestComboNumber;
 
+    public Color sliderStartingColor;
+    public Color sliderWarningColor;
+
     public Color startingColor;
     public Color decentComboColor;
     public Color highComboColor;
@@ -30,7 +35,9 @@ public class ComboUI : MonoBehaviour
 
     int currentscore = 0;
     bool isTimerVisible = false;
-    Color currentColor;
+
+    Color currentSliderColor;
+    Color currentTextColor;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +45,7 @@ public class ComboUI : MonoBehaviour
         decentComboFraction = 1 / decentComboNumber;
         Debug.Log(decentComboFraction);
         highComboFraction = 1 / (highComboNumber - decentComboNumber);
-        currentColor = startingColor;
+        currentTextColor = startingColor;
         ToggleTimerVisibility(false);
     }
 
@@ -46,6 +53,11 @@ public class ComboUI : MonoBehaviour
     {
         comboTimerSlider.gameObject.SetActive(shouldBeVisible);
         isTimerVisible = shouldBeVisible;
+
+        if (shouldBeVisible)
+        {
+            UpdateTimerColor(true);
+        }
     }
 
     public void UpdateTimer(float comboTimer)
@@ -58,7 +70,21 @@ public class ComboUI : MonoBehaviour
         if (isTimerVisible)
         {
             comboTimerSlider.value = comboTimer / maxComboTimer;
+            UpdateTimerColor(false);
         }
+    }
+
+    public void UpdateTimerColor(bool isRestarting)
+    {
+        if (isRestarting)
+        {
+            currentSliderColor = sliderStartingColor;
+        } else
+        {
+            currentSliderColor = Color.Lerp(currentSliderColor, sliderWarningColor, timerColorChangeRate);
+        }
+
+        comboFillSlider.color = currentSliderColor;
     }
 
     public void UpdateCounter(int currentScore)
@@ -82,7 +108,7 @@ public class ComboUI : MonoBehaviour
 
         if (currentscore == 0)
         {
-            currentColor = startingColor;
+            currentTextColor = startingColor;
             comboText.color = startingColor;
         }
 
@@ -105,8 +131,8 @@ public class ComboUI : MonoBehaviour
 
     void UpdateTextColor(Color newcolor)
     {
-        currentColor = Color.Lerp(currentColor, newcolor, 0.167f);
-        comboText.color = currentColor;
+        currentTextColor = Color.Lerp(currentTextColor, newcolor, 0.167f);
+        comboText.color = currentTextColor;
     }
 
     void TweenScore()
