@@ -21,8 +21,6 @@ public class EnemyData : MonoBehaviour
 
     EnemyAnimator enemyAnimator;
     EnemyController enemyController;
-    [SerializeField]
-    PlayerLevelSystem playerLevel;
 
     public static Action EnemyHit;
     public static Action EnemyKilled;
@@ -37,10 +35,7 @@ public class EnemyData : MonoBehaviour
     {
         currentHP = maxHP;
         enemyAnimator = GetComponent<EnemyAnimator>();
-        if (isNewController)
-        {
-            enemyController = GetComponent<EnemyController>();
-        }
+        enemyController = GetComponent<EnemyController>();
     }
 
     private void Update()
@@ -63,24 +58,13 @@ public class EnemyData : MonoBehaviour
 
     void CheckIfDead()
     {
-        if (currentHP == 0)
+        if (currentHP <= 0)
         {
             Debug.Log("Enemy died");
-            if (isNewController)
-            {
-                enemyController.SwitchState(EnemyState.Death);
-            } else
-            {
-                enemyAnimator.StartDeathAnimation();
-            }
+            enemyController.SwitchState(EnemyState.Death);
             isDead = true;
             EnemyKilled?.Invoke();
-            //     EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
-            //  playerLevel.currentXP += EnemyKillXP;
-            if (!isNewController)
-            {
-                GameObject.FindWithTag("Player").GetComponent<PlayerLevelSystem>().currentXP += EnemyKillXP;
-            }
+            EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
         }
     }
 

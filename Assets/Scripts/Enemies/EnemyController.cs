@@ -12,6 +12,8 @@ public enum EnemyState
     Attack,
     Hit,
     Stun,
+    Launched,
+    Landed,
     Death
 }
 
@@ -71,6 +73,8 @@ public class EnemyController : MonoBehaviour
         }
 
         hitLocation = Vector2.zero;
+
+        chaseTarget = GameObject.FindWithTag("Player");
     }
 
     private void FixedUpdate()

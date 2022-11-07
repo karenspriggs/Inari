@@ -36,13 +36,29 @@ public class PlayerLevelSystem : MonoBehaviour
         requiredXP = CalculateRequiredXp();
     }
 
+    private void OnEnable()
+    {
+        EnemyData.EnemyKilledValues += GainXPOnEnemyDeath;
+    }
+
+    private void OnDisable()
+    {
+        EnemyData.EnemyKilledValues -= GainXPOnEnemyDeath;
+    }
+
     void Update()
     {
-        UpdateXpUI();
+        //UpdateXpUI();
         //GainExperienceFlatRate(100f * Time.deltaTime);
         if (currentXP > requiredXP)
             LevelUp();
 
+    }
+
+    void GainXPOnEnemyDeath(int coins, int XP)
+    {
+        this.currentXP += XP;
+        UpdateXpUI();
     }
 
     public void UpdateXpUI()
