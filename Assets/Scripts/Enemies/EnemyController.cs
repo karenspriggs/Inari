@@ -13,7 +13,7 @@ public enum EnemyState
     Hit,
     Stun,
     Launched,
-    Landed,
+    DeadLaunch,
     Death
 }
 
