@@ -361,5 +361,10 @@ public class EnemyController : MonoBehaviour
         {
             TurnAround();
         }
+
+        if (collision.gameObject.CompareTag("Bumperbox") && currentState == EnemyState.Wander)
+        {
+            TurnAround();
+        }
     }
 }
