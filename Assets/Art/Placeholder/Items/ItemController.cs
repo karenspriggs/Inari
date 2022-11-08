@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    public Item Item;
+    public Item item;
 
+    public void AddItem(Item newItem)
+    {
+        item = newItem;
+    }
 }
