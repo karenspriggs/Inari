@@ -7,7 +7,13 @@ public class ComboSystem : MonoBehaviour
     [SerializeField]
     float comboTimer;
     [SerializeField]
-    float comboResetTime;
+    float defaultComboResetTime;
+    [SerializeField]
+    float currentComboResetTime;
+    [SerializeField]
+    float minimumComboResetTime;
+    [SerializeField]
+    float comboTimeDecreaseFactor;
     [SerializeField]
     ComboUI comboUI;
 
@@ -27,12 +33,22 @@ public class ComboSystem : MonoBehaviour
     void UpdateCombo()
     {
         currentComboCount++;
-        comboTimer = comboResetTime;
+        comboTimer = currentComboResetTime;
         comboUI.UpdateCounter(currentComboCount);
+
+        LowerComboTime();
 
         if (currentComboCount > maxComboCount)
         {
             maxComboCount = currentComboCount;
+        }
+    }
+
+    void LowerComboTime()
+    {
+        if (currentComboResetTime - comboTimeDecreaseFactor > minimumComboResetTime)
+        {
+            currentComboResetTime -= comboTimeDecreaseFactor;
         }
     }
 
@@ -41,9 +57,9 @@ public class ComboSystem : MonoBehaviour
     {
         UpdateComboTimer();
 
-        if (comboTimer < comboResetTime)
+        if (comboTimer < defaultComboResetTime)
         {
-            comboUI.UpdateTimer(comboTimer);
+            comboUI.UpdateTimer(comboTimer, currentComboResetTime);
         }
     }
 
@@ -56,6 +72,7 @@ public class ComboSystem : MonoBehaviour
             if (comboTimer <= 0)
             {
                 currentComboCount = 0;
+                currentComboResetTime = defaultComboResetTime;
                 comboUI.UpdateCounter(currentComboCount);
                 comboUI.ToggleTimerVisibility(false);
             }

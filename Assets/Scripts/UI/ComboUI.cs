@@ -9,7 +9,6 @@ public class ComboUI : MonoBehaviour
     public TMP_Text comboText;
     public float tweenIntensity;
     public float tweenTime;
-    public float maxComboTimer;
     public float timerColorChangeRate;
 
     public ParticleSystem comboParticles;
@@ -60,7 +59,7 @@ public class ComboUI : MonoBehaviour
         }
     }
 
-    public void UpdateTimer(float comboTimer)
+    public void UpdateTimer(float comboTimer, float maxComboTimer)
     {
         if (!isTimerVisible && currentscore >= minimumComboNumber)
         {

@@ -25,6 +25,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     EnemyState currentState;
 
+    [SerializeField]
+    bool isActive = false;
+
     bool canMove = true;
     bool canAttack = false;
     bool shouldWander = false;
@@ -79,6 +82,11 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isActive)
+        {
+            return;
+        }
+
         if (currentState != EnemyState.Death)
         {
             if (currentState != EnemyState.Hit)
@@ -365,6 +373,22 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Bumperbox") && currentState == EnemyState.Wander)
         {
             TurnAround();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyEnabler"))
+        {
+            isActive = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyEnabler"))
+        {
+            isActive = false;
         }
     }
 }

@@ -26,6 +26,7 @@ public class CheckpointUI : MonoBehaviour
 
     void EnableRespawnText()
     {
+        Debug.Log("Turning on respawn text");
         RespawnText.color = new Color(CheckpointText.color.r, CheckpointText.color.g, CheckpointText.color.b, 255);
         StartCoroutine(FadeInText(RespawnText));
     }
