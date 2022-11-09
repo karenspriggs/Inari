@@ -58,7 +58,7 @@ public class EnemyData : MonoBehaviour
 
     void CheckIfDead()
     {
-        if (currentHP <= 0)
+        if (currentHP <= 0 && !isDead)
         {
             Debug.Log("Enemy died");
             enemyController.SwitchState(EnemyState.Death);

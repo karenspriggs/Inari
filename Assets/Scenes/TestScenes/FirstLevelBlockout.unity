@@ -31660,6 +31660,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2130696927410552590, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 319
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130696927410552590, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 308
+      objectReference: {fileID: 0}
     - target: {fileID: 3021392215289344593, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: currentSceneIndex
       value: 3
@@ -31755,6 +31763,22 @@ PrefabInstance:
     - target: {fileID: 3021392215289344623, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: sceneIndex
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808498214683353960, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808498214683353960, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459348471856753846, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7174796943634695938, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8763537998282229159, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_AnchorMax.y
@@ -31978,6 +32002,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dust: {fileID: 144502269}
+--- !u!114 &710491192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710491190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc600c07b76b56498eec4c6bfbe36e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  currentXP: 0
+  requiredXP: 0
+  experienceText: {fileID: 0}
+  frontXpBar: {fileID: 0}
+  backXpBar: {fileID: 0}
+  additionMultiplier: 300
+  powerMultiplier: 2
+  divisionMultiplier: 7
+  statGain: 1.25
+  levelScreen: {fileID: 0}
+  isNewVersion: 1
 --- !u!1001 &731871149
 PrefabInstance:
   m_ObjectHideFlags: 0

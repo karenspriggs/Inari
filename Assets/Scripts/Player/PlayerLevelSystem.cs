@@ -29,11 +29,23 @@ public class PlayerLevelSystem : MonoBehaviour
     [SerializeField]
     LevelUpScreen levelScreen;
 
+    public bool isNewVersion = false;
+
+    public static Action<float> xpAmountInitialized;
+    public static Action<float> PlayerGainedXP;
+    public static Action PlayerLeveledUp;
+
     void Start()
     {
-        frontXpBar.fillAmount = currentXP / requiredXP;
-        backXpBar.fillAmount = currentXP / requiredXP;
+        if (!isNewVersion)
+        {
+            frontXpBar.fillAmount = currentXP / requiredXP;
+            backXpBar.fillAmount = currentXP / requiredXP;
+        }
+        
         requiredXP = CalculateRequiredXp();
+
+        xpAmountInitialized?.Invoke(requiredXP);
     }
 
     private void OnEnable()
@@ -58,14 +70,22 @@ public class PlayerLevelSystem : MonoBehaviour
     void GainXPOnEnemyDeath(int coins, int XP)
     {
         this.currentXP += XP;
-        UpdateXpUI();
+        if (!isNewVersion)
+        {
+            UpdateXpUI();
+        }
+        PlayerGainedXP?.Invoke(currentXP);
     }
 
     public void UpdateXpUI()
     {
-          float xpFraction = currentXP / requiredXP;
-           float FXP = frontXpBar.fillAmount = xpFraction;
-        experienceText.text = currentXP.ToString() + " / " + requiredXP.ToString();
+        if (!isNewVersion)
+        {
+            float xpFraction = currentXP / requiredXP;
+            float FXP = frontXpBar.fillAmount = xpFraction;
+            experienceText.text = currentXP.ToString() + " / " + requiredXP.ToString();
+        }
+          
         //if (FXP < xpFraction)
         //{
         //    delayTimer += Time.deltaTime;
@@ -92,6 +112,7 @@ public class PlayerLevelSystem : MonoBehaviour
         currentXP += xpGained;
         lerpTimer = 0f;
         delayTimer = 0f;
+        PlayerGainedXP?.Invoke(currentXP);
     }
 
     public void GainedExperience()
@@ -101,12 +122,19 @@ public class PlayerLevelSystem : MonoBehaviour
 
     private void LevelUp()
     {
-        levelScreen.ShowLevelUpUI();
-        level++;
-        frontXpBar.fillAmount = 0f;
-        backXpBar.fillAmount = 0f;
+        if (!isNewVersion)
+        {
+            levelScreen.ShowLevelUpUI();
+            level++;
+            frontXpBar.fillAmount = 0f;
+            backXpBar.fillAmount = 0f;
+        }
+        
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
         requiredXP = CalculateRequiredXp();
+        xpAmountInitialized?.Invoke(requiredXP);
+        PlayerGainedXP?.Invoke(currentXP);
+        PlayerLeveledUp?.Invoke();
     }
 
     private int CalculateRequiredXp()
