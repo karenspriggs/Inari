@@ -29,6 +29,8 @@ public class Checkpoint : MonoBehaviour
 
         if (PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID >= this.checkpointID)
         {
+            hasActivated = true;
+            shouldLightUp = false;
             DisableCheckpoint();
         }
     }
@@ -43,9 +45,9 @@ public class Checkpoint : MonoBehaviour
 
     public void DisableCheckpoint()
     {
+        checkpointLight.enabled = true;
         if (shouldLightUp)
         {
-            checkpointLight.enabled = true;
             lanternAnimator.StartFadeAnimation();
         }
         else

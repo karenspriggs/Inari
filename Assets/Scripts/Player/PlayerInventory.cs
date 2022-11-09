@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,31 +38,23 @@ public class PlayerInventory : MonoBehaviour
 
     public void ListItems()
     {
+        
         foreach (Transform item in ItemContent)
         {
             Destroy(item.gameObject);
         }
 
-        foreach (var item in Items)
+        foreach (var item in Items.Distinct())
         {
             GameObject obj = Instantiate(InventoryItem, ItemContent);
-            var itemName = obj.transform.Find("ItemName").GetComponent<Text>();
-            var itemIcon = obj.transform.Find("ItemImage").GetComponent<Image>();
+            obj.GetComponent<ItemController>().item = item;
 
+            var itemName = obj.transform.Find("ItemName").GetComponent<TMPro.TextMeshProUGUI>();
+            var itemIcon = obj.transform.Find("ItemImage").GetComponent<Image>();
+            var itemCount = obj.transform.Find("ItemCount").GetComponent<TMPro.TextMeshProUGUI>();
             itemName.text = item.itemName;
             itemIcon.sprite = item.icon;
+            itemCount.text = Items.Count(i => i == item).ToString();
         }
-
-        //SetInventoryItems();
     }
-
-    //public void SetInventoryItems()
-    //{
-    //    SetInventoryItems = ItemContent.GetComponentsInChildren<InventoryItemController>();
-
-    //    for (int i = 0; i < Items.Count; i++)
-    //    {
-    //        IntentoryItems[i].AddItem(Items[i]);
-    //    }
-    //}
 }

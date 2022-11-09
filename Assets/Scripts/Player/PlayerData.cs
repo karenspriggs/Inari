@@ -63,18 +63,14 @@ public class PlayerData : MonoBehaviour
     /// </summary>
     public static Action PlayerDied;
 
-    private void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
         if (isUsingSaveData)
         {
             currentCheckpointID = PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID;
             transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         currentHP = maxHP;
         currentEnergy = maxEnergy;
         InitializedPlayerHealth?.Invoke(currentHP);
