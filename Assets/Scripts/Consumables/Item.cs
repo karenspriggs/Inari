@@ -10,5 +10,11 @@ public class Item : ScriptableObject
     public string itemName;
     public int value;
     public Sprite icon;
+    public int health;
+    public override bool Equals(object other)
+    {
+        var item = other as Item;
+        return this.id.Equals(item.id);
+    }
 
 }
