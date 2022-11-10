@@ -354,10 +354,9 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox") && currentState != EnemyState.Death)
         {
             SwitchState(EnemyState.Hit);
-            Debug.Log("hit");
             hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
         }
 

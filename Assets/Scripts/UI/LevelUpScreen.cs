@@ -11,10 +11,15 @@ public class LevelUpScreen : MonoBehaviour
 {
     public GameObject LevelUpUIPanel;
     public int sceneIndex;
+
+    public TextMeshProUGUI pointsText;
+    public TextMeshProUGUI progressText;
+
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI levelText;
+
   //  public TextMeshProUGUI experienceText;
     [SerializeField]
     PlayerData playerStats;
@@ -27,24 +32,15 @@ public class LevelUpScreen : MonoBehaviour
     [SerializeField]
     Button EnergyButton;
 
-    public void ShowLevelUpUI()
-    {
-        AttackButton.interactable = (playerStats.Attack < playerStats.attackCap);
-        EnergyButton.interactable = (playerStats.maxEnergy < playerStats.maxEnergyCap);
-        HealthButton.interactable = (playerStats.maxHP < playerStats.maxHPCap);
-        Time.timeScale = 0f;
-        UpdateLevelUpUI();
-        LevelUpUIPanel.SetActive(true);
-    }
-
     public void UpdateLevelUpUI()
     {
-        attackText.text = "Attack: " + playerStats.Attack.ToString();
-        healthText.text = "Health: " + playerStats.maxHP.ToString();
-        energyText.text = "Energy: " + playerStats.maxEnergy.ToString();
-        levelText.text = "Current Level: " + playerLevel.level.ToString();
-    //  experienceText.text = playerLevel.currentXP.ToString() + " / " + playerLevel.requiredXP.ToString();
+        attackText.text = "Current Attack: " + playerStats.Attack.ToString();
+        healthText.text = "Current Max Health: " + playerStats.maxHP.ToString();
+        energyText.text = "Current Max Energy: " + playerStats.maxEnergy.ToString();
 
+        levelText.text = "Current Level: " + playerLevel.level.ToString();
+        pointsText.text = "Upgrade Points: " + playerLevel.upgradePoints.ToString();
+        progressText.text = "XP to Next Level: " + (playerLevel.requiredXP - playerLevel.currentXP).ToString();
     }
 
     public void CloseScreen()
@@ -55,36 +51,32 @@ public class LevelUpScreen : MonoBehaviour
 
     public void AttackIncrease()
     {
-        playerStats.Attack = Mathf.Ceil(1.25f * playerStats.Attack);
-        attackText.text = "Attack: " + playerStats.Attack.ToString();
-        AttackButton.interactable = false;
-        EnergyButton.interactable = false;
-        HealthButton.interactable = false;
-        
+        if (playerLevel.upgradePoints > 0)
+        {
+            playerStats.Attack = Mathf.Ceil(1.25f * playerStats.Attack);
+            playerLevel.upgradePoints--;
+            UpdateLevelUpUI();
+        }
     }
 
     public void EnergyIncrease()
     {
-        playerStats.maxEnergy = Mathf.Ceil(1.25f * playerStats.maxEnergy);
-        energyText.text = "Energy: " + playerStats.maxEnergy.ToString();
-        AttackButton.interactable = false;
-        EnergyButton.interactable = false;
-        HealthButton.interactable = false;
+        if (playerLevel.upgradePoints > 0)
+        {
+            playerStats.maxEnergy = Mathf.Ceil(1.25f * playerStats.maxEnergy);
+            playerLevel.upgradePoints--;
+            UpdateLevelUpUI();
+        }
     }
 
 
     public void HealthIncrease()
     {
-        playerStats.maxHP = Mathf.Ceil(1.25f * playerStats.maxHP);
-        healthText.text = "Health: " + playerStats.maxHP.ToString();
-        AttackButton.interactable = false;
-        EnergyButton.interactable = false;
-        HealthButton.interactable = false;
-    }
-
-    public void DisableLevelUpUI()
-    {
-        LevelUpUIPanel.SetActive(false);
-        Time.timeScale = 1f;
+        if (playerLevel.upgradePoints > 0)
+        {
+            playerStats.maxHP = Mathf.Ceil(1.25f * playerStats.maxHP);
+            playerLevel.upgradePoints--;
+            UpdateLevelUpUI();
+        }
     }
 }

@@ -28915,6 +28915,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 956654741892395309, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: playerLevel
+      value: 
+      objectReference: {fileID: 710491192}
+    - target: {fileID: 956654741892395309, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 710491201}
     - target: {fileID: 1512628805850284529, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -29034,6 +29042,10 @@ PrefabInstance:
     - target: {fileID: 4459348471856753846, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542418390048975722, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7174796943634695938, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_AnchorMax.y
@@ -29274,6 +29286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
+  upgradePoints: 0
   currentXP: 0
   requiredXP: 0
   experienceText: {fileID: 0}
@@ -29285,6 +29298,17 @@ MonoBehaviour:
   statGain: 1.25
   levelScreen: {fileID: 0}
   isNewVersion: 1
+--- !u!114 &710491201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6534854772515789269, guid: c8497b3c9ef78e84d89a244c65c46409, type: 3}
+  m_PrefabInstance: {fileID: 710491188}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710491190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbba9d456b4a94409820e062bc9c547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &731871149
 PrefabInstance:
   m_ObjectHideFlags: 0

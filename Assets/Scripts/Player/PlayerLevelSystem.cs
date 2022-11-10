@@ -11,6 +11,8 @@ using TMPro;
 public class PlayerLevelSystem : MonoBehaviour
 {
     public int level;
+    public int upgradePoints = 0;
+
     public float currentXP;
     public float requiredXP;
 
@@ -57,14 +59,10 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         EnemyData.EnemyKilledValues -= GainXPOnEnemyDeath;
     }
-
-    void Update()
+    void CheckIfCanLevelUp()
     {
-        //UpdateXpUI();
-        //GainExperienceFlatRate(100f * Time.deltaTime);
         if (currentXP > requiredXP)
             LevelUp();
-
     }
 
     void GainXPOnEnemyDeath(int coins, int XP)
@@ -75,6 +73,7 @@ public class PlayerLevelSystem : MonoBehaviour
             UpdateXpUI();
         }
         PlayerGainedXP?.Invoke(currentXP);
+        CheckIfCanLevelUp();
     }
 
     public void UpdateXpUI()
@@ -128,6 +127,7 @@ public class PlayerLevelSystem : MonoBehaviour
             level++;
             frontXpBar.fillAmount = 0f;
             backXpBar.fillAmount = 0f;
+            upgradePoints++;
         }
         
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
