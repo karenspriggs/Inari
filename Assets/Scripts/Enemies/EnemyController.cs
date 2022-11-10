@@ -80,7 +80,6 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (currentState != EnemyState.Death)
         {
             if (currentState != EnemyState.Hit)
@@ -133,7 +132,6 @@ public class EnemyController : MonoBehaviour
         {
             case (EnemyState.Idle):
                 canMove = true;
-                DetermineIfShouldWander();
                 break;
             case (EnemyState.Wander):
                 Wander();
@@ -177,6 +175,7 @@ public class EnemyController : MonoBehaviour
             float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
             if (targetDistance <= chaseDistance)
             {
+                Debug.Log("start chasing");
                 SwitchState(EnemyState.Chase);
             }
         }
@@ -211,6 +210,8 @@ public class EnemyController : MonoBehaviour
 
     void DetermineState()
     {
+        DetermineIfShouldWander();
+
         if (shouldHitStun)
         {
             SwitchState(EnemyState.Hit);
@@ -355,7 +356,8 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
-            shouldHitStun = true;
+            SwitchState(EnemyState.Hit);
+            Debug.Log("hit");
             hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
         }
 
