@@ -18,6 +18,11 @@ public class LevelUpScreen : MonoBehaviour
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI energyText;
+
+    public TextMeshProUGUI previewAttackText;
+    public TextMeshProUGUI previewHealthText;
+    public TextMeshProUGUI previewEnergyText;
+
     public TextMeshProUGUI levelText;
 
   //  public TextMeshProUGUI experienceText;
@@ -34,9 +39,14 @@ public class LevelUpScreen : MonoBehaviour
 
     public void UpdateLevelUpUI()
     {
+        Debug.Log("Updated UI");
         attackText.text = "Current Attack: " + playerStats.Attack.ToString();
         healthText.text = "Current Max Health: " + playerStats.maxHP.ToString();
         energyText.text = "Current Max Energy: " + playerStats.maxEnergy.ToString();
+
+        previewAttackText.text = "Upgrade Value: " + Mathf.Ceil(1.25f * playerStats.Attack).ToString();
+        previewHealthText.text = "Upgrade Value: " + Mathf.Ceil(1.25f * playerStats.maxHP).ToString();
+        previewEnergyText.text = "Upgrade Value: " + Mathf.Ceil(1.25f * playerStats.maxEnergy).ToString();
 
         levelText.text = "Current Level: " + playerLevel.level.ToString();
         pointsText.text = "Upgrade Points: " + playerLevel.upgradePoints.ToString();
@@ -64,6 +74,7 @@ public class LevelUpScreen : MonoBehaviour
         if (playerLevel.upgradePoints > 0)
         {
             playerStats.maxEnergy = Mathf.Ceil(1.25f * playerStats.maxEnergy);
+            playerStats.currentEnergy = playerStats.maxEnergy;
             playerLevel.upgradePoints--;
             UpdateLevelUpUI();
         }
@@ -75,6 +86,7 @@ public class LevelUpScreen : MonoBehaviour
         if (playerLevel.upgradePoints > 0)
         {
             playerStats.maxHP = Mathf.Ceil(1.25f * playerStats.maxHP);
+            playerStats.currentHP = playerStats.maxHP;
             playerLevel.upgradePoints--;
             UpdateLevelUpUI();
         }

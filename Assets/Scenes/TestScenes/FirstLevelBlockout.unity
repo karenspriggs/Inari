@@ -28927,18 +28927,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2130696927410552590, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 319
-      objectReference: {fileID: 0}
-    - target: {fileID: 2130696927410552590, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 308
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021392215289344593, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
-      propertyPath: currentSceneIndex
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3021392215289344616, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_Name
       value: UICanvas
@@ -29027,17 +29015,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3021392215289344623, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
-      propertyPath: sceneIndex
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808498214683353960, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
-      propertyPath: m_fontColor.a
+    - target: {fileID: 3021392215885874347, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808498214683353960, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 16777215
       objectReference: {fileID: 0}
     - target: {fileID: 4459348471856753846, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_AnchorMax.y
@@ -29045,7 +29025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6542418390048975722, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7174796943634695938, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_AnchorMax.y
@@ -29232,6 +29212,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: -0.00056994986
       objectReference: {fileID: 0}
+    - target: {fileID: 8479595035103778575, guid: c8497b3c9ef78e84d89a244c65c46409, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.99986106
+      objectReference: {fileID: 0}
     - target: {fileID: 8825512306289610629, guid: c8497b3c9ef78e84d89a244c65c46409, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9991029
@@ -29286,7 +29270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
-  upgradePoints: 0
+  upgradePoints: 2
   currentXP: 0
   requiredXP: 0
   experienceText: {fileID: 0}

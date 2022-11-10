@@ -11,7 +11,7 @@ using TMPro;
 public class PlayerLevelSystem : MonoBehaviour
 {
     public int level;
-    public int upgradePoints = 0;
+    public int upgradePoints;
 
     public float currentXP;
     public float requiredXP;
