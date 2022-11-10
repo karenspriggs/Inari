@@ -123,7 +123,6 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         if (!isNewVersion)
         {
-            levelScreen.ShowLevelUpUI();
             level++;
             frontXpBar.fillAmount = 0f;
             backXpBar.fillAmount = 0f;
