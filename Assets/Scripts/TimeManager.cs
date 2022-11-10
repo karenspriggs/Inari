@@ -1,9 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
     private bool slowmoOn = false;
     public float slowmoTimeScale = 0.5f;
+    public float hitstopDuration = 0.1f;
+    public float hitstopTimeScale = 0.1f;
 
     public void SetTimeScale(float newTimeScale)
     {
@@ -17,7 +20,7 @@ public class TimeManager : MonoBehaviour
 
     public void ToggleSlowmo()
     {
-        Debug.Log("Toggle slowmo");
+        //Debug.Log("Toggle slowmo");
         if (slowmoOn)
         {
             ResetTimeScale();
@@ -29,13 +32,15 @@ public class TimeManager : MonoBehaviour
         slowmoOn = !slowmoOn;
     }
 
-    private void OnEnable()
+    public void DoHitStop()
     {
-        
+        SetTimeScale(hitstopTimeScale);
+        StartCoroutine(ResetTimeScaleCoroutine());
     }
 
-    private void Update()
+    IEnumerator ResetTimeScaleCoroutine()
     {
-        
+        yield return new WaitForSecondsRealtime(hitstopDuration);
+        ResetTimeScale();
     }
 }
