@@ -524,12 +524,15 @@ public class PlayerController : MonoBehaviour
     public void OnAttackActive()
     {
         //Debug.Log("OnAttackActive Received");
+        //SetAttackCancels();
     }
 
     public void OnAttackRecovery()
     {
         //Debug.Log("OnAttackRecovery Received");
-        attacksEnabled = true;
+        //attacksEnabled = true;
+        SetAttackCancels();
+        
     }
 
     public void OnVelocityImpulse(object sender, AnimationVelocityEventArgs e)
@@ -540,6 +543,14 @@ public class PlayerController : MonoBehaviour
             impulse.x = -impulse.x;
         }
         playerMovement.ApplyVelocityImpulse(impulse);
+    }
+
+    public void SetAttackCancels()
+    {
+        attacksEnabled = true;
+        //update cancels
+        dashEnabled = playerAttacks.CanDashCancel();
+        jumpsEnabled = playerAttacks.CanJumpCancel();
     }
 
     #endregion
