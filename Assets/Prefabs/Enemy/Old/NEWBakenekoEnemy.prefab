@@ -149,7 +149,6 @@ MonoBehaviour:
   EnemyKillCoins: 0
   EnemyKillEnergy: 0
   EnemyKillXP: 0
-  playerLevel: {fileID: 0}
   isNewController: 0
   isDead: 0
   wasHit: 0
@@ -169,7 +168,7 @@ MonoBehaviour:
   attackTimer: 0
   currentWanderTarget: {x: 0, y: 0}
   isFacingRight: 0
-  AttackDistance: 0
+  AttackDistance: 2
   ChaseSpeed: 0
   WanderSpeed: 0
   chaseDistance: 0
@@ -177,6 +176,7 @@ MonoBehaviour:
   attackCooldown: 0
   WanderCooldown: 0
   maxWanderDistance: 0
+  willWander: 1
   chaseTarget: {fileID: 0}
 --- !u!114 &6882337787471013022
 MonoBehaviour:
@@ -381,6 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitParticles: {fileID: 4416589141369341387}
   hitParts: {fileID: 8139969672973357318}
+  timeManager: {fileID: 0}
 --- !u!1 &357127452101285048
 GameObject:
   m_ObjectHideFlags: 0
