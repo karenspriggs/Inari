@@ -123,12 +123,11 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         if (!isNewVersion)
         {
-            level++;
             frontXpBar.fillAmount = 0f;
             backXpBar.fillAmount = 0f;
             upgradePoints++;
         }
-        
+        level++;
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
         requiredXP = CalculateRequiredXp();
         xpAmountInitialized?.Invoke(requiredXP);
