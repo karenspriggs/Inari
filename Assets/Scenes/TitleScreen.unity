@@ -525,6 +525,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3551238975570810608, guid: bf2e4029bc1eefa4199817e0e0da59ed, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 5bfc6a93a623ba34cad37b1d8c17771d, type: 2}
     - target: {fileID: 3551238975570810609, guid: bf2e4029bc1eefa4199817e0e0da59ed, type: 3}
       propertyPath: m_Name
       value: MusicPlayer
@@ -2162,8 +2166,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 883265821}
     - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 743218844}
+    - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.AudioSource, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}

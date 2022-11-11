@@ -980,6 +980,7 @@ GameObject:
   - component: {fileID: 103363855418619710}
   - component: {fileID: 103363855418619711}
   - component: {fileID: 103363855418619696}
+  - component: {fileID: 4933129471264715800}
   m_Layer: 5
   m_Name: Volume
   m_TagString: Untagged
@@ -1055,16 +1056,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 103363854358126466}
   m_HandleRect: {fileID: 103363853400702476}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: set_volume
+      - m_Target: {fileID: 4933129471264715800}
+        m_TargetAssemblyTypeName: AudioAdjusting, Assembly-CSharp
+        m_MethodName: SetVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1082,3 +1083,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103363855418619709}
   m_CullTransparentMesh: 1
+--- !u!114 &4933129471264715800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103363855418619709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34cd34418053f7a4c868c8f80513c2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 0}
