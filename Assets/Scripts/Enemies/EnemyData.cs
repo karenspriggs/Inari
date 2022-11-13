@@ -40,7 +40,7 @@ public class EnemyData : MonoBehaviour
 
     private void Update()
     {
-        if (wasHit)
+        if (wasHit && !isDead)
         {
             Debug.Log("Enemy took damage");
             currentHP--;
