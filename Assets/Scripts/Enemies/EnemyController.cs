@@ -20,7 +20,7 @@ public enum EnemyState
 
 public class EnemyController : MonoBehaviour
 {
-    EnemyAnimator enemyAnimatior;
+    EnemyAnimator enemyAnimator;
     EnemyData enemyData;
     EnemyParticles enemyParticles;
     Rigidbody2D rigidbody;
@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyAnimatior = GetComponent<EnemyAnimator>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
         enemyData = GetComponent<EnemyData>();
         enemyParticles = GetComponent<EnemyParticles>();
         rigidbody = GetComponent<Rigidbody2D>();
@@ -99,12 +99,17 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch)
         {
-            if (currentState != EnemyState.Hit)
+            if (currentState != EnemyState.Hit && currentState != EnemyState.ChaseStartup && currentState != EnemyState.Confused)
             {
                 DetermineIfShouldChase();
                 DetermineState();
             }
-            UpdateTimers();
+
+            if (currentState != EnemyState.Confused)
+            {
+                UpdateTimers();
+            }
+            
             DoState(currentState);
         }
         UpdateGrounding();
@@ -116,34 +121,38 @@ public class EnemyController : MonoBehaviour
         switch (newState)
         {
             case (EnemyState.Idle):
-                enemyAnimatior.SwitchState(EnemyState.Idle);
+                enemyAnimator.SwitchState(EnemyState.Idle);
+                wanderTimer = WanderCooldown;
                 canMove = true;
                 break;
             case (EnemyState.Wander):
-                enemyAnimatior.SwitchState(EnemyState.Wander);
+                enemyAnimator.SwitchState(EnemyState.Wander);
                 DetermineWanderBoundaries();
                 DetermineWanderDistance();
                 break;
             case (EnemyState.ChaseStartup):
-                enemyAnimatior.SwitchState(EnemyState.ChaseStartup);
+                enemyAnimator.SwitchState(EnemyState.ChaseStartup);
+                break;
+            case (EnemyState.Confused):
+                enemyAnimator.SwitchState(EnemyState.Confused);
                 break;
             case (EnemyState.Chase):
-                enemyAnimatior.SwitchState(EnemyState.Chase);
+                enemyAnimator.SwitchState(EnemyState.Chase);
                 break;
             case (EnemyState.Attack):
-                enemyAnimatior.SwitchState(EnemyState.Attack);
+                enemyAnimator.SwitchState(EnemyState.Attack);
                 break;
             case (EnemyState.Hit):
                 enemyParticles.PlayHitParticles();
-                enemyAnimatior.SwitchState(EnemyState.Hit);
+                enemyAnimator.SwitchState(EnemyState.Hit);
                 break;
             case (EnemyState.Stun):
                 break;
             case (EnemyState.DeadLaunch):
-                enemyAnimatior.SwitchState(EnemyState.DeadLaunch);
+                enemyAnimator.SwitchState(EnemyState.DeadLaunch);
                 break;
             case (EnemyState.Death):
-                enemyAnimatior.SwitchState(EnemyState.Death);
+                enemyAnimator.SwitchState(EnemyState.Death);
                 break;
         }
     }
@@ -160,6 +169,9 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.ChaseStartup):
                 AnimationEndTransitionToNextState(EnemyState.Chase);
+                break;
+            case (EnemyState.Confused):
+                AnimationEndTransitionToNextState(EnemyState.Idle);
                 break;
             case (EnemyState.Chase):
                 ChasePlayer();
@@ -197,7 +209,7 @@ public class EnemyController : MonoBehaviour
             if (targetDistance <= chaseDistance)
             {
                 Debug.Log("start chasing");
-                SwitchState(EnemyState.Chase);
+                SwitchState(EnemyState.ChaseStartup);
             }
         }
     }
@@ -311,8 +323,7 @@ public class EnemyController : MonoBehaviour
         if (Vector2.Distance(chaseTarget.transform.position, this.transform.position) >= stopDistance)
         {
             Debug.Log("Out of range");
-            SwitchState(EnemyState.Idle);
-            wanderTimer = WanderCooldown;
+            SwitchState(EnemyState.Confused);
         }
         else
             transform.position = currentMovement;
@@ -414,7 +425,7 @@ public class EnemyController : MonoBehaviour
 
     private void AnimationEndTransitionToNextState(EnemyState nextState)
     {
-        if (enemyAnimatior.CheckIfAnimationEnded())
+        if (enemyAnimator.CheckIfAnimationEnded())
         {
             SwitchState(nextState);
         }

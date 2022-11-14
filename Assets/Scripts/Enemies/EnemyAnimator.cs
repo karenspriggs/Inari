@@ -12,6 +12,7 @@ public class EnemyAnimator : MonoBehaviour
     public string AnimatorIdleAltStateName;
     public string AnimatorWalkStateName;
     public string AnimatorChaseStartupStateName;
+    public string AnimatorConfusedStateName;
     public string AnimatorChaseStateName;
     public string AnimatorHitStateName;
     public string AnimatorAttackStateName;
@@ -69,6 +70,9 @@ public class EnemyAnimator : MonoBehaviour
                 break;
             case (EnemyState.ChaseStartup):
                 StartAnimation(AnimatorChaseStartupStateName);
+                break;
+            case (EnemyState.Confused):
+                StartAnimation(AnimatorConfusedStateName);
                 break;
             case (EnemyState.Chase):
                 StartAnimation(AnimatorChaseStateName);
