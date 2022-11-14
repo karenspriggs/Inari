@@ -747,7 +747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1925141421899861905
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2719,6 +2719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 3021392215289344593}
+  firstButton: {fileID: 0}
 --- !u!114 &5123784879552030408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3540,7 +3541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3021392215885874348
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11186,7 +11187,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &6542418390048975722
 GameObject:
