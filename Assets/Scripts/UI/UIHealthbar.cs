@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIHealthbar : MonoBehaviour
 {
     public static UIHealthbar instance { get; private set; }
 
     public Image mask;
+    public TMP_Text healthText;
     float originalSize;
     float maxHPValue;
     float currentValue;
@@ -52,6 +54,12 @@ public class UIHealthbar : MonoBehaviour
     {
         maxHPValue = maxHP;
         currentValue = maxHP;
+        SetHPText();
+    }
+
+    void SetHPText()
+    {
+        healthText.text = $"{currentValue}/{maxHPValue}";
     }
 
     public void SetValue(float damage)
@@ -73,5 +81,6 @@ public class UIHealthbar : MonoBehaviour
         LeanTween.cancel(mask.gameObject);
         
         LeanTween.scaleX(mask.gameObject, currentValue / maxHPValue, 1.0f).setEasePunch();
+        SetHPText();
     }
 }

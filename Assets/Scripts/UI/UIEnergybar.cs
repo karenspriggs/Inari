@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIEnergybar : MonoBehaviour
 {
     public static UIEnergybar instance { get; private set; }
 
     public Image mask;
+    public TMP_Text energyText;
+
     float originalSize;
     float maxEnergyValue;
     float currentValue;
@@ -46,10 +49,17 @@ public class UIEnergybar : MonoBehaviour
 
     }
 
+    void SetEnergyText()
+    {
+        energyText.text = $"{currentValue}/{maxEnergyValue}";
+    }
+
     void SetMaxEnergyValue(float maxEnergy)
     {
         maxEnergyValue = maxEnergy;
         currentValue = maxEnergy;
+
+        SetEnergyText();
     }
 
     public void SetValue(float energy)
@@ -60,5 +70,6 @@ public class UIEnergybar : MonoBehaviour
         LeanTween.cancel(mask.gameObject);
 
         LeanTween.scaleX(mask.gameObject, currentValue / maxEnergyValue, 1.0f).setEasePunch();
+        SetEnergyText();
     }
 }
