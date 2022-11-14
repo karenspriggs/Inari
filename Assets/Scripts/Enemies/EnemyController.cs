@@ -99,17 +99,13 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch)
         {
-            if (currentState != EnemyState.Hit && currentState != EnemyState.ChaseStartup && currentState != EnemyState.Confused)
+            if (currentState != EnemyState.Hit && currentState != EnemyState.ChaseStartup)
             {
                 DetermineIfShouldChase();
                 DetermineState();
             }
 
-            if (currentState != EnemyState.Confused)
-            {
-                UpdateTimers();
-            }
-            
+            UpdateTimers();
             DoState(currentState);
         }
         UpdateGrounding();
@@ -216,7 +212,7 @@ public class EnemyController : MonoBehaviour
 
     void DetermineIfShouldWander()
     {
-        if (shouldWander && willWander && currentState == EnemyState.Idle)
+        if (shouldWander && willWander && currentState == EnemyState.Idle && currentState != EnemyState.Confused)
         {
             SwitchState(EnemyState.Wander);
         }
