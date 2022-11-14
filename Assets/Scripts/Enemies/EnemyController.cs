@@ -64,6 +64,8 @@ public class EnemyController : MonoBehaviour
     public float groundCheckXDistance = 0.25f;
     public float groundCheckYDistance = 0.25f;
 
+    bool groundedLastFrame = false;
+
     public GameObject chaseTarget;
 
     private Vector2 hitLocation;
@@ -400,10 +402,12 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        if (isGrounded && currentState == EnemyState.DeadLaunch)
+        if (isGrounded && currentState == EnemyState.DeadLaunch && !groundedLastFrame)
         {
             SwitchState(EnemyState.Death);
         }
+
+        groundedLastFrame = isGrounded;
     }
 
     private void AnimationEndTransitionToNextState(EnemyState nextState)
