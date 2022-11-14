@@ -56,6 +56,9 @@ public class UIHealthbar : MonoBehaviour
 
     public void SetValue(float damage)
     {
+        Debug.Log("Updating Value");
+        Debug.Log(damage);
+
         currentValue -= damage;
 
         if (currentValue > maxHPValue)

@@ -204,10 +204,5 @@ public class PlayerData : MonoBehaviour
             currentCheckpoint = collision.transform;
             collision.GetComponent<Collider2D>().enabled = false; //Deactivates checkpoint collider
         }
-
-        if (collision.gameObject.tag == "Food")
-        {
-            HealHealth(1);
-        }
     }
 }
