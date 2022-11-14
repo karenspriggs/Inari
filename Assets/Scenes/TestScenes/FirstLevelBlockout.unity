@@ -65827,8 +65827,8 @@ Transform:
   m_Children:
   - {fileID: 6098494944009950506}
   - {fileID: 2010162325}
-  - {fileID: 1790768084}
   - {fileID: 1502891006422965496}
+  - {fileID: 1790768084}
   - {fileID: 233610850}
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -75331,6 +75331,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6859016246574178843, guid: 5bdb544428683484eb431a8cdc2758eb, type: 3}
   m_PrefabInstance: {fileID: 1727661155}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1734128458 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6080896665345142065, guid: 6b02e27f901ac034c8df042e37b393da, type: 3}
+  m_PrefabInstance: {fileID: 1649939404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0167177647f4da746945ee26d83c0410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1736496520
 GameObject:
   m_ObjectHideFlags: 0
@@ -82697,6 +82708,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2320926256363551617, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: CheckpointsInLevel.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320926256363551617, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: CheckpointsInLevel.Array.data[0]
       value: 
       objectReference: {fileID: 965174354}
@@ -82708,6 +82723,10 @@ PrefabInstance:
       propertyPath: CheckpointsInLevel.Array.data[2]
       value: 
       objectReference: {fileID: 1219009157}
+    - target: {fileID: 2320926256363551617, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: CheckpointsInLevel.Array.data[3]
+      value: 
+      objectReference: {fileID: 1734128458}
     - target: {fileID: 3362845495905569700, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -82851,6 +82870,14 @@ PrefabInstance:
     - target: {fileID: 8366366373655446275, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: m_LocalPosition.y
       value: 17.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366366373655446333, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: isUsingSaveData
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366366373655446333, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: manualCheckpointSpawnID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8861233120566410729, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: m_LocalRotation.w

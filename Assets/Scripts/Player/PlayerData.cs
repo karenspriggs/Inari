@@ -28,6 +28,7 @@ public class PlayerData : MonoBehaviour
     public float energyForKillingEnemy;
     public float invulnTime;
     public int currentCheckpointID;
+    public int manualCheckpointSpawnID = 0;
 
     public bool isUsingSaveData = false;
     public bool isInvincible = false;
@@ -37,7 +38,7 @@ public class PlayerData : MonoBehaviour
     private Weapon currentWeapon;
 
     private Transform currentCheckpoint;
-    
+
     /// <summary>
     /// Subscribe to this delegate for methods that want to know when a player took damage, it will also give you the max amount for health
     /// </summary>
@@ -70,6 +71,9 @@ public class PlayerData : MonoBehaviour
         {
             currentCheckpointID = PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID;
             transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
+        } else
+        {
+            transform.position = checkpointManager.ReturnCheckpointTransform(manualCheckpointSpawnID);
         }
         currentHP = maxHP;
         currentEnergy = maxEnergy;
