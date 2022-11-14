@@ -95,7 +95,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentState != EnemyState.Death)
+        if (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch)
         {
             if (currentState != EnemyState.Hit)
             {
@@ -103,9 +103,9 @@ public class EnemyController : MonoBehaviour
                 DetermineState();
             }
             UpdateTimers();
-            UpdateGrounding();
             DoState(currentState);
-        }   
+        }
+        UpdateGrounding();
     }
 
     public void SwitchState(EnemyState newState)
@@ -137,8 +137,9 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Stun):
                 break;
+            case (EnemyState.DeadLaunch):
+                break;
             case (EnemyState.Death):
-                LaunchOnDeath();
                 enemyAnimatior.SwitchState(EnemyState.Death);
                 break;
         }
@@ -210,7 +211,7 @@ public class EnemyController : MonoBehaviour
     {
         if (!targetChosen)
         {
-            float wanderDirection = Random.Range(0,2);
+            float wanderDirection = Random.Range(0, 2);
 
             // Goes right if random was 1, goes left if random was 0
             if (wanderDirection == 0)
@@ -310,13 +311,24 @@ public class EnemyController : MonoBehaviour
             SwitchState(EnemyState.Idle);
             wanderTimer = WanderCooldown;
         }
-        else 
+        else
             transform.position = currentMovement;
     }
 
-    void LaunchOnDeath()
+    public void LaunchOnDeath(bool isToLeft)
     {
-        rigidbody.AddForce(deathLaunchDistance);
+        Debug.Log("Launching enemy");
+
+        Vector2 distanceToLaunch = deathLaunchDistance;
+
+        if (!isToLeft)
+        {
+            distanceToLaunch = new Vector2(-distanceToLaunch.x, distanceToLaunch.y);
+        }
+
+        rigidbody.AddForce(distanceToLaunch);
+
+        SwitchState(EnemyState.DeadLaunch);
     }
 
     void ResetAttack()
@@ -387,6 +399,11 @@ public class EnemyController : MonoBehaviour
                 rigidbody.gravityScale = 5f;
             }
         }
+
+        if (isGrounded && currentState == EnemyState.DeadLaunch)
+        {
+            SwitchState(EnemyState.Death);
+        }
     }
 
     private void AnimationEndTransitionToNextState(EnemyState nextState)
@@ -399,7 +416,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerAttackHitbox") && currentState != EnemyState.Death)
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox") && (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch))
         {
             SwitchState(EnemyState.Hit);
             hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));

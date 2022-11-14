@@ -45,7 +45,7 @@ public class EnemyFollow : MonoBehaviour
 
         if (!enemyData.isDead)
         {
-            enemyAnimator.UpdateMoveAnimation(isMoving);
+            //enemyAnimator.UpdateMoveAnimation(isMoving);
         }
     }
 
@@ -59,7 +59,7 @@ public class EnemyFollow : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox") && !enemyData.isDead)
         {
             hitStun = true;
-            enemyAnimator.StartHitAnimation();
+            //enemyAnimator.StartHitAnimation();
             StartCoroutine(HitStun());
             StopCoroutine(HitStun());
         }

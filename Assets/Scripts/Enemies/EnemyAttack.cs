@@ -98,6 +98,6 @@ public class EnemyAttack : MonoBehaviour
     private void StartAttack()
     {
         canAttack = false;
-        enemyAnimator.StartAttackAnimation();
+        //enemyAnimator.StartAttackAnimation();
     }
 }

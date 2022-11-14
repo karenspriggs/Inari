@@ -8,14 +8,6 @@ public class EnemyAnimator : MonoBehaviour
     private EnemySound enemySound;
     float velocityToStopMovingAnim;
 
-    [Header("Animator Values")]
-    private int animatorMoveBool;
-    private int animatorChaseBool;
-    private int animatorWanderBool;
-    private int animatorAttackTrigger;
-    private int animatorHitTrigger;
-    private int animatorDeathTrigger;
-
     public string AnimatorIdleStateName;
     public string AnimatorIdleAltStateName;
     public string AnimatorWalkStateName;
@@ -24,6 +16,7 @@ public class EnemyAnimator : MonoBehaviour
     public string AnimatorHitStateName;
     public string AnimatorAttackStateName;
     public string AnimatorStunStateName;
+    public string AnimatorLaunchDeathStateName;
     public string AnimatorDeathStateName;
 
     public int StunTime;
@@ -33,49 +26,8 @@ public class EnemyAnimator : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         enemySound = GetComponent<EnemySound>();
-
-        animatorMoveBool = Animator.StringToHash("IsMoving");
-        animatorWanderBool = Animator.StringToHash("IsWandering");
-        animatorChaseBool = Animator.StringToHash("IsChasing");
-        animatorHitTrigger = Animator.StringToHash("IsHit");
-        animatorDeathTrigger = Animator.StringToHash("IsDead");
-        animatorAttackTrigger = Animator.StringToHash("IsAttacking");
     }
 
-    public void StartHitAnimation()
-    {
-        Debug.Log("Hit animation");
-        animator.SetTrigger(animatorHitTrigger);
-        enemySound.PlaySound(enemySound.HitSound);
-    }
-    public void StartDeathAnimation()
-    {
-        animator.SetTrigger(animatorDeathTrigger);
-        enemySound.PlaySound(enemySound.DeathSound);
-    }
-
-    public void UpdateMoveAnimation(bool isMoving)
-    {
-        animator.SetBool(animatorMoveBool, isMoving);
-    }
-
-    public void StartAttackAnimation()
-    {
-        animator.SetTrigger("IsAttacking");
-        enemySound.PlaySound(enemySound.AttackSound);
-    }
-
-    public void AnimationUpdateMoveBool(float moveInput)
-    {
-        bool isMoving = true;
-
-        if ((moveInput < velocityToStopMovingAnim && moveInput >= -velocityToStopMovingAnim))
-        {
-            isMoving = false;
-        }
-
-        animator.SetBool(animatorMoveBool, isMoving);
-    }
 
     public void StartAnimation(string animationStateName)
     {
@@ -129,6 +81,9 @@ public class EnemyAnimator : MonoBehaviour
                 break;
             case (EnemyState.Stun):
                 StartAnimation(AnimatorStunStateName, StunTime);
+                break;
+            case (EnemyState.DeadLaunch):
+                StartAnimation(AnimatorLaunchDeathStateName);
                 break;
             case (EnemyState.Death):
                 StartAnimation(AnimatorDeathStateName);

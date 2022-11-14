@@ -29,6 +29,7 @@ public class EnemyData : MonoBehaviour
     public bool isNewController = false;
     public bool isDead = false;
     public bool wasHit = false;
+    bool wasHitToLeft = false;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +62,7 @@ public class EnemyData : MonoBehaviour
         if (currentHP <= 0 && !isDead)
         {
             Debug.Log("Enemy died");
-            enemyController.SwitchState(EnemyState.Death);
+            enemyController.LaunchOnDeath(wasHitToLeft);
             isDead = true;
             EnemyKilled?.Invoke();
             EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
@@ -82,6 +83,14 @@ public class EnemyData : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             wasHit = true;
+
+            if (collision.gameObject.transform.position.x < this.gameObject.transform.position.x)
+            {
+                wasHitToLeft = true;
+            } else
+            {
+                wasHitToLeft = false;
+            }
         }
     }
 }
