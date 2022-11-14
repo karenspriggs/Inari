@@ -345,18 +345,39 @@ public class PlayerController : MonoBehaviour
         switch(state)
         {
             case InariState.Neutral:
-                playerMovement.UpdateGravity();
+                if (isGrounded)
+                {
+                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
+                }
+                else
+                {
+                    playerMovement.UpdateGravity();
+                }
                 AllowHorizontalMovement();
                 AllowFalling();
                 AllowGroundToResetJumps();
                 break;
             case InariState.DashStartup:
-                playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
+                if (isGrounded)
+                {
+                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
+                }
+                else
+                {
+                    playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
+                }
                 playerMovement.DoFriction(playerMovement.GroundFriction);
                 TimeTransitionToNextState(DashStartupTimerMax, InariState.Dashing);
                 break;
             case InariState.Dashing:
-                playerMovement.TurnOffGravity();
+                if (isGrounded)
+                {
+                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
+                }
+                else
+                {
+                    playerMovement.TurnOffGravity();
+                }
                 playerMovement.DoFriction(playerMovement.DashFriction);
                 if (playerMovement.ShouldEndDash())
                 {
@@ -381,7 +402,14 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case InariState.BasicAttacking:
-                playerMovement.TurnOffGravity();
+                if (isGrounded)
+                {
+                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
+                }
+                else
+                {
+                    playerMovement.TurnOffGravity();
+                }
                 playerMovement.DoFriction(playerMovement.GroundFriction);
                 AnimationEndTransitionToNextState(InariState.Neutral);
                 break;

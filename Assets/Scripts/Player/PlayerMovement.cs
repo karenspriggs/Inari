@@ -19,9 +19,11 @@ public class PlayerMovement : MonoBehaviour
     public float WallJumpHeight;
     public float WallJumpSpeedHorizontal;
 
+    public float GroundedGravityScale = 50f;
     public float RisingGravityScale;
     public float FallingGravityScale;
     public float DashStartupGravityScale = 0.3f;
+    public float slopeFriction = 1f;
 
     public float GroundFriction;
     public float AirFriction;

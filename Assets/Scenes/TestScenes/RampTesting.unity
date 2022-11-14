@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 135947896}
   - component: {fileID: 135947895}
   - component: {fileID: 135947897}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ramps
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -149,14 +149,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135947893}
-  m_LocalRotation: {x: -0, y: -0, z: -0.40773758, w: 0.9130992}
-  m_LocalPosition: {x: -12.12, y: 8.99, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.5735764, w: 0.8191521}
+  m_LocalPosition: {x: -13.56, y: 12.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1814441639}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -48.126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -70}
 --- !u!483693784 &135947895
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -32404,7 +32404,7 @@ GameObject:
   - component: {fileID: 903442951}
   - component: {fileID: 903442950}
   - component: {fileID: 903442949}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ramps (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -33474,7 +33474,7 @@ GameObject:
   - component: {fileID: 1018402075}
   - component: {fileID: 1018402074}
   - component: {fileID: 1018402073}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -33587,9 +33587,9 @@ GameObject:
   - component: {fileID: 1344380507}
   - component: {fileID: 1344380506}
   - component: {fileID: 1344380509}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ramps (2)
-  m_TagString: Ramp
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36107,7 +36107,7 @@ GameObject:
   - component: {fileID: 1612782885}
   - component: {fileID: 1612782884}
   - component: {fileID: 1612782883}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36649,6 +36649,22 @@ PrefabInstance:
     - target: {fileID: 8366366373655446274, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: DashTimer
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366366373655446274, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: DashEndGravityScale
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366366373655446274, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: GroundedGravityScale
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366366373655446274, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: groundCheckXDistance
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366366373655446274, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: groundCheckYDistance
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8366366373655446275, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: m_LocalPosition.x
