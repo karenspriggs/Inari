@@ -140,6 +140,7 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Stun):
                 break;
             case (EnemyState.DeadLaunch):
+                enemyAnimatior.SwitchState(EnemyState.DeadLaunch);
                 break;
             case (EnemyState.Death):
                 enemyAnimatior.SwitchState(EnemyState.Death);

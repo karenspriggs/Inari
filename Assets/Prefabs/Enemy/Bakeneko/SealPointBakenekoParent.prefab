@@ -264,8 +264,12 @@ PrefabInstance:
       value: SealPointBakenekoEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 342619544621165300, guid: c994a724409b37a4985546a6240b94fe, type: 3}
+      propertyPath: AnimatorDeathStateName
+      value: NewBakenekoDeathLANDING
+      objectReference: {fileID: 0}
+    - target: {fileID: 342619544621165300, guid: c994a724409b37a4985546a6240b94fe, type: 3}
       propertyPath: AnimatorLaunchDeathStateName
-      value: NEWBakenekoStun
+      value: NewBakenekoDeathLAUNCH
       objectReference: {fileID: 0}
     - target: {fileID: 826998923756485064, guid: c994a724409b37a4985546a6240b94fe, type: 3}
       propertyPath: m_LocalRotation.w
