@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
     Vector2 currentWanderTarget;
     float currentWanderMin;
     float currentWanderMax;
+    public float lastWanderDistance;
 
     public bool isFacingRight;
 
@@ -103,6 +104,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Wander):
                 enemyAnimatior.SwitchState(EnemyState.Wander);
+                DetermineWanderBoundaries();
                 DetermineWanderDistance();
                 break;
             case (EnemyState.ChaseStartup):
@@ -135,7 +137,6 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Wander):
                 Wander();
-                DetermineWanderBoundaries();
                 break;
             case (EnemyState.ChaseStartup):
                 AnimationEndTransitionToNextState(EnemyState.Chase);
@@ -236,6 +237,12 @@ public class EnemyController : MonoBehaviour
 
     void Wander()
     {
+        if (lastWanderDistance >= -0.1f && maxWanderDistance <= 0.1f)
+        {
+            Debug.Log("Enemy is being flipped");
+            FlipEnemy();
+        }
+
         if (transform.position.x < currentWanderTarget.x && !isFacingRight)
         {
             FlipEnemy();
@@ -247,6 +254,7 @@ public class EnemyController : MonoBehaviour
         }
 
         Vector2 currentMovement = Vector2.MoveTowards(transform.position, currentWanderTarget, WanderSpeed * Time.deltaTime);
+        lastWanderDistance = currentMovement.x - transform.position.x;
         transform.position = currentMovement;
 
         if ((Vector2)transform.position == currentWanderTarget)

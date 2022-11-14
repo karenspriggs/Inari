@@ -24,14 +24,20 @@ public class PauseMenuUI : MonoBehaviour
     {
         Time.timeScale = 1;
         isPaused = false;
-        pauseMenuUI.SetActive(false);
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(false);
+        }
     }
 
     void Pause()
     {
         Time.timeScale = 0;
         isPaused = true;
-        pauseMenuUI.SetActive(true);
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(true);
+        }
     }
 
     public void RestartButton()
