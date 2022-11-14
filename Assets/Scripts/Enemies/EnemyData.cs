@@ -26,7 +26,7 @@ public class EnemyData : MonoBehaviour
     public static Action EnemyKilled;
     public static Action<int, int> EnemyKilledValues;
 
-    public bool isNewController = false;
+    public bool isNewController = true;
     public bool isDead = false;
     public bool wasHit = false;
     bool wasHitToLeft = false;
