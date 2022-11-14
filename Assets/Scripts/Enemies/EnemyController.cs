@@ -406,6 +406,7 @@ public class EnemyController : MonoBehaviour
         if (isGrounded && currentState == EnemyState.DeadLaunch && !groundedLastFrame)
         {
             SwitchState(EnemyState.Death);
+            enemyParticles.PlayLandParticles();
         }
 
         groundedLastFrame = isGrounded;

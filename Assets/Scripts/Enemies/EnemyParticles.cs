@@ -6,6 +6,7 @@ public class EnemyParticles : MonoBehaviour
 {
     public GameObject hitParticles;
     public ParticleSystem hitParts;
+    public ParticleSystem landParts;
     public TimeManager timeManager;
 
     private void Awake()
@@ -17,5 +18,10 @@ public class EnemyParticles : MonoBehaviour
     {
         hitParts.Play();
         timeManager.DoHitStop();
+    }
+
+    public void PlayLandParticles()
+    {
+        landParts.Play();
     }
 }

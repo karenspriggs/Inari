@@ -9,19 +9,24 @@ public class ScreenShake : MonoBehaviour
     CinemachineBasicMultiChannelPerlin noisePerlin;
     public float ampletudeGain = 2f, frequencyGain = 2f, shakeTime = 1f;
     bool isShaking = false;
-    float shakeTimeElasped = 0f ;
+    float shakeTimeElasped;
 
     void Awake()
     {
         vcam = GetComponent<CinemachineVirtualCamera>();
-        noisePerlin = vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        //CharacterEvents.CharacterDamaged += ShakeIfTarget;
-        //Character action whatever that may be.^
-        //"CharacterEvents" = Class, "CharacterDamage" = Method... just incase people were curious.
+        noisePerlin = vcam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
     }
 
-    //void OnDistroy(){ CharacterEvents.CharacterDamaged -= ShakeIfTarget; }
-    //this is to remove it in the list of methods to be reinvoked (basically to stop it from looping))
+    private void OnEnable()
+    {
+        EnemyData.EnemyKilled += StartShaking;
+    }
+
+    private void OnDisable()
+    {
+        EnemyData.EnemyKilled -= StartShaking;
+    }
+
     public void ShakeIfTarget(float damage, GameObject gameObject) //only placeholders for now
     {
         if(vcam.Follow == gameObject.transform)
@@ -29,6 +34,7 @@ public class ScreenShake : MonoBehaviour
             StartShaking();
         }
     }
+
     public void StartShaking()
     {
         noisePerlin.m_AmplitudeGain = ampletudeGain;
@@ -36,6 +42,7 @@ public class ScreenShake : MonoBehaviour
         isShaking = true;
         shakeTimeElasped = 0f;
     }
+
     public void StopShake()
     {
         noisePerlin.m_AmplitudeGain = 0f;
@@ -47,6 +54,6 @@ public class ScreenShake : MonoBehaviour
     private void Update()
     {
         shakeTimeElasped += Time.deltaTime;
-        if(shakeTimeElasped > shakeTime) { StopShake(); }
+        if(shakeTimeElasped > shakeTime && isShaking) { StopShake(); }
     }
 }
