@@ -23,6 +23,9 @@ public class EnemyController : MonoBehaviour
     EnemyAnimator enemyAnimatior;
     EnemyData enemyData;
     EnemyParticles enemyParticles;
+    Rigidbody2D rigidbody;
+    CapsuleCollider2D collider;
+
     [SerializeField]
     EnemyState currentState;
 
@@ -32,6 +35,7 @@ public class EnemyController : MonoBehaviour
     bool shouldAttack = false;
     bool shouldHitStun = false;
     bool targetChosen = false;
+    bool isGrounded = true;
 
     [SerializeField]
     float attackTimer;
@@ -54,6 +58,11 @@ public class EnemyController : MonoBehaviour
     public float WanderCooldown;
     public int maxWanderDistance;
     public bool willWander = true;
+    public Vector2 deathLaunchDistance;
+
+    private LayerMask groundMask;
+    public float groundCheckXDistance = 0.25f;
+    public float groundCheckYDistance = 0.25f;
 
     public GameObject chaseTarget;
 
@@ -65,9 +74,14 @@ public class EnemyController : MonoBehaviour
         enemyAnimatior = GetComponent<EnemyAnimator>();
         enemyData = GetComponent<EnemyData>();
         enemyParticles = GetComponent<EnemyParticles>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<CapsuleCollider2D>();
+
         currentState = EnemyState.Idle;
         attackTimer = attackCooldown;
         wanderTimer = WanderCooldown;
+
+        groundMask = LayerMask.GetMask("Ground");
 
         if (stopDistance <= chaseDistance)
         {
@@ -89,6 +103,7 @@ public class EnemyController : MonoBehaviour
                 DetermineState();
             }
             UpdateTimers();
+            UpdateGrounding();
             DoState(currentState);
         }   
     }
@@ -123,6 +138,7 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Stun):
                 break;
             case (EnemyState.Death):
+                LaunchOnDeath();
                 enemyAnimatior.SwitchState(EnemyState.Death);
                 break;
         }
@@ -298,6 +314,11 @@ public class EnemyController : MonoBehaviour
             transform.position = currentMovement;
     }
 
+    void LaunchOnDeath()
+    {
+        rigidbody.AddForce(deathLaunchDistance);
+    }
+
     void ResetAttack()
     {
         canAttack = true;
@@ -348,6 +369,22 @@ public class EnemyController : MonoBehaviour
                 //just now passed below the timer
                 wanderTimer = 0f;
                 ResetWander();
+            }
+        }
+    }
+
+    void UpdateGrounding()
+    {
+        isGrounded = Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), groundMask);
+
+        if (isGrounded)
+        {
+            rigidbody.gravityScale = 1f;
+        } else
+        {
+            if (currentState != EnemyState.Hit)
+            {
+                rigidbody.gravityScale = 5f;
             }
         }
     }
