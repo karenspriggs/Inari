@@ -181,6 +181,27 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.velocity = new Vector2(dashSpeedThisFrame, playerRigidbody.velocity.y);
         playerController.canDash = false;
     }
+
+    //public void NormalizeSlope()
+    //{
+    //    if (playerController.isGrounded)
+    //    {
+    //        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 1f, groundMask);
+
+    //        if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f)
+    //        {
+    //            Rigidbody2D body = GetComponent<Rigidbody2D>();
+    //            // Apply the opposite force against the slope force 
+    //            // You will need to provide your own slopeFriction to stabalize movement
+    //            body.velocity = new Vector2(body.velocity.x - (hit.normal.x * slopeFriction), body.velocity.y);
+
+    //            //Move Player up or down to compensate for the slope below them
+    //            Vector3 pos = transform.position;
+    //            pos.y += -hit.normal.x * Mathf.Abs(body.velocity.x) * Time.deltaTime * (body.velocity.x - hit.normal.x > 0 ? 1 : -1);
+    //            transform.position = pos;
+    //        }
+    //    }
+    //}
     public void DoTheDash()
     {
         Dash();
