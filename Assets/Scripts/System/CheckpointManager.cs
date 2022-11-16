@@ -26,4 +26,9 @@ public class CheckpointManager : MonoBehaviour
 
         return CheckpointsInLevel[0].gameObject.transform.position;
     }
+
+    public bool HasCheckpoints()
+    {
+        return (CheckpointsInLevel.Count > 0);
+    }
 }

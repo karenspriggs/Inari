@@ -67,13 +67,17 @@ public class PlayerData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (isUsingSaveData)
+        if (checkpointManager.HasCheckpoints())
         {
-            currentCheckpointID = PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID;
-            transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
-        } else
-        {
-            transform.position = checkpointManager.ReturnCheckpointTransform(manualCheckpointSpawnID);
+            if (isUsingSaveData)
+            {
+                currentCheckpointID = PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID;
+                transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
+            }
+            else
+            {
+                transform.position = checkpointManager.ReturnCheckpointTransform(manualCheckpointSpawnID);
+            }
         }
         currentHP = maxHP;
         currentEnergy = maxEnergy;
