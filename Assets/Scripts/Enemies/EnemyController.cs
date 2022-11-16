@@ -26,6 +26,8 @@ public class EnemyController : MonoBehaviour
     Rigidbody2D rigidbody;
     CapsuleCollider2D collider;
 
+    public GameObject animationProps;
+
     [SerializeField]
     EnemyState currentState;
 
@@ -357,6 +359,10 @@ public class EnemyController : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
+
+        Vector3 propsLocalScale = animationProps.transform.localScale;
+        propsLocalScale.x *= -1f;
+        animationProps.transform.localScale = propsLocalScale;
     }
 
     private void UpdateTimers()
