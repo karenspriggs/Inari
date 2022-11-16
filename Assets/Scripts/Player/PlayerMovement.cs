@@ -364,7 +364,7 @@ public class PlayerMovement : MonoBehaviour
             if (_coyoteTimer <= 0)
             {
                 //just now passed below the timer
-                _dashTimer = 0f;
+                _coyoteTimer = 0f;
                 ResetDash();
             }
         }
