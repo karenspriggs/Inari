@@ -337,6 +337,7 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateTimers()
     {
         UpdateDashTimer();
+        UpdateCoyoteTimer();
     }
 
     public void UpdateDashTimer()
