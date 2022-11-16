@@ -163,7 +163,6 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckForJump()
     {
-        
         bool hasJumpInputThisFrame = (isJumping == 1);
         bool r = false;
 
@@ -179,9 +178,10 @@ public class PlayerController : MonoBehaviour
                     r = true;
                     SwitchState(InariState.WallJumping);
                 }
-                else if (canJump)
+                else if (canJump || playerMovement.CanCoyoteJump)
                 {
                     canJump = false;
+                    playerMovement.CanCoyoteJump = false;
                     isGrounded = false;
                     r = true;
                     SwitchState(InariState.Jumping);
@@ -305,8 +305,8 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = true;
                 dashEnabled = true;
                 attacksEnabled = true;
-                canJump = false;
                 canWallJump = true;
+                playerMovement._coyoteTimer = playerMovement.CoyoteTimer;
                 break;
             case InariState.BasicAttacking:
                 jumpsEnabled = false;

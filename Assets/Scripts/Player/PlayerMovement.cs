@@ -14,10 +14,12 @@ public class PlayerMovement : MonoBehaviour
     public float DashTimer;
     public float DashFriction;
 
+    public float CoyoteTimer;
     public float JumpHeight;
     public float DoubleJumpHeight;
     public float WallJumpHeight;
     public float WallJumpSpeedHorizontal;
+    public bool CanCoyoteJump;
 
     public float GroundedGravityScale = 50f;
     public float RisingGravityScale;
@@ -40,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     CapsuleCollider2D playerCapsule;
     //BoxCollider2D playerCapsule;
     public float _dashTimer = 0f;
+    public float _coyoteTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -266,6 +269,11 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+
+    public void ResetCoyoteTimer()
+    {
+        CanCoyoteJump = false;
+    }
     #endregion
 
     public void DoFriction(float frictionAmount)
@@ -338,6 +346,21 @@ public class PlayerMovement : MonoBehaviour
             _dashTimer -= 1 * Time.deltaTime;
 
             if (_dashTimer <= 0)
+            {
+                //just now passed below the timer
+                _dashTimer = 0f;
+                ResetDash();
+            }
+        }
+    }
+
+    public void UpdateCoyoteTimer()
+    {
+        if (_coyoteTimer > 0)
+        {
+            _coyoteTimer -= 1 * Time.deltaTime;
+
+            if (_coyoteTimer <= 0)
             {
                 //just now passed below the timer
                 _dashTimer = 0f;
