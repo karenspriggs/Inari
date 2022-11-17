@@ -64,10 +64,13 @@ public class PlayerMovement : MonoBehaviour
         MoveHorizontal(maxSpeed, inputMovement);
     }
 
-    public void MoveHorizontal(float maxSpeed, float _inputMovement)
+    public void MoveHorizontal(float _maxSpeed, float _inputMovement)
     {
 
         float hsp = playerRigidbody.velocity.x;
+
+        //if we only move the left stick a little bit, inari should only accelerate to a walking pace
+        float maxSpeed = _maxSpeed * Mathf.Abs(_inputMovement);
 
         float fricAmount = GroundFriction;
         
@@ -99,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
                 (System.Math.Sign(_inputMovement) != System.Math.Sign(hsp)) // or if you are trying to change directions
                 )
             {
-                hsp += actingHorizontalAccel * _inputMovement * Time.deltaTime;
+                hsp += actingHorizontalAccel * Mathf.Sign(_inputMovement) * Time.deltaTime;
             }
             else
             {
