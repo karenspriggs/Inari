@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
 {
     EnemyAnimator enemyAnimator;
     EnemyData enemyData;
+    EnemySound enemySounds;
     EnemyParticles enemyParticles;
     Rigidbody2D rigidbody;
     CapsuleCollider2D collider;
@@ -78,6 +79,7 @@ public class EnemyController : MonoBehaviour
         enemyAnimator = GetComponent<EnemyAnimator>();
         enemyData = GetComponent<EnemyData>();
         enemyParticles = GetComponent<EnemyParticles>();
+        enemySounds = GetComponent<EnemySound>();
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<CapsuleCollider2D>();
 
@@ -130,18 +132,22 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.ChaseStartup):
                 enemyAnimator.SwitchState(EnemyState.ChaseStartup);
+                enemySounds.PlaySound(enemySounds.AlertSound);
                 break;
             case (EnemyState.Confused):
                 enemyAnimator.SwitchState(EnemyState.Confused);
+                enemySounds.PlaySound(enemySounds.ConfusedSound);
                 break;
             case (EnemyState.Chase):
                 enemyAnimator.SwitchState(EnemyState.Chase);
                 break;
             case (EnemyState.Attack):
                 enemyAnimator.SwitchState(EnemyState.Attack);
+                enemySounds.PlaySound(enemySounds.AttackSound);
                 break;
             case (EnemyState.Hit):
                 enemyParticles.PlayHitParticles();
+                enemySounds.PlaySound(enemySounds.HitSound);
                 enemyAnimator.SwitchState(EnemyState.Hit);
                 break;
             case (EnemyState.Stun):
@@ -151,6 +157,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case (EnemyState.Death):
                 enemyAnimator.SwitchState(EnemyState.Death);
+                enemySounds.PlaySound(enemySounds.DeathSound);
                 break;
         }
     }
