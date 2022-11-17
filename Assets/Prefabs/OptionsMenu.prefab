@@ -574,10 +574,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 6034433129587575709}
+    m_SelectOnDown: {fileID: 2956338856151878697}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -614,7 +614,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4933129471264715800}
         m_TargetAssemblyTypeName: AudioAdjusting, Assembly-CSharp
-        m_MethodName: SetVolume
+        m_MethodName: SetMaster
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -644,7 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cd34418053f7a4c868c8f80513c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 5bfc6a93a623ba34cad37b1d8c17771d, type: 2}
 --- !u!1 &1659057903103520470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,8 +1079,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 784262631127436118}
+    m_SelectOnDown: {fileID: 103363855418619711}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1176,10 +1176,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 103363855418619711}
+    m_SelectOnDown: {fileID: 784262631127436118}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1216,7 +1216,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2392839291618635235}
         m_TargetAssemblyTypeName: AudioAdjusting, Assembly-CSharp
-        m_MethodName: SetVolume
+        m_MethodName: SetMusic
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cd34418053f7a4c868c8f80513c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 5bfc6a93a623ba34cad37b1d8c17771d, type: 2}
 --- !u!1 &5320082105630090995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,10 +1897,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 2956338856151878697}
+    m_SelectOnDown: {fileID: 6034433129587575709}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1937,7 +1937,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1110258340514015444}
         m_TargetAssemblyTypeName: AudioAdjusting, Assembly-CSharp
-        m_MethodName: SetVolume
+        m_MethodName: SetSFX
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1967,7 +1967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cd34418053f7a4c868c8f80513c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 5bfc6a93a623ba34cad37b1d8c17771d, type: 2}
 --- !u!1 &7882268079465511935
 GameObject:
   m_ObjectHideFlags: 0

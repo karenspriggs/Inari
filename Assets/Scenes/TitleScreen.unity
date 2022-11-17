@@ -898,17 +898,6 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 3551238975570810608, guid: bf2e4029bc1eefa4199817e0e0da59ed, type: 3}
   m_PrefabInstance: {fileID: 226179836}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &883265821 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 103363854163351973, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
-  m_PrefabInstance: {fileID: 103363853435275448}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1076308273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,6 +1327,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231336700}
   m_CullTransparentMesh: 1
+--- !u!114 &1242662213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2956338856151878697, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
+  m_PrefabInstance: {fileID: 103363853435275448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1245715302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6034433129587575709, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
+  m_PrefabInstance: {fileID: 103363853435275448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1538793062
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,7 +2163,7 @@ PrefabInstance:
     - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 883265821}
+      objectReference: {fileID: 1245715302}
     - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
       value: 0.9725491
@@ -2168,7 +2179,7 @@ PrefabInstance:
     - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 883265821}
+      objectReference: {fileID: 1242662213}
     - target: {fileID: 103363855418619711, guid: a0b8891a695d17e4ea9f1413345fae87, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
