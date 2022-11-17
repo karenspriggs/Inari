@@ -65,6 +65,10 @@ public class LevelUpScreen : MonoBehaviour
         {
             playerStats.Attack = Mathf.Ceil(1.25f * playerStats.Attack);
             playerLevel.upgradePoints--;
+
+            PlayerSaveSystem.SessionSaveData.playerStats.Attack = playerStats.Attack;
+            PlayerSaveSystem.SessionSaveData.playerStats.UpdgradePoints--;
+
             UpdateLevelUpUI();
         }
     }
@@ -76,6 +80,10 @@ public class LevelUpScreen : MonoBehaviour
             playerStats.maxEnergy = Mathf.Ceil(1.25f * playerStats.maxEnergy);
             playerStats.currentEnergy = playerStats.maxEnergy;
             playerLevel.upgradePoints--;
+
+            PlayerSaveSystem.SessionSaveData.playerStats.MaxEnergy = playerStats.maxEnergy;
+            PlayerSaveSystem.SessionSaveData.playerStats.UpdgradePoints--;
+
             UpdateLevelUpUI();
         }
     }
@@ -87,7 +95,12 @@ public class LevelUpScreen : MonoBehaviour
         {
             playerStats.maxHP = Mathf.Ceil(1.25f * playerStats.maxHP);
             playerStats.currentHP = playerStats.maxHP;
+
             playerLevel.upgradePoints--;
+
+            PlayerSaveSystem.SessionSaveData.playerStats.MaxHP = playerStats.maxHP;
+            PlayerSaveSystem.SessionSaveData.playerStats.UpdgradePoints--;
+
             UpdateLevelUpUI();
         }
     }

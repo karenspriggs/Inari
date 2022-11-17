@@ -10,6 +10,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory Instance;
     public List<Item> Items = new List<Item>();
+    public bool isUsingSaveData = false;
     // Start is called before the first frame update
 
     public Transform ItemContent;
@@ -18,16 +19,31 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        if (isUsingSaveData)
+        {
+            Items = PlayerSaveSystem.SessionSaveData.playerInventory;
+        }
     }
 
     public void Add(Item item)
     {
         Items.Add(item);
+
+        if (isUsingSaveData)
+        {
+            PlayerSaveSystem.SessionSaveData.playerInventory = this.Items;
+        }
     }
 
     public void Remove(Item item)
     {
         Items.Remove(item);
+
+        if (isUsingSaveData)
+        {
+            PlayerSaveSystem.SessionSaveData.playerInventory = this.Items;
+        }
     }
 
     // Update is called once per frame

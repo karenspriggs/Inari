@@ -11,6 +11,7 @@ public class PlayerStats
     public float CurrencyCount;
     public float CurrentXP;
     public int CurrentLevel;
+    public int UpdgradePoints;
     public int LatestCheckpointID;
 
     public PlayerStats()
@@ -22,6 +23,7 @@ public class PlayerStats
         CurrencyCount = 0;
         CurrentXP = 0;
         CurrentLevel = 1;
+        UpdgradePoints = 0;
         LatestCheckpointID = 0;
     }
 }

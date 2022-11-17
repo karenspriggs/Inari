@@ -28,9 +28,11 @@ public class UIPlayerExperienceBar : MonoBehaviour
         PlayerLevelSystem.PlayerLeveledUp -= ShowLevelUpText;
     }
 
-    void SetMaxBarXP(float maxXP)
+    void SetMaxBarXP(float currentXP, float maxXP)
     {
+        currentValue = currentXP;
         barMax = maxXP;
+        UpdateBarXP(currentValue);
     }
 
     void UpdateBarXP(float currentXP)

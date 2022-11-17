@@ -73,6 +73,10 @@ public class PlayerData : MonoBehaviour
             {
                 currentCheckpointID = PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID;
                 transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
+
+                maxHP = PlayerSaveSystem.SessionSaveData.playerStats.MaxHP;
+                maxEnergy = PlayerSaveSystem.SessionSaveData.playerStats.MaxEnergy;
+                Attack = PlayerSaveSystem.SessionSaveData.playerStats.Attack;
             }
             else
             {

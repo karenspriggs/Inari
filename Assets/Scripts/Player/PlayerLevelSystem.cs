@@ -32,22 +32,30 @@ public class PlayerLevelSystem : MonoBehaviour
     LevelUpScreen levelScreen;
 
     public bool isNewVersion = false;
+    public bool isUsingSaveData = false;
 
-    public static Action<float> xpAmountInitialized;
+    public static Action<float, float> xpAmountInitialized;
     public static Action<float> PlayerGainedXP;
     public static Action PlayerLeveledUp;
 
     void Start()
     {
+        if (isUsingSaveData)
+        {
+            this.level = PlayerSaveSystem.SessionSaveData.playerStats.CurrentLevel;
+            this.currentXP = PlayerSaveSystem.SessionSaveData.playerStats.CurrentXP;
+            this.upgradePoints = PlayerSaveSystem.SessionSaveData.playerStats.UpdgradePoints;
+        }
+
+        requiredXP = CalculateRequiredXp();
+
         if (!isNewVersion)
         {
             frontXpBar.fillAmount = currentXP / requiredXP;
             backXpBar.fillAmount = currentXP / requiredXP;
         }
         
-        requiredXP = CalculateRequiredXp();
-
-        xpAmountInitialized?.Invoke(requiredXP);
+        xpAmountInitialized?.Invoke(currentXP, requiredXP);
     }
 
     private void OnEnable()
@@ -59,6 +67,7 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         EnemyData.EnemyKilledValues -= GainXPOnEnemyDeath;
     }
+
     void CheckIfCanLevelUp()
     {
         if (currentXP > requiredXP)
@@ -68,11 +77,18 @@ public class PlayerLevelSystem : MonoBehaviour
     void GainXPOnEnemyDeath(int coins, int XP)
     {
         this.currentXP += XP;
+
         if (!isNewVersion)
         {
             UpdateXpUI();
         }
         PlayerGainedXP?.Invoke(currentXP);
+
+        if (isUsingSaveData)
+        {
+            PlayerSaveSystem.SessionSaveData.playerStats.CurrentXP = currentXP;
+        }
+        
         CheckIfCanLevelUp();
     }
 
@@ -128,9 +144,17 @@ public class PlayerLevelSystem : MonoBehaviour
         }
         level++;
         upgradePoints++;
+
+        if (isUsingSaveData)
+        {
+            PlayerSaveSystem.SessionSaveData.playerStats.CurrentLevel = level;
+            PlayerSaveSystem.SessionSaveData.playerStats.UpdgradePoints = upgradePoints;
+        }
+
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
         requiredXP = CalculateRequiredXp();
-        xpAmountInitialized?.Invoke(requiredXP);
+
+        xpAmountInitialized?.Invoke(currentXP, requiredXP);
         PlayerGainedXP?.Invoke(currentXP);
         PlayerLeveledUp?.Invoke();
     }
