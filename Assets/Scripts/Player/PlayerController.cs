@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
     public bool nextToWall = false;
     bool hasEnabledEnemyCollision = false;
     //public bool canAttack = true;
+    private bool usedAirAttack = false;
+    private bool isInRecovery = false;
 
     // state transition flags
     // set these in SwitchState()
@@ -219,7 +221,7 @@ public class PlayerController : MonoBehaviour
 
             if (hasAttackInputThisFrame)
             {
-                if (currentState != InariState.GroundBasicAttacking && currentState != InariState.AirBasicAttacking)
+                if (currentState != InariState.GroundBasicAttacking && currentState != InariState.AirBasicAttacking && HasNotUsedAirComboYetIfInAir())
                 {
                     playerAttacks.basicAttacksIndex = 0;
                     SwitchAttackStateBasedOnGroundedness();
@@ -251,6 +253,11 @@ public class PlayerController : MonoBehaviour
             SwitchState(InariState.AirBasicAttacking);
         }
     }
+    
+    private bool HasNotUsedAirComboYetIfInAir()
+    {
+        return !usedAirAttack;
+    }
 
     private void SetDead()
     {
@@ -269,6 +276,7 @@ public class PlayerController : MonoBehaviour
         UpdateTimers();
 
         playerMovement.CheckForGroundedness();
+        if (isGrounded) usedAirAttack = false;
 
         DoState(currentState);
 
@@ -290,7 +298,7 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
-                playerMovement.HaltAirVelocity();
+                playerMovement.HaltVerticalVelocity();
                 playerAnimator.SwitchState(newState);
                 DisableEnemyCollision();
                 break;
@@ -299,7 +307,7 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = false;
                 attacksEnabled = false;
                 playerSound.PlaySound(playerSound.DashSound);
-                playerMovement.HaltAirVelocity();
+                playerMovement.HaltVerticalVelocity();
                 playerMovement.DoTheDash();
                 break;
             case InariState.Jumping:
@@ -325,16 +333,19 @@ public class PlayerController : MonoBehaviour
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
+                isInRecovery = false;
                 playerSound.PlaySound(playerSound.AttackSound);
-                playerMovement.HaltAirVelocity();
+                playerMovement.HaltVerticalVelocity();
                 playerAnimator.StartAnimation(playerAttacks.groundBasicAttacks[playerAttacks.basicAttacksIndex].Name);
                 break;
             case InariState.AirBasicAttacking:
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
+                isInRecovery = false;
+                usedAirAttack = true;
                 playerSound.PlaySound(playerSound.AttackSound);
-                playerMovement.HaltAirVelocity();
+                playerMovement.HaltVerticalVelocity();
                 playerAnimator.StartAnimation(playerAttacks.airBasicAttacks[playerAttacks.basicAttacksIndex].Name);
                 break;
             case InariState.Hit:
@@ -343,7 +354,7 @@ public class PlayerController : MonoBehaviour
                 attacksEnabled = false;
                 playerData.isInvincible = true;
                 playerSound.PlaySound(playerSound.HitSound);
-                playerMovement.HaltAirVelocity();
+                playerMovement.HaltVerticalVelocity();
                 playerAnimator.SwitchState(newState);
                 break;
             case InariState.Dead:
@@ -352,7 +363,7 @@ public class PlayerController : MonoBehaviour
                 attacksEnabled = false;
                 playerData.isInvincible = true;
                 playerSound.PlaySound(playerSound.DeathSound);
-                playerMovement.HaltAirVelocity();
+                playerMovement.HaltVerticalVelocity();
                 playerAnimator.SwitchState(newState);
                 break;
             default:
@@ -428,9 +439,13 @@ public class PlayerController : MonoBehaviour
                 AnimationEndTransitionToNextState(InariState.Neutral);
                 break;
             case InariState.AirBasicAttacking:
-                playerMovement.TurnOffGravity();
+                playerMovement.SetGravity(playerMovement.AirAttackGravityScale);
                 playerMovement.DoFriction(playerMovement.AirFriction);
-                AnimationEndTransitionToNextState(InariState.Neutral);
+                if (isInRecovery)
+                {
+                    AllowLanding();
+                }
+                AnimationEndTransitionToNextState(InariState.Air);
                 break;
             case InariState.Hit:
                 AnimationEndTransitionToNextState(InariState.Neutral);
@@ -476,6 +491,7 @@ public class PlayerController : MonoBehaviour
         {
             playerSound.PlaySound(playerSound.LandingSound);
             playerParticles.CreateDust();
+            usedAirAttack = false;
             SwitchState(InariState.Neutral);
         }
     }
@@ -576,10 +592,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttackRecovery()
     {
-        //Debug.Log("OnAttackRecovery Received");
-        //attacksEnabled = true;
-        SetAttackCancels();
         
+        SetAttackCancels();
+        isInRecovery = true;
     }
 
     public void OnVelocityImpulse(object sender, AnimationVelocityEventArgs e)
@@ -595,6 +610,7 @@ public class PlayerController : MonoBehaviour
     public void SetAttackCancels()
     {
         attacksEnabled = true;
+        
         //update cancels
         dashEnabled = playerAttacks.CanDashCancel();
         jumpsEnabled = playerAttacks.CanJumpCancel();

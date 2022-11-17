@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class InariAttack
@@ -24,7 +25,6 @@ public class PlayerAttacks : MonoBehaviour
     public List<InariAttack> airBasicAttacks;
     
     public int basicAttacksIndex = 0;
-
 
     private void Awake()
     {
@@ -71,6 +71,7 @@ public class PlayerAttacks : MonoBehaviour
 
     public bool CanAirAttackCombo()
     {
+        
         return CanContinueCombo(airBasicAttacks);
     }
 

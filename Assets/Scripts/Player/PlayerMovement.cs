@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float RisingGravityScale;
     public float FallingGravityScale;
     public float DashStartupGravityScale = 0.3f;
+    public float AirAttackGravityScale = 0.3f;
     public float slopeFriction = 1f;
 
     public float GroundFriction;
@@ -325,7 +326,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.gravityScale = gravScale;
     }
 
-    public void HaltAirVelocity()
+    public void HaltVerticalVelocity()
     {
         playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, 0);
     }
