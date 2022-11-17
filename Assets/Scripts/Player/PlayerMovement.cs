@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float RisingGravityScale;
     public float FallingGravityScale;
     public float DashStartupGravityScale = 0.3f;
-    public float AirAttackGravityScale = 0.3f;
+    public float AttackGravityScale = 0.3f;
     public float slopeFriction = 1f;
 
     public float GroundFriction;

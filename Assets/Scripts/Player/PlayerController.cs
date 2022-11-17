@@ -434,12 +434,16 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case InariState.GroundBasicAttacking:
-                playerMovement.TurnOffGravity();
+                playerMovement.SetGravity(playerMovement.AttackGravityScale);
                 playerMovement.DoFriction(playerMovement.GroundFriction);
+                if (isInRecovery)
+                {
+                    AllowFalling();
+                }
                 AnimationEndTransitionToNextState(InariState.Neutral);
                 break;
             case InariState.AirBasicAttacking:
-                playerMovement.SetGravity(playerMovement.AirAttackGravityScale);
+                playerMovement.SetGravity(playerMovement.AttackGravityScale);
                 playerMovement.DoFriction(playerMovement.AirFriction);
                 if (isInRecovery)
                 {
