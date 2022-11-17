@@ -14,7 +14,8 @@ public enum InariState
     WallJumping,
     WallSliding,
     Air,
-    BasicAttacking,
+    GroundBasicAttacking,
+    AirBasicAttacking,
     Hit,
     Dead
 }
@@ -218,25 +219,37 @@ public class PlayerController : MonoBehaviour
 
             if (hasAttackInputThisFrame)
             {
-                if (currentState != InariState.BasicAttacking)
+                if (currentState != InariState.GroundBasicAttacking && currentState != InariState.AirBasicAttacking)
                 {
                     playerAttacks.basicAttacksIndex = 0;
-                    SwitchState(InariState.BasicAttacking);
+                    SwitchAttackStateBasedOnGroundedness();
                     return true;
                 }
                 else
                 {
                     //was already attacking, see if we can combo
-                    if (playerAttacks.CanBasicAttackCombo())
+                    if (playerAttacks.CanBasicAttackCombo(isGrounded))
                     {
                         playerAttacks.basicAttacksIndex += 1;
-                        SwitchState(InariState.BasicAttacking);
+                        SwitchAttackStateBasedOnGroundedness();
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+    private void SwitchAttackStateBasedOnGroundedness()
+    {
+        if (isGrounded)
+        {
+            SwitchState(InariState.GroundBasicAttacking);
+        }
+        else
+        {
+            SwitchState(InariState.AirBasicAttacking);
+        }
     }
 
     private void SetDead()
@@ -308,13 +321,21 @@ public class PlayerController : MonoBehaviour
                 canWallJump = true;
                 playerMovement._coyoteTimer = playerMovement.CoyoteTimer;
                 break;
-            case InariState.BasicAttacking:
+            case InariState.GroundBasicAttacking:
                 jumpsEnabled = false;
                 dashEnabled = false;
                 attacksEnabled = false;
                 playerSound.PlaySound(playerSound.AttackSound);
                 playerMovement.HaltAirVelocity();
-                playerAnimator.StartAnimation(playerAttacks.basicAttacks[playerAttacks.basicAttacksIndex].Name);
+                playerAnimator.StartAnimation(playerAttacks.groundBasicAttacks[playerAttacks.basicAttacksIndex].Name);
+                break;
+            case InariState.AirBasicAttacking:
+                jumpsEnabled = false;
+                dashEnabled = false;
+                attacksEnabled = false;
+                playerSound.PlaySound(playerSound.AttackSound);
+                playerMovement.HaltAirVelocity();
+                playerAnimator.StartAnimation(playerAttacks.airBasicAttacks[playerAttacks.basicAttacksIndex].Name);
                 break;
             case InariState.Hit:
                 jumpsEnabled = false;
@@ -401,16 +422,14 @@ public class PlayerController : MonoBehaviour
                     AllowLanding();
                 }
                 break;
-            case InariState.BasicAttacking:
-                if (isGrounded)
-                {
-                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
-                }
-                else
-                {
-                    playerMovement.TurnOffGravity();
-                }
+            case InariState.GroundBasicAttacking:
+                playerMovement.TurnOffGravity();
                 playerMovement.DoFriction(playerMovement.GroundFriction);
+                AnimationEndTransitionToNextState(InariState.Neutral);
+                break;
+            case InariState.AirBasicAttacking:
+                playerMovement.TurnOffGravity();
+                playerMovement.DoFriction(playerMovement.AirFriction);
                 AnimationEndTransitionToNextState(InariState.Neutral);
                 break;
             case InariState.Hit:

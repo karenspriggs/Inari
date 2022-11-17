@@ -58,7 +58,7 @@ public class PlayerAnimator : MonoBehaviour
                 //break;
             case InariState.Air:
                 break;
-            case InariState.BasicAttacking:
+            case InariState.GroundBasicAttacking:
                 StartAnimation("PlayerDollBasicAttack");
                 break;
             case InariState.Hit:

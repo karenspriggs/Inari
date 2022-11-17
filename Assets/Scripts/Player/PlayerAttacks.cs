@@ -20,8 +20,11 @@ public class InariAttack
 }
 public class PlayerAttacks : MonoBehaviour
 {
-    public List<InariAttack> basicAttacks;
+    public List<InariAttack> groundBasicAttacks;
+    public List<InariAttack> airBasicAttacks;
+    
     public int basicAttacksIndex = 0;
+
 
     private void Awake()
     {
@@ -30,32 +33,65 @@ public class PlayerAttacks : MonoBehaviour
 
     public void InitializeAttacks()
     {
-        basicAttacks = new List<InariAttack> 
+        groundBasicAttacks = new List<InariAttack> 
         { 
             new InariAttack("PlayerDollBasicAttack", true, true, true), 
             new InariAttack("PlayerDollSwipeUp", true, true, true), 
             new InariAttack("PlayerDollStab", true, true, true) 
         };
+
+        airBasicAttacks = new List<InariAttack>
+        {
+            new InariAttack("PlayerDollAirBasic", true, true, true),
+            new InariAttack("PlayerDollAirSwipeUp", true, true, true),
+            new InariAttack("PlayerDollAirStab", true, true, true)
+        };
     }
 
     public bool CanBasicAttackCombo()
     {
-        if (basicAttacksIndex < basicAttacks.Count-1) return true;
+        return CanBasicAttackCombo(false);
+    }
+    public bool CanBasicAttackCombo(bool isGrounded)
+    {
+        if (isGrounded)
+        {
+            return CanGroundAttackCombo();
+        }
+        else
+        {
+            return CanAirAttackCombo();
+        }
+    }
+
+    public bool CanGroundAttackCombo()
+    {
+        return CanContinueCombo(groundBasicAttacks);
+    }
+
+    public bool CanAirAttackCombo()
+    {
+        return CanContinueCombo(airBasicAttacks);
+    }
+
+    public bool CanContinueCombo(List<InariAttack> attacks)
+    {
+        if (basicAttacksIndex < attacks.Count - 1) return true;
         return false;
     }
 
     public bool CanDashCancel()
     {
-        return basicAttacks[basicAttacksIndex].canDashCancel;
+        return groundBasicAttacks[basicAttacksIndex].canDashCancel;
     }
 
     public bool CanJumpCancel()
     {
-        return basicAttacks[basicAttacksIndex].canJumpCancel;
+        return groundBasicAttacks[basicAttacksIndex].canJumpCancel;
     }
 
     public bool CanHeavyAttackCancel()
     {
-        return basicAttacks[basicAttacksIndex].canHeavyAttackCancel;
+        return groundBasicAttacks[basicAttacksIndex].canHeavyAttackCancel;
     }
 }
