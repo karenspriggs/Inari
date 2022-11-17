@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (isUsingSaveData)
         {
-            Items = PlayerSaveSystem.SessionSaveData.playerInventory;
+            //Items = PlayerSaveSystem.SessionSaveData.playerInventory;
         }
     }
 
@@ -32,7 +32,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (isUsingSaveData)
         {
-            PlayerSaveSystem.SessionSaveData.playerInventory = this.Items;
+            //PlayerSaveSystem.SessionSaveData.playerInventory = this.Items;
         }
     }
 
@@ -42,7 +42,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (isUsingSaveData)
         {
-            PlayerSaveSystem.SessionSaveData.playerInventory = this.Items;
+            //PlayerSaveSystem.SessionSaveData.playerInventory = this.Items;
         }
     }
 
