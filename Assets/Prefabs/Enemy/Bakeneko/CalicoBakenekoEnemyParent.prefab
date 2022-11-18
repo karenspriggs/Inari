@@ -5344,12 +5344,20 @@ PrefabInstance:
       value: CalicoBakenekoEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 342619544621165300, guid: c684b982326c8af4eb0b3aa2c524ca89, type: 3}
+      propertyPath: AnimatorStunStateName
+      value: NEWBakenekoStun
+      objectReference: {fileID: 0}
+    - target: {fileID: 342619544621165300, guid: c684b982326c8af4eb0b3aa2c524ca89, type: 3}
+      propertyPath: AnimatorDeathStateName
+      value: NewBakenekoDeathLANDING
+      objectReference: {fileID: 0}
+    - target: {fileID: 342619544621165300, guid: c684b982326c8af4eb0b3aa2c524ca89, type: 3}
       propertyPath: AnimatorConfusedStateName
       value: NEWBakenekoConfused
       objectReference: {fileID: 0}
     - target: {fileID: 342619544621165300, guid: c684b982326c8af4eb0b3aa2c524ca89, type: 3}
       propertyPath: AnimatorLaunchDeathStateName
-      value: NEWBakenekoStun
+      value: NewBakenekoDeathLAUNCH
       objectReference: {fileID: 0}
     - target: {fileID: 342619544621165300, guid: c684b982326c8af4eb0b3aa2c524ca89, type: 3}
       propertyPath: AnimatorChaseStartupStateName
