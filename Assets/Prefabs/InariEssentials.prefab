@@ -799,6 +799,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3021392214543136424, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -543
+      objectReference: {fileID: 0}
     - target: {fileID: 3021392214612133441, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
@@ -814,6 +818,10 @@ PrefabInstance:
     - target: {fileID: 3021392214612133470, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021392214700131606, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -474
       objectReference: {fileID: 0}
     - target: {fileID: 3021392215289344593, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: pauseObjects.Array.size
@@ -927,6 +935,10 @@ PrefabInstance:
       propertyPath: firstButton
       value: 
       objectReference: {fileID: 4708491442124200521}
+    - target: {fileID: 3021392215353903350, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3021392215629236688, guid: c0d4a42a614c3e0479047a03be22e242, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
@@ -1896,9 +1908,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 1105aac1872ed564fa599ca52e4e14c5, type: 3}
     - target: {fileID: 7203985625143320267, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: DeathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d6a3120cbf02469498f8d1302cabc78c, type: 3}
+    - target: {fileID: 7203985625143320267, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
       propertyPath: AttackSound
       value: 
       objectReference: {fileID: 8300000, guid: 689ab70091849e246b78e1b582036991, type: 3}
+    - target: {fileID: 7203985625143320267, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: LandingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a3135c3020070f04ca59e349265d8aab, type: 3}
     - target: {fileID: 7408384020752524658, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: -0.00031000376
