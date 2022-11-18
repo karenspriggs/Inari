@@ -50,6 +50,7 @@ public class CheckpointUI : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         }
+        fadeText.color = new Color(fadeText.color.r, fadeText.color.g, fadeText.color.b, 0);
         yield break;
     }
 }
