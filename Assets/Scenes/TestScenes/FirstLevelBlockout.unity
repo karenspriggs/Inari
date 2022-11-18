@@ -2662,6 +2662,7 @@ GameObject:
   - component: {fileID: 137559329}
   - component: {fileID: 137559331}
   - component: {fileID: 137559330}
+  - component: {fileID: 137559332}
   m_Layer: 6
   m_Name: Placeholder_Roof (2)
   m_TagString: Ground
@@ -2695,7 +2696,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0.05937147, y: 1.7311524}
   m_SpriteTilingProperty:
@@ -2762,6 +2763,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &137559332
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137559328}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1001 &138335957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4124,6 +4144,7 @@ GameObject:
   - component: {fileID: 240009728}
   - component: {fileID: 240009730}
   - component: {fileID: 240009729}
+  - component: {fileID: 240009731}
   m_Layer: 6
   m_Name: Placeholder_Roof (1)
   m_TagString: Ground
@@ -4157,7 +4178,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0.00000047683716, y: 1.754726}
   m_SpriteTilingProperty:
@@ -4224,6 +4245,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &240009731
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240009727}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &243421821
 GameObject:
   m_ObjectHideFlags: 0
@@ -7421,6 +7461,7 @@ GameObject:
   - component: {fileID: 406058012}
   - component: {fileID: 406058014}
   - component: {fileID: 406058013}
+  - component: {fileID: 406058015}
   m_Layer: 6
   m_Name: Placeholder_Roof
   m_TagString: Ground
@@ -7454,7 +7495,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0.032151222, y: 1.7197298}
   m_SpriteTilingProperty:
@@ -7521,6 +7562,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &406058015
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406058011}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!4 &408702553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4452250549004560445, guid: ea72db2b181379c4caf2579f2a9e008c, type: 3}
@@ -79375,6 +79435,7 @@ GameObject:
   - component: {fileID: 1725159773}
   - component: {fileID: 1725159774}
   - component: {fileID: 1725159775}
+  - component: {fileID: 1725159776}
   m_Layer: 6
   m_Name: Placeholder_Roof (2)
   m_TagString: Ground
@@ -79460,7 +79521,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0.05937147, y: 1.7311524}
   m_SpriteTilingProperty:
@@ -79475,6 +79536,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 19.98642, y: 1.5320122}
   m_EdgeRadius: 0
+--- !u!251 &1725159776
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725159772}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1727632464
 GameObject:
   m_ObjectHideFlags: 0
@@ -86604,6 +86684,7 @@ GameObject:
   - component: {fileID: 2093736264}
   - component: {fileID: 2093736265}
   - component: {fileID: 2093736266}
+  - component: {fileID: 2093736267}
   m_Layer: 6
   m_Name: Placeholder_Roof (1)
   m_TagString: Ground
@@ -86689,7 +86770,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0.02321148, y: 1.7473547}
   m_SpriteTilingProperty:
@@ -86704,6 +86785,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 19.968386, y: 1.5223927}
   m_EdgeRadius: 0
+--- !u!251 &2093736267
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093736263}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &2100405631
 GameObject:
   m_ObjectHideFlags: 0
