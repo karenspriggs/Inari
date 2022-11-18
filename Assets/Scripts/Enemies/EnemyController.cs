@@ -133,6 +133,7 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.ChaseStartup):
                 enemyAnimator.SwitchState(EnemyState.ChaseStartup);
                 enemySounds.PlaySound(enemySounds.AlertSound);
+                attackTimer = attackCooldown;
                 break;
             case (EnemyState.Confused):
                 enemyAnimator.SwitchState(EnemyState.Confused);
