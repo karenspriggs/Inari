@@ -8,6 +8,7 @@ public class PlayerAnimator : MonoBehaviour
 
     [Header("Animator Values")]
     private int animatorMoveBool;
+    private int animatorMoveValue;
     private int animatorBasicAttackBool;
     private int animatorJumpTrigger;
     private int animatorDashTrigger;
@@ -19,6 +20,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animatorMoveBool = Animator.StringToHash("IsMoving");
+        animatorMoveValue = Animator.StringToHash("MoveSpeed");
         //animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
         //animatorJumpTrigger = Animator.StringToHash("IsJumping");
         //animatorDashTrigger = Animator.StringToHash("IsDashing");
@@ -27,6 +29,7 @@ public class PlayerAnimator : MonoBehaviour
     public void AnimationUpdateMoveBool(float moveInput)
     {
         bool isMoving = true;
+        float moveSpeed = Mathf.Abs(moveInput);
 
         if ((moveInput < velocityToStopMovingAnim && moveInput >= -velocityToStopMovingAnim))
         {
@@ -34,6 +37,7 @@ public class PlayerAnimator : MonoBehaviour
         }
 
         animator.SetBool(animatorMoveBool, isMoving);
+        animator.SetFloat(animatorMoveValue, moveSpeed);
     }
 
     public void SwitchState(InariState newState)
@@ -41,7 +45,7 @@ public class PlayerAnimator : MonoBehaviour
         switch (newState)
         {
             case InariState.Neutral:
-                StartAnimation("PlayerDollWalk");
+                StartAnimation("PlayerDollRun");
                 break;
             case InariState.DashStartup:
                 StartAnimation("PlayerDollDash");
