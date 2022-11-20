@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     public bool dashTimerOn = false;
     public bool isFacingRight = true;
     public bool isGrounded = true;
+    public bool isPlatformGrounded = false;
     public bool nextToWall = false;
     bool hasEnabledEnemyCollision = false;
     //public bool canAttack = true;
@@ -479,11 +480,17 @@ public class PlayerController : MonoBehaviour
             canDoubleJump = true;
             canWallJump = true;
         }
+
+        if (isPlatformGrounded)
+        {
+            canJump = true; // let the state machine handle these
+            canDoubleJump = true;
+        }
     }
 
     private void AllowFalling()
     {
-        if (!isGrounded)
+        if (!isGrounded && !isPlatformGrounded)
         {
             SwitchState(InariState.Air);
         }
@@ -491,7 +498,7 @@ public class PlayerController : MonoBehaviour
 
     private void AllowLanding()
     {
-        if (isGrounded)
+        if (isGrounded || isPlatformGrounded)
         {
             playerSound.PlaySound(playerSound.LandingSound);
             playerParticles.CreateDust();

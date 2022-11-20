@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public float AirFriction;
 
     private LayerMask groundMask;
+    private LayerMask platformMask;
     public float groundCheckXDistance = 0.25f;
     public float groundCheckYDistance = 0.25f;
     
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         //playerCapsule = GetComponent<BoxCollider2D>();
 
         groundMask = LayerMask.GetMask("Ground");
+        platformMask = LayerMask.GetMask("One-Way Platform");
         playerController.canDash = true;
     }
 
@@ -389,6 +391,7 @@ public class PlayerMovement : MonoBehaviour
     public void CheckForGroundedness()
     {
         playerController.isGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + groundCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - groundCheckXDistance, playerCapsule.bounds.min.y - groundCheckYDistance), groundMask);
+        playerController.isPlatformGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + groundCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - groundCheckXDistance, playerCapsule.bounds.min.y - groundCheckYDistance), platformMask);
     }
 
     /// <summary>
