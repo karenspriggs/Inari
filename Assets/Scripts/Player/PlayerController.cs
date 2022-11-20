@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private bool hasJumped = false;
     private float isJumping;
     private float isDashing;
+    private float isDroppingDown;
     private float isBasicAttacking;
     private bool b_isBasicAttacking;
 
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
     public bool isPlatformGrounded = false;
     public bool nextToWall = false;
     bool hasEnabledEnemyCollision = false;
+    bool canDropDown = false;
     //public bool canAttack = true;
     private bool usedAirAttack = false;
     private bool isInRecovery = false;
@@ -84,6 +86,9 @@ public class PlayerController : MonoBehaviour
 
         playerActions.Dash.performed += ctx => isDashing = ctx.ReadValue<float>();
         playerActions.Dash.canceled += ctx => isDashing = ctx.ReadValue<float>();
+
+        playerActions.DropDown.performed += ctx => isDroppingDown = ctx.ReadValue<float>();
+        playerActions.DropDown.canceled += ctx => isDroppingDown = ctx.ReadValue<float>();
 
         //playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
         //playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
@@ -109,9 +114,12 @@ public class PlayerController : MonoBehaviour
         playerActions.Dash.performed -= ctx => isDashing = ctx.ReadValue<float>();
         playerActions.Dash.canceled -= ctx => isDashing = ctx.ReadValue<float>();
 
+        playerActions.DropDown.performed -= ctx => isDroppingDown = ctx.ReadValue<float>();
+        playerActions.DropDown.canceled -= ctx => isDroppingDown = ctx.ReadValue<float>();
+
         //playerActions.Attack.performed -= ctx => isBasicAttacking = ctx.ReadValue<float>();
         //playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
-        
+
         playerActions.Attack.performed -= ctx => onBasicAttackPressed();
 
         PlayerData.PlayerTookDamage -= SetHit;
@@ -208,10 +216,16 @@ public class PlayerController : MonoBehaviour
         return r;
     }
 
+    private void CheckForDrop()
+    {
+        canDropDown = (isDroppingDown == 1f); 
+    }
+
     private void onBasicAttackPressed()
     {
         b_isBasicAttacking = true;
     }
+
     private bool CheckForBasicAttack()
     {
         if (attacksEnabled)
@@ -460,6 +474,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForInputs()
     {
+        CheckForDrop();
         SetMovementInput();
         if (CheckForDash()) return;
         if (CheckForJump()) return;
@@ -590,6 +605,19 @@ public class PlayerController : MonoBehaviour
                 }
             }
             hasEnabledEnemyCollision = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("OneWayPlatform"))
+        {
+            if (canDropDown)
+            {
+                Debug.Log("Trying to drop");
+                canDropDown = false;
+                collision.gameObject.GetComponent<OneWayPlatform>().DropDown(GetComponent<CapsuleCollider2D>());
+            }
         }
     }
 

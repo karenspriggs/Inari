@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     private LayerMask platformMask;
     public float groundCheckXDistance = 0.25f;
     public float groundCheckYDistance = 0.25f;
-    
 
     private float inputMovement;
 
