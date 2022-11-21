@@ -614,7 +614,6 @@ public class PlayerController : MonoBehaviour
         {
             if (canDropDown)
             {
-                Debug.Log("Trying to drop");
                 canDropDown = false;
                 collision.gameObject.GetComponent<OneWayPlatform>().DropDown(GetComponent<CapsuleCollider2D>());
             }

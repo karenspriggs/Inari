@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     private LayerMask platformMask;
     public float groundCheckXDistance = 0.25f;
     public float groundCheckYDistance = 0.25f;
+    public float platformCheckXDistance;
+    public float platformCheckYDistance;
 
     private float inputMovement;
 
@@ -390,7 +392,7 @@ public class PlayerMovement : MonoBehaviour
     public void CheckForGroundedness()
     {
         playerController.isGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + groundCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - groundCheckXDistance, playerCapsule.bounds.min.y - groundCheckYDistance), groundMask);
-        playerController.isPlatformGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + groundCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - groundCheckXDistance, playerCapsule.bounds.min.y - groundCheckYDistance), platformMask);
+        playerController.isPlatformGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + platformCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - platformCheckXDistance, playerCapsule.bounds.min.y - platformCheckYDistance), platformMask);
     }
 
     /// <summary>
