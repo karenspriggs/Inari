@@ -293,6 +293,9 @@ public class PlayerController : MonoBehaviour
         playerMovement.CheckForGroundedness();
         if (isGrounded) usedAirAttack = false;
 
+        bool animateGroundedness = isGrounded || isPlatformGrounded;
+        playerAnimator.AnimationUpdateGroundedBool(animateGroundedness);
+
         DoState(currentState);
 
     }

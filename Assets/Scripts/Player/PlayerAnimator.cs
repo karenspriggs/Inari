@@ -9,9 +9,7 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Animator Values")]
     private int animatorMoveBool;
     private int animatorMoveValue;
-    private int animatorBasicAttackBool;
-    private int animatorJumpTrigger;
-    private int animatorDashTrigger;
+    private int animatorGroundedBool;
 
     public float velocityToStopMovingAnim;
 
@@ -21,9 +19,7 @@ public class PlayerAnimator : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         animatorMoveBool = Animator.StringToHash("IsMoving");
         animatorMoveValue = Animator.StringToHash("MoveSpeed");
-        //animatorBasicAttackBool = Animator.StringToHash("IsBasicAttacking");
-        //animatorJumpTrigger = Animator.StringToHash("IsJumping");
-        //animatorDashTrigger = Animator.StringToHash("IsDashing");
+        animatorGroundedBool = Animator.StringToHash("IsGrounded");
     }
 
     public void AnimationUpdateMoveBool(float moveInput)
@@ -38,6 +34,10 @@ public class PlayerAnimator : MonoBehaviour
 
         animator.SetBool(animatorMoveBool, isMoving);
         animator.SetFloat(animatorMoveValue, moveSpeed);
+    }
+
+    public void AnimationUpdateGroundedBool(bool isGrounded) {
+        animator.SetBool(animatorGroundedBool, isGrounded);
     }
 
     public void SwitchState(InariState newState)
