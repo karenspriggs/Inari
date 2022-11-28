@@ -11,6 +11,16 @@ public class EnemyRoom : MonoBehaviour
     public bool isActivated;
     public int enemyCount;
 
+    private void OnEnable()
+    {
+        EnemyData.EnemyKilled += DecreaseEnemyCount;
+    }
+
+    private void OnDisable()
+    {
+        EnemyData.EnemyKilled -= DecreaseEnemyCount;
+    }
+
     private void Start()
     {
         isActivated = false;
@@ -32,6 +42,33 @@ public class EnemyRoom : MonoBehaviour
         }
 
         spriteRenderer.enabled = true;
+    }
+
+    void DecreaseEnemyCount() 
+    {
+        if (isActivated)
+        {
+            enemyCount--;
+            CheckIfShouldDeactivate();
+        }
+    }
+
+    void CheckIfShouldDeactivate()
+    {
+        if (enemyCount == 0)
+        {
+            DeactivateRoom();
+        }
+    }
+
+    void DeactivateRoom()
+    {
+        foreach (GameObject wall in Walls)
+        {
+            wall.SetActive(false);
+        }
+
+        spriteRenderer.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
