@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class QuickSlot : MonoBehaviour
 {
-    public Image Icon;
     public ItemController itemcontroller;
     // Start is called before the first frame update
     void Start()
@@ -16,7 +15,7 @@ public class QuickSlot : MonoBehaviour
     public void SetQuickSlot(Item i)
     {
         itemcontroller.AddItem(i);
-        Icon.sprite = i.icon;
+        itemcontroller.ItemRefresh();
     }
 
     public void UseItem()

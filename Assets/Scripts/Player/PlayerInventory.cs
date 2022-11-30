@@ -64,13 +64,7 @@ public class PlayerInventory : MonoBehaviour
         {
             GameObject obj = Instantiate(InventoryItem, ItemContent);
             obj.GetComponent<ItemController>().AddItem(item);
-
-            var itemName = obj.transform.Find("ItemName").GetComponent<TMPro.TextMeshProUGUI>();
-            var itemIcon = obj.transform.Find("ItemImage").GetComponent<Image>();
-            var itemCount = obj.transform.Find("ItemCount").GetComponent<TMPro.TextMeshProUGUI>();
-            itemName.text = item.itemName;
-            itemIcon.sprite = item.icon;
-            itemCount.text = Items.Count(i => i == item).ToString();
+            obj.GetComponent<ItemController>().ItemRefresh();
         }
     }
 }
