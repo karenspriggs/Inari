@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyRoom : MonoBehaviour
 {
-    public GameObject[] Walls;
+    public GameObject[] ActivationObjects;
     public BoxCollider2D[] WallColliders;
     SpriteRenderer spriteRenderer;
 
@@ -25,9 +25,9 @@ public class EnemyRoom : MonoBehaviour
     {
         isActivated = false;
 
-        foreach (GameObject wall in Walls)
+        foreach (GameObject obj in ActivationObjects)
         {
-            wall.SetActive(false);
+            obj.SetActive(false);
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,9 +36,9 @@ public class EnemyRoom : MonoBehaviour
 
     void ActivateRoom()
     {
-        foreach(GameObject wall in Walls)
+        foreach(GameObject obj in ActivationObjects)
         {
-            wall.SetActive(true);
+            obj.SetActive(true);
         }
 
         spriteRenderer.enabled = true;
@@ -63,9 +63,9 @@ public class EnemyRoom : MonoBehaviour
 
     void DeactivateRoom()
     {
-        foreach (GameObject wall in Walls)
+        foreach (GameObject obj in ActivationObjects)
         {
-            wall.SetActive(false);
+            obj.SetActive(false);
         }
 
         spriteRenderer.enabled = false;

@@ -320,7 +320,9 @@ public class EnemyController : MonoBehaviour
 
         Vector2 currentMovement = Vector2.MoveTowards(transform.position, new Vector2(chaseTarget.transform.position.x, transform.position.y), ChaseSpeed * Time.deltaTime);
 
-        if (Mathf.Abs(chaseTarget.transform.position.x - transform.position.x) <= AttackDistance && canAttack)
+        float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
+
+        if (targetDistance <= AttackDistance && canAttack)
         {
             SwitchState(EnemyState.Attack);
             return;
