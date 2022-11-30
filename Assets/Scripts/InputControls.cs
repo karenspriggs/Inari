@@ -89,6 +89,15 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""05806270-1e7d-42fe-9388-86b7668ddbf3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -355,6 +364,28 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""action"": ""DropDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e1c53e7-483c-4290-bfc5-e6f1afb9e6c0"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17f759c2-4263-4f10-b2e2-0dae26dcf209"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -443,6 +474,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         m_Player_Shuriken = m_Player.FindAction("Shuriken", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_DropDown = m_Player.FindAction("DropDown", throwIfNotFound: true);
+        m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SlowmoToggle = m_Debug.FindAction("SlowmoToggle", throwIfNotFound: true);
@@ -515,6 +547,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shuriken;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_DropDown;
+    private readonly InputAction m_Player_UseItem;
     public struct PlayerActions
     {
         private @InputControls m_Wrapper;
@@ -526,6 +559,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         public InputAction @Shuriken => m_Wrapper.m_Player_Shuriken;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @DropDown => m_Wrapper.m_Player_DropDown;
+        public InputAction @UseItem => m_Wrapper.m_Player_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -556,6 +590,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @DropDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropDown;
                 @DropDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropDown;
                 @DropDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropDown;
+                @UseItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
+                @UseItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
+                @UseItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -581,6 +618,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @DropDown.started += instance.OnDropDown;
                 @DropDown.performed += instance.OnDropDown;
                 @DropDown.canceled += instance.OnDropDown;
+                @UseItem.started += instance.OnUseItem;
+                @UseItem.performed += instance.OnUseItem;
+                @UseItem.canceled += instance.OnUseItem;
             }
         }
     }
@@ -669,6 +709,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         void OnShuriken(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDropDown(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

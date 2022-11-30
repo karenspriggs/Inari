@@ -90,6 +90,8 @@ public class PlayerController : MonoBehaviour
         playerActions.DropDown.performed += ctx => isDroppingDown = ctx.ReadValue<float>();
         playerActions.DropDown.canceled += ctx => isDroppingDown = ctx.ReadValue<float>();
 
+        playerActions.UseItem.started += ctx => UseQuickSlot();
+
         //playerActions.Attack.performed += ctx => isBasicAttacking = ctx.ReadValue<float>();
         //playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
 
@@ -130,6 +132,7 @@ public class PlayerController : MonoBehaviour
         PlayerAnimationEvents.PlayerAttackRecoveryStarted -= OnAttackRecovery;
         PlayerAnimationEvents.PlayerAnimationVelocityImpulse -= OnVelocityImpulse;
     }
+
 
     public void Start()
     {
@@ -225,6 +228,12 @@ public class PlayerController : MonoBehaviour
     {
         b_isBasicAttacking = true;
     }
+
+    private void UseQuickSlot()
+    {
+        GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>().UseItem();
+    }
+
 
     private bool CheckForBasicAttack()
     {

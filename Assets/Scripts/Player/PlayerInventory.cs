@@ -63,7 +63,7 @@ public class PlayerInventory : MonoBehaviour
         foreach (var item in Items.Distinct())
         {
             GameObject obj = Instantiate(InventoryItem, ItemContent);
-            obj.GetComponent<ItemController>().item = item;
+            obj.GetComponent<ItemController>().AddItem(item);
 
             var itemName = obj.transform.Find("ItemName").GetComponent<TMPro.TextMeshProUGUI>();
             var itemIcon = obj.transform.Find("ItemImage").GetComponent<Image>();
