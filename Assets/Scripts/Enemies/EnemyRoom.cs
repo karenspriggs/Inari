@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyRoom : MonoBehaviour
 {
     public GameObject[] ActivationObjects;
+    public EnemySpawnEffect[] Enemies;
     public BoxCollider2D[] WallColliders;
     SpriteRenderer spriteRenderer;
 
@@ -39,6 +40,11 @@ public class EnemyRoom : MonoBehaviour
         foreach(GameObject obj in ActivationObjects)
         {
             obj.SetActive(true);
+        }
+
+        foreach(EnemySpawnEffect enemy in Enemies)
+        {
+            enemy.TurnOnEnemy();
         }
 
         spriteRenderer.enabled = true;
