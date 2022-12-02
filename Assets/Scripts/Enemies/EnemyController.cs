@@ -55,8 +55,10 @@ public class EnemyController : MonoBehaviour
     public float AttackDistance;
     public float ChaseSpeed;
     public float WanderSpeed;
-    public float chaseDistance;
-    public float stopDistance;
+    public float xChaseDistance;
+    public float yChaseDistance;
+    public float xStopDistance;
+    public float yStopDistance;
     public float attackCooldown;
     public float WanderCooldown;
     public int maxWanderDistance;
@@ -92,7 +94,7 @@ public class EnemyController : MonoBehaviour
         groundMask = LayerMask.GetMask("Ground");
         platformMask = LayerMask.GetMask("One-Way Platform");
 
-        if (stopDistance <= chaseDistance)
+        if (xStopDistance <= xChaseDistance)
         {
             Debug.LogError($"{gameObject.name} has a stop distance that is shorter than their chase distance. This will cause their chase behavior to not work properly. Make the stop distance larger or I will nuclear strike your house - John Unity");
         }
@@ -215,7 +217,11 @@ public class EnemyController : MonoBehaviour
         if (currentState != EnemyState.Chase && currentState != EnemyState.Attack)
         {
             float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
-            if (targetDistance <= chaseDistance)
+
+            float xTargetDistance = Mathf.Abs(transform.position.x - chaseTarget.transform.position.x);
+            float yTargetDistance = Mathf.Abs(transform.position.y - chaseTarget.transform.position.y);
+
+            if (xTargetDistance <= xChaseDistance && yTargetDistance <= yChaseDistance)
             {
                 Debug.Log("start chasing");
                 SwitchState(EnemyState.ChaseStartup);
@@ -325,13 +331,16 @@ public class EnemyController : MonoBehaviour
 
         float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
 
+        float xTargetDistance = Mathf.Abs(transform.position.x - chaseTarget.transform.position.x);
+        float yTargetDistance = Mathf.Abs(transform.position.y - chaseTarget.transform.position.y);
+
         if (targetDistance <= AttackDistance && canAttack)
         {
             SwitchState(EnemyState.Attack);
             return;
         }
 
-        if (Vector2.Distance(chaseTarget.transform.position, this.transform.position) >= stopDistance)
+        if (xTargetDistance >= xStopDistance || yTargetDistance >= yStopDistance )
         {
             Debug.Log("Out of range");
             SwitchState(EnemyState.Confused);
