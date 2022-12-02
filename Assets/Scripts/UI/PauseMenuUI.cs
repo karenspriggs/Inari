@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenuUI : MonoBehaviour
 {
     public GameObject pauseMenuUI;
     public GameObject[] pauseObjects;
+    public Button[] buttons;
     public int currentSceneIndex;
     bool isPaused = false;
 
@@ -42,6 +44,12 @@ public class PauseMenuUI : MonoBehaviour
             {
                 g.SetActive(false);
             }
+
+            foreach(Button b in buttons)
+            {
+                b.interactable = true;
+            }
+
             pauseMenuUI.SetActive(true);
         }
     }
