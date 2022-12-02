@@ -9,8 +9,13 @@ public class PauseMenuUI : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject[] pauseObjects;
     public Button[] buttons;
-    public int currentSceneIndex;
+    private int currentSceneIndex;
     bool isPaused = false;
+
+    private void Start()
+    {
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    }
 
     public void TogglePauseMenu()
     {
