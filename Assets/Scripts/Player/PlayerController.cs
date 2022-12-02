@@ -404,39 +404,19 @@ public class PlayerController : MonoBehaviour
         switch(state)
         {
             case InariState.Neutral:
-                if (isGrounded)
-                {
-                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
-                }
-                else
-                {
-                    playerMovement.UpdateGravity();
-                }
+                playerMovement.UpdateGravity();
                 AllowHorizontalMovement();
                 AllowFalling();
                 AllowGroundToResetJumps();
                 break;
             case InariState.DashStartup:
-                if (isGrounded)
-                {
-                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
-                }
-                else
-                {
-                    playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
-                }
+                playerMovement.SetGravity(playerMovement.DashStartupGravityScale);
                 playerMovement.DoFriction(playerMovement.GroundFriction);
                 TimeTransitionToNextState(DashStartupTimerMax, InariState.Dashing);
                 break;
             case InariState.Dashing:
-                if (isGrounded)
-                {
-                    playerMovement.SetGravity(playerMovement.GroundedGravityScale);
-                }
-                else
-                {
-                    playerMovement.TurnOffGravity();
-                }
+                playerMovement.TurnOffGravity();
+                playerMovement.HaltVerticalVelocity(); // no move up and down, hopefully stop trimping?
                 playerMovement.DoFriction(playerMovement.DashFriction);
                 if (playerMovement.ShouldEndDash())
                 {
