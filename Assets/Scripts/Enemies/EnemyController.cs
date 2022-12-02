@@ -64,6 +64,8 @@ public class EnemyController : MonoBehaviour
     public Vector2 deathLaunchDistance;
 
     private LayerMask groundMask;
+    private LayerMask platformMask;
+
     public float groundCheckXDistance = 0.25f;
     public float groundCheckYDistance = 0.25f;
 
@@ -88,6 +90,7 @@ public class EnemyController : MonoBehaviour
         wanderTimer = WanderCooldown;
 
         groundMask = LayerMask.GetMask("Ground");
+        platformMask = LayerMask.GetMask("One-Way Platform");
 
         if (stopDistance <= chaseDistance)
         {
@@ -413,7 +416,8 @@ public class EnemyController : MonoBehaviour
 
     void UpdateGrounding()
     {
-        isGrounded = Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), groundMask);
+        isGrounded = Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), groundMask)
+            || Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), platformMask);
 
         if (isGrounded)
         {
