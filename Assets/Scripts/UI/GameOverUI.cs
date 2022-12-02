@@ -9,7 +9,12 @@ public class GameOverUI : MonoBehaviour
 {
     public GameObject GameOverUIPanel;
     public static Action PlayerRestarted;
-    public int sceneIndex;
+    private int sceneIndex;
+
+    private void Start()
+    {
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
+    }
 
     private void OnEnable()
     {
