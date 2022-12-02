@@ -5668,6 +5668,7 @@ MonoBehaviour:
   dashTimerOn: 0
   isFacingRight: 1
   isGrounded: 1
+  isPlatformGrounded: 0
   nextToWall: 0
 --- !u!114 &6534854772515789269
 MonoBehaviour:
@@ -5721,7 +5722,7 @@ MonoBehaviour:
   WallJumpHeight: 18
   WallJumpSpeedHorizontal: 25.58
   CanCoyoteJump: 0
-  GroundedGravityScale: 50
+  GroundedGravityScale: 5
   RisingGravityScale: 5
   FallingGravityScale: 5
   DashStartupGravityScale: 0.3
@@ -5731,6 +5732,8 @@ MonoBehaviour:
   AirFriction: 30
   groundCheckXDistance: 0.25
   groundCheckYDistance: 0.25
+  platformCheckXDistance: 0.25
+  platformCheckYDistance: 0.25
   _dashTimer: 0
   _coyoteTimer: 0
 --- !u!70 &6534854772515789264

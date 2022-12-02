@@ -393,6 +393,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerController.isGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + groundCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - groundCheckXDistance, playerCapsule.bounds.min.y - groundCheckYDistance), groundMask);
         playerController.isPlatformGrounded = Physics2D.OverlapArea(new Vector2(playerCapsule.bounds.min.x + platformCheckXDistance, playerCapsule.bounds.min.y), new Vector2(playerCapsule.bounds.max.x - platformCheckXDistance, playerCapsule.bounds.min.y - platformCheckYDistance), platformMask);
+        
+        if (playerController.isPlatformGrounded) playerController.isGrounded = true;
     }
 
     /// <summary>
