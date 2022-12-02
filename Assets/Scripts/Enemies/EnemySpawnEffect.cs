@@ -5,12 +5,14 @@ using UnityEngine;
 public class EnemySpawnEffect : MonoBehaviour
 {
     public GameObject enemyToSpawn;
-    ParticleSystem spawnParticles;
+    int animatorPoofTrigger;
+    Animator effectAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnParticles = GetComponent<ParticleSystem>();
+        effectAnimator = GetComponent<Animator>();
+        animatorPoofTrigger = Animator.StringToHash("enemyPoofOn");
         enemyToSpawn.SetActive(false);
     }
 
@@ -20,14 +22,13 @@ public class EnemySpawnEffect : MonoBehaviour
         
     }
 
-    void PlayEffects()
+    public void TurnOnEffect()
     {
-        spawnParticles.Play();
+        effectAnimator.SetTrigger(animatorPoofTrigger);
     }
 
     public void TurnOnEnemy()
     {
         enemyToSpawn.gameObject.SetActive(true);
-        PlayEffects(); 
     }
 }

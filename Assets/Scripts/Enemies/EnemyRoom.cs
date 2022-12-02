@@ -44,7 +44,7 @@ public class EnemyRoom : MonoBehaviour
 
         foreach(EnemySpawnEffect enemy in Enemies)
         {
-            enemy.TurnOnEnemy();
+            enemy.TurnOnEffect();
         }
 
         spriteRenderer.enabled = true;
