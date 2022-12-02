@@ -19,6 +19,18 @@ public enum MultiRangeEnemyStates
 
 public class MultiRangeEnemyController : MonoBehaviour
 {
+    EnemyAnimator enemyAnimator;
+    EnemyData enemyData;
+    EnemySound enemySounds;
+    EnemyParticles enemyParticles;
+    Rigidbody2D rigidbody;
+    CapsuleCollider2D collider;
+
+    public GameObject animationProps;
+
+    [SerializeField]
+    EnemyState currentState;
+
     // Start is called before the first frame update
     void Start()
     {
