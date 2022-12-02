@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.CheckForGroundedness();
         if (isGrounded) usedAirAttack = false;
 
-        bool animateGroundedness = isGrounded || isPlatformGrounded;
+        bool animateGroundedness = isGrounded; //|| isPlatformGrounded;
         playerAnimator.AnimationUpdateGroundedBool(animateGroundedness);
 
         DoState(currentState);
@@ -507,17 +507,18 @@ public class PlayerController : MonoBehaviour
             canDoubleJump = true;
             canWallJump = true;
         }
-
+        /*
         if (isPlatformGrounded)
         {
             canJump = true; // let the state machine handle these
             canDoubleJump = true;
         }
+        */
     }
 
     private void AllowFalling()
     {
-        if (!isGrounded && !isPlatformGrounded)
+        if (!isGrounded)// && !isPlatformGrounded)
         {
             SwitchState(InariState.Air);
         }
@@ -525,7 +526,7 @@ public class PlayerController : MonoBehaviour
 
     private void AllowLanding()
     {
-        if (isGrounded || isPlatformGrounded)
+        if (isGrounded)// || isPlatformGrounded)
         {
             playerSound.PlaySound(playerSound.LandingSound);
             playerParticles.CreateDust();
