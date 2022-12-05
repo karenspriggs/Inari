@@ -20,6 +20,13 @@ public class EnemyAnimator : MonoBehaviour
     public string AnimatorLaunchDeathStateName;
     public string AnimatorDeathStateName;
 
+    [Header("For multi range enemies")]
+    public string AnimatorRangedAttackStateName;
+    public string AnimatorRangedActiveStateName;
+    public string AnimatorRangedAlertStateName;
+    public string AnimatorForwardDashStateName;
+    public string AnimatorBackwardDashStateName;
+
     public int StunTime;
 
     // Start is called before the first frame update
@@ -90,6 +97,52 @@ public class EnemyAnimator : MonoBehaviour
                 StartAnimation(AnimatorLaunchDeathStateName);
                 break;
             case (EnemyState.Death):
+                StartAnimation(AnimatorDeathStateName);
+                break;
+        }
+    }
+
+    public void SwitchState(MultiRangeEnemyState newState)
+    {
+        switch (newState)
+        {
+            case (MultiRangeEnemyState.Idle):
+                DetermineIdleAnimation();
+                break;
+            case (MultiRangeEnemyState.Wander):
+                StartAnimation(AnimatorWalkStateName);
+                break;
+            case (MultiRangeEnemyState.Hit):
+                StartAnimation(AnimatorHitStateName);
+                break;
+            case (MultiRangeEnemyState.MeleeAlert):
+                StartAnimation(AnimatorChaseStartupStateName);
+                break;
+            case (MultiRangeEnemyState.RangedAlert):
+                StartAnimation(AnimatorChaseStartupStateName);
+                break;
+            case (MultiRangeEnemyState.RangedActive):
+                StartAnimation(AnimatorRangedActiveStateName);
+                break;
+            case (MultiRangeEnemyState.RangedAttack):
+                StartAnimation(AnimatorChaseStartupStateName);
+                break;
+            case (MultiRangeEnemyState.MeleeAttack):
+                StartAnimation(AnimatorAttackStateName);
+                break;
+            case (MultiRangeEnemyState.RangedConfused):
+                StartAnimation(AnimatorConfusedStateName);
+                break;
+            case (MultiRangeEnemyState.AttackDash):
+                StartAnimation(AnimatorForwardDashStateName);
+                break;
+            case (MultiRangeEnemyState.BackDash):
+                StartAnimation(AnimatorBackwardDashStateName);
+                break;
+            case (MultiRangeEnemyState.DeadLaunch):
+                StartAnimation(AnimatorLaunchDeathStateName);
+                break;
+            case (MultiRangeEnemyState.Dead):
                 StartAnimation(AnimatorDeathStateName);
                 break;
         }

@@ -413,10 +413,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2822262005380943324}
-  - component: {fileID: 8494705802591786081}
-  - component: {fileID: 14667325983180722}
   - component: {fileID: 7324370174203307949}
   - component: {fileID: 7371361271587698925}
+  - component: {fileID: 7689283540378783972}
+  - component: {fileID: 8494705802591786081}
+  - component: {fileID: 14667325983180722}
   m_Layer: 0
   m_Name: TenguEnemy
   m_TagString: Untagged
@@ -440,6 +441,88 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7324370174203307949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822262005380943325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5e3b4496213d1429a75667176d49bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 0
+  currentHP: 0
+  Attack: 0
+  EnemyKillCoins: 0
+  EnemyKillEnergy: 0
+  EnemyKillXP: 0
+  isNewController: 1
+  isDead: 0
+  wasHit: 0
+--- !u!114 &7371361271587698925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822262005380943325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea646c9d8695e914dbf51c867e2f579a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseTarget: {fileID: 0}
+  animationProps: {fileID: 4117927810497419261}
+  currentState: 0
+  rangedAttackTimer: 0
+  currentWanderTarget: {x: 0, y: 0}
+  lastWanderDistance: 0
+  isFacingRight: 0
+  AttackDistance: 0
+  ChaseSpeed: 0
+  WanderSpeed: 0
+  xShootingDistance: 0
+  MeleeAttackDistance: 0
+  MeleeAttackCooldown: 0
+  RangedAttackCooldown: 0
+  WanderCooldown: 0
+  maxWanderDistance: 0
+  willWander: 1
+  deathLaunchDistance: {x: 0, y: 0}
+  groundCheckXDistance: 0.25
+  groundCheckYDistance: 0.25
+--- !u!114 &7689283540378783972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822262005380943325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88c9a3c42040c70419ef9011291fa82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimatorIdleStateName: Tengu_Idle
+  AnimatorIdleAltStateName: Tengu_Idle_ALT
+  AnimatorWalkStateName: Tengu_Flying
+  AnimatorChaseStartupStateName: Tengu_Alert
+  AnimatorConfusedStateName: Tengu_Flying_Confused
+  AnimatorChaseStateName: 
+  AnimatorHitStateName: Tengu_Hit
+  AnimatorAttackStateName: Tengu_Melee_Attack
+  AnimatorStunStateName: Tengu_Stunned
+  AnimatorLaunchDeathStateName: Tengu_Death_Launch
+  AnimatorDeathStateName: Tengu_Death_Landing
+  AnimatorRangedAttackStateName: Tengu_Ranged_Attack
+  AnimatorRangedActiveStateName: Tengu_Angry_Flying
+  AnimatorRangedAlertStateName: Tengu_Alert
+  AnimatorForwardDashStateName: Tengu_Forward_Dash
+  AnimatorBackwardDashStateName: Tengu_Backwards_Dash
+  StunTime: 0
 --- !u!70 &8494705802591786081
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -477,41 +560,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &7324370174203307949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2822262005380943325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c5e3b4496213d1429a75667176d49bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 0
-  currentHP: 0
-  Attack: 0
-  EnemyKillCoins: 0
-  EnemyKillEnergy: 0
-  EnemyKillXP: 0
-  isNewController: 1
-  isDead: 0
-  wasHit: 0
---- !u!114 &7371361271587698925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2822262005380943325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea646c9d8695e914dbf51c867e2f579a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationProps: {fileID: 4117927810497419261}
-  currentState: 0
 --- !u!1 &2822262005400865949
 GameObject:
   m_ObjectHideFlags: 0
