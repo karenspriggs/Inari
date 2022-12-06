@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectilePool : MonoBehaviour
 {
-    public List<Projectile> projectilesInPool;
+    public List<Projectile> projectilePool;
 
     // Start is called before the first frame update
     void Start()
@@ -16,5 +16,17 @@ public class ProjectilePool : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ShootProjectile()
+    {
+        foreach(Projectile p in projectilePool)
+        {
+            if (!p.gameObject.activeInHierarchy)
+            {
+                p.gameObject.SetActive(true);
+                p.Shoot();
+            }
+        }
     }
 }

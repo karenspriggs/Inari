@@ -15,4 +15,14 @@ public class Projectile : MonoBehaviour
     {
         
     }
+
+    void ResetPosition()
+    {
+
+    }
+
+    public void Shoot()
+    {
+        ResetPosition();
+    }
 }

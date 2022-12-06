@@ -57,18 +57,24 @@ public class MultiRangeEnemyController : MonoBehaviour
 
     public bool isFacingRight;
 
-    public float AttackDistance;
-    public float ChaseSpeed;
+    public float DashSpeed;
     public float WanderSpeed;
+    [Header("The range the player has to enter for the enemy to start shooting (X axis only)")]
     public float xShootingDistance;
+    [Header("The range the player has to enter for the enemy to dash to them")]
+    public float MeleeStateActivationDistance;
+    [Header("How far away the enemy is from the player when it attacks")]
     public float MeleeAttackDistance;
     public float MeleeAttackCooldown;
     public float RangedAttackCooldown;
+    [Header("How fast the tengu moves up and down to match the player's Y axis when shooting")]
+    public float RangedYMoveSpeed;
     public float WanderCooldown;
     public int maxWanderDistance;
     public bool willWander = true;
 
     public Vector2 deathLaunchDistance;
+    private Vector2 returnDashLocation;
     private Vector2 hitLocation;
 
     bool groundedLastFrame = false;
@@ -106,6 +112,8 @@ public class MultiRangeEnemyController : MonoBehaviour
         {
             if (currentState != MultiRangeEnemyState.Hit && currentState != MultiRangeEnemyState.RangedAlert && currentState != MultiRangeEnemyState.MeleeAlert)
             {
+                DetermineIfShouldShoot();
+                DetermineIfShouldMelee();
                 DetermineState();
             }
 
@@ -131,6 +139,13 @@ public class MultiRangeEnemyController : MonoBehaviour
                 DetermineWanderBoundaries();
                 DetermineWanderDistance();
                 break;
+            case (MultiRangeEnemyState.AttackDash):
+                meleeAttackTimer = MeleeAttackCooldown;
+                returnDashLocation = this.transform.position;
+                break;
+            case (MultiRangeEnemyState.RangedActive):
+                rangedAttackTimer = RangedAttackCooldown;
+                break;
         }
     }
 
@@ -143,6 +158,12 @@ public class MultiRangeEnemyController : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.Wander):
                 Wander();
+                break;
+            case (MultiRangeEnemyState.AttackDash):
+                DashToPlayer();
+                break;
+            case (MultiRangeEnemyState.RangedActive):
+                ShootAtPlayer();
                 break;
         }
     }
@@ -163,12 +184,29 @@ public class MultiRangeEnemyController : MonoBehaviour
 
     void DetermineIfShouldShoot()
     {
+        if (currentState != MultiRangeEnemyState.RangedAttack && currentState != MultiRangeEnemyState.AttackDash)
+        {
+            float xTargetDistance = Mathf.Abs(transform.position.x - chaseTarget.transform.position.x);
 
+            if (xTargetDistance <= xShootingDistance && xTargetDistance >= MeleeAttackDistance)
+            {
+                Debug.Log("Start shooting");
+            }
+        }
     }
 
     void DetermineIfShouldMelee()
     {
+        if (currentState != MultiRangeEnemyState.MeleeAttack && currentState != MultiRangeEnemyState.RangedActive)
+        {
+            float xTargetDistance = Mathf.Abs(transform.position.x - chaseTarget.transform.position.x);
 
+            if (xTargetDistance <= MeleeStateActivationDistance)
+            {
+                Debug.Log("Start dashing");
+                SwitchState(MultiRangeEnemyState.AttackDash);
+            }
+        }
     }
 
     void DetermineWanderDistance()
@@ -199,6 +237,57 @@ public class MultiRangeEnemyController : MonoBehaviour
         {
             SwitchState(MultiRangeEnemyState.Hit);
             shouldHitStun = false;
+        }
+    }
+
+    void DashToPlayer()
+    {
+        if (transform.position.x < chaseTarget.transform.position.x && !isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        if (transform.position.x > chaseTarget.transform.position.x && isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        Vector2 currentMovement = Vector2.MoveTowards(transform.position, chaseTarget.transform.position, DashSpeed * Time.deltaTime);
+        float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
+
+        if (targetDistance <= MeleeAttackDistance && canMeleeAttack)
+        {
+            SwitchState(MultiRangeEnemyState.MeleeAttack);
+            return;
+        }
+
+        if (targetDistance >= MeleeStateActivationDistance)
+        {
+            SwitchState(MultiRangeEnemyState.Idle);
+        } else
+        {
+            transform.position = currentMovement;
+        }
+    }
+
+    void ShootAtPlayer()
+    {
+        Vector2 currentMovement = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, chaseTarget.transform.position.y), RangedYMoveSpeed * Time.deltaTime);
+        float xTargetDistance = Mathf.Abs(transform.position.x - chaseTarget.transform.position.x);
+
+        if (canRangedAttack)
+        {
+            SwitchState(MultiRangeEnemyState.RangedAttack);
+            return;
+        }
+
+        if (xTargetDistance >= MeleeStateActivationDistance)
+        {
+            SwitchState(MultiRangeEnemyState.Idle);
+        }
+        else
+        {
+            transform.position = currentMovement;
         }
     }
 
@@ -247,11 +336,6 @@ public class MultiRangeEnemyController : MonoBehaviour
             wanderTimer = WanderCooldown;
             SwitchState(MultiRangeEnemyState.Idle);
         }
-    }
-
-    void RangedAttackMode()
-    {
-
     }
 
     void MeleeAttackMode()
@@ -338,18 +422,6 @@ public class MultiRangeEnemyController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), groundMask)
             || Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), platformMask);
-
-        if (isGrounded)
-        {
-            rigidbody.gravityScale = 1f;
-        }
-        else
-        {
-            if (currentState != MultiRangeEnemyState.Hit)
-            {
-                rigidbody.gravityScale = 5f;
-            }
-        }
 
         if (isGrounded && currentState == MultiRangeEnemyState.DeadLaunch && !groundedLastFrame)
         {

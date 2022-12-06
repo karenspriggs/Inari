@@ -216,8 +216,6 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState != EnemyState.Chase && currentState != EnemyState.Attack)
         {
-            float targetDistance = Vector2.Distance(transform.position, chaseTarget.transform.position);
-
             float xTargetDistance = Mathf.Abs(transform.position.x - chaseTarget.transform.position.x);
             float yTargetDistance = Mathf.Abs(transform.position.y - chaseTarget.transform.position.y);
 
