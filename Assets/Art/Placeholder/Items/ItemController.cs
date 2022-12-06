@@ -10,6 +10,7 @@ public class ItemController : MonoBehaviour
     [System.NonSerialized]
     public Item item;
     public Image icon;
+    public Sprite quickslot;
     public TextMeshProUGUI count;
     public TextMeshProUGUI itemname;
     public void AddItem(Item newItem)
@@ -19,6 +20,7 @@ public class ItemController : MonoBehaviour
 
     public void UseItem()
     {
+        if (item == null) return;
         GameObject.FindWithTag("Player").GetComponent<PlayerData>().HealHealth(item.health);
         GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Remove(item);
         GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().ListItems();
@@ -42,9 +44,10 @@ public class ItemController : MonoBehaviour
 
     public void ClearItem()
     {
-        icon.sprite = null;
+        icon.sprite = quickslot;
         itemname.text = "";
         count.text = "";
+        item = null;
     }
 
 
