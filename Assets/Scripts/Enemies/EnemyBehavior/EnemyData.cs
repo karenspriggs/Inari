@@ -44,7 +44,7 @@ public class EnemyData : MonoBehaviour
         if (wasHit && !isDead)
         {
             Debug.Log("Enemy took damage");
-            currentHP--;
+          //  currentHP--;
             EnemyHit?.Invoke();
             wasHit = false;
             CheckIfDead();
@@ -53,7 +53,7 @@ public class EnemyData : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHP -= damage;
+       // currentHP -= damage;
         CheckIfDead();
     }
 
@@ -83,7 +83,8 @@ public class EnemyData : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             wasHit = true;
-
+            currentHP -= (int)collision.GetComponentInParent<PlayerData>().Attack;
+            CheckIfDead();
             if (collision.gameObject.transform.position.x < this.gameObject.transform.position.x)
             {
                 wasHitToLeft = true;
