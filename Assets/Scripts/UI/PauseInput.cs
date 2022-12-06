@@ -20,5 +20,6 @@ public class PauseInput : MonoBehaviour
         pauseActions.Pause.performed += ctx => pauseMenu.TogglePauseMenu();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
+        Debug.Log("PauseInput");
     }
 }

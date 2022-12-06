@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class PauseMenuUI : MonoBehaviour
     public Button[] buttons;
     private int currentSceneIndex;
     bool isPaused = false;
-
+    public GameObject firstButton;
     private void Start()
     {
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -56,6 +57,8 @@ public class PauseMenuUI : MonoBehaviour
             }
 
             pauseMenuUI.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(firstButton);
         }
     }
 
