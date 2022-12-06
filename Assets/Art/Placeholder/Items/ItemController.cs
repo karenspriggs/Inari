@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class ItemController : MonoBehaviour
 {
     [System.NonSerialized]
-    private Item item;
+    public Item item;
     public Image icon;
     public TextMeshProUGUI count;
     public TextMeshProUGUI itemname;
@@ -22,7 +22,15 @@ public class ItemController : MonoBehaviour
         GameObject.FindWithTag("Player").GetComponent<PlayerData>().HealHealth(item.health);
         GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Remove(item);
         GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().ListItems();
-        ItemRefresh();
+        int count = GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Items.Count(i => i == item);
+        if (count <= 0)
+        {
+            GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>().itemcontroller.ClearItem();
+        }
+        else
+        {
+            ItemRefresh();
+        }
     }
     
     public void ItemRefresh()
@@ -31,6 +39,14 @@ public class ItemController : MonoBehaviour
         itemname.text = item.itemName;
         icon.sprite = item.icon;
     }
+
+    public void ClearItem()
+    {
+        icon.sprite = null;
+        itemname.text = "";
+        count.text = "";
+    }
+
 
     public void SetQuickSlot()
     {

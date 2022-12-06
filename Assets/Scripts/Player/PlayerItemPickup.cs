@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerItemPickup : MonoBehaviour
 {
     public FoodSound sounds;
     public Item Item;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -14,7 +16,12 @@ public class PlayerItemPickup : MonoBehaviour
 
     void PickUp()
     {
+        var quickSlot = GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>();
         PlayerInventory.Instance.Add(Item);
+        if (quickSlot.itemcontroller.item == Item)
+        {
+            quickSlot.itemcontroller.ItemRefresh();
+        }
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
     }
