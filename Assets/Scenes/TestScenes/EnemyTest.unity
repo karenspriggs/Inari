@@ -82838,6 +82838,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 534868177915922681, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99579835
+      objectReference: {fileID: 0}
+    - target: {fileID: 534868177915922681, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.09157308
+      objectReference: {fileID: 0}
     - target: {fileID: 668914390290366213, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.018053595
@@ -82864,7 +82872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2669579056820573094, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: m_Mass
-      value: 0.0001
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2669579056820573094, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: m_GravityScale
@@ -82931,6 +82939,14 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: xShootingDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: yShootingDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: MeleeStateDistance
       value: 10
       objectReference: {fileID: 0}
@@ -82943,12 +82959,32 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: RangedAttackCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: MeleeStateActivationDistance
-      value: 5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5598508478491673754, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9980519
+      objectReference: {fileID: 0}
+    - target: {fileID: 5598508478491673754, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.06238952
       objectReference: {fileID: 0}
     - target: {fileID: 5943857121696914798, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.01763496
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943857121696914798, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.99984455
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393407637992633626, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: projectileLifeTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8306423290806248967, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: m_LocalRotation.w
@@ -90972,7 +91008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2088101220
 Transform:
   m_ObjectHideFlags: 0

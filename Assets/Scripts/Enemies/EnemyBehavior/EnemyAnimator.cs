@@ -125,7 +125,7 @@ public class EnemyAnimator : MonoBehaviour
                 StartAnimation(AnimatorRangedActiveStateName);
                 break;
             case (MultiRangeEnemyState.RangedAttack):
-                StartAnimation(AnimatorChaseStartupStateName);
+                StartAnimation(AnimatorRangedAttackStateName);
                 break;
             case (MultiRangeEnemyState.MeleeAttack):
                 StartAnimation(AnimatorAttackStateName);

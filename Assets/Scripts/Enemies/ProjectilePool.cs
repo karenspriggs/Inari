@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectilePool : MonoBehaviour
 {
     public List<Projectile> projectilePool;
+    public GameObject originPointObject;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +19,15 @@ public class ProjectilePool : MonoBehaviour
         
     }
 
-    public void ShootProjectile()
+    public void ShootProjectile(bool isFacingRight)
     {
         foreach(Projectile p in projectilePool)
         {
             if (!p.gameObject.activeInHierarchy)
             {
                 p.gameObject.SetActive(true);
-                p.Shoot();
+                p.Shoot(originPointObject.transform.position, isFacingRight);
+                return;
             }
         }
     }

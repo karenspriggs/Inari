@@ -195,7 +195,17 @@ public class PlayerData : MonoBehaviour
         {
             if (!isInvincible)
             {
-                int damage = collision.GetComponentInParent<EnemyData>().Attack;
+                int damage;
+
+                // i hate this lmao but i dont want to make an interface right now UWAA
+                if (collision.GetComponentInParent<EnemyData>() == null)
+                {
+                    damage = collision.gameObject.GetComponent<Projectile>().projectileDamage;
+                } else
+                {
+                    damage = collision.GetComponentInParent<EnemyData>().Attack;
+                }
+
                 TakeDamage(damage);
 
                 if (!isInvincibleCoroutineRunning)

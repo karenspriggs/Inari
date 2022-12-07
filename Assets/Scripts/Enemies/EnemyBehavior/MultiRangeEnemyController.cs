@@ -27,7 +27,8 @@ public class MultiRangeEnemyController : MonoBehaviour
     EnemyParticles enemyParticles;
     Rigidbody2D rigidbody;
     CapsuleCollider2D collider;
-    ProjectilePool projectiles;
+
+    public ProjectilePool projectiles;
 
     public GameObject chaseTarget;
     public GameObject animationProps;
@@ -61,6 +62,7 @@ public class MultiRangeEnemyController : MonoBehaviour
     public float WanderSpeed;
     [Header("The range the player has to enter for the enemy to start shooting (X axis only)")]
     public float xShootingDistance;
+    public float yShootingDistance;
     [Header("The range the player has to enter for the enemy to dash to them")]
     public float MeleeStateActivationDistance;
     [Header("How far away the enemy is from the player when it attacks")]
@@ -106,14 +108,32 @@ public class MultiRangeEnemyController : MonoBehaviour
         platformMask = LayerMask.GetMask("One-Way Platform");
     }
 
+    private void OnEnable()
+    {
+        EnemyShootEvent.ShootProjectileInitiated += ShootAtPlayer;
+    }
+
+    private void OnDisable()
+    {
+        EnemyShootEvent.ShootProjectileInitiated -= ShootAtPlayer;
+    }
+
     private void FixedUpdate()
     {
         if (currentState != MultiRangeEnemyState.Dead && currentState != MultiRangeEnemyState.DeadLaunch)
         {
-            if (currentState != MultiRangeEnemyState.Hit && currentState != MultiRangeEnemyState.RangedAlert && currentState != MultiRangeEnemyState.MeleeAlert)
+            if (currentState != MultiRangeEnemyState.Hit && currentState != MultiRangeEnemyState.RangedAlert && currentState != MultiRangeEnemyState.MeleeAlert && currentState != MultiRangeEnemyState.BackDash)
             {
-                DetermineIfShouldShoot();
-                DetermineIfShouldMelee();
+                if (currentState != MultiRangeEnemyState.RangedActive)
+                {
+                    DetermineIfShouldShoot();
+                }
+
+                if (currentState != MultiRangeEnemyState.AttackDash)
+                {
+                    DetermineIfShouldMelee();
+                }
+                
                 DetermineState();
             }
 
@@ -139,12 +159,27 @@ public class MultiRangeEnemyController : MonoBehaviour
                 DetermineWanderBoundaries();
                 DetermineWanderDistance();
                 break;
+            case (MultiRangeEnemyState.Hit):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.Hit);
+                break;
             case (MultiRangeEnemyState.AttackDash):
-                meleeAttackTimer = MeleeAttackCooldown;
+                enemyAnimator.SwitchState(MultiRangeEnemyState.AttackDash);
                 returnDashLocation = this.transform.position;
                 break;
+            case (MultiRangeEnemyState.MeleeAttack):
+                canMeleeAttack = false;
+                enemyAnimator.SwitchState(MultiRangeEnemyState.MeleeAttack);
+                break;
+            case (MultiRangeEnemyState.BackDash):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.BackDash);
+                break;
             case (MultiRangeEnemyState.RangedActive):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.RangedActive);
+                break;
+            case (MultiRangeEnemyState.RangedAttack):
+                canRangedAttack = false;
                 rangedAttackTimer = RangedAttackCooldown;
+                enemyAnimator.SwitchState(MultiRangeEnemyState.RangedAttack);
                 break;
         }
     }
@@ -159,11 +194,26 @@ public class MultiRangeEnemyController : MonoBehaviour
             case (MultiRangeEnemyState.Wander):
                 Wander();
                 break;
+            case (MultiRangeEnemyState.Hit):
+                canMeleeAttack = false;
+                canRangedAttack = false;
+                meleeAttackTimer = MeleeAttackCooldown;
+                rangedAttackTimer = RangedAttackCooldown;
+                break;
             case (MultiRangeEnemyState.AttackDash):
                 DashToPlayer();
                 break;
+            case (MultiRangeEnemyState.MeleeAttack):
+                AnimationEndTransitionToNextState(MultiRangeEnemyState.BackDash);
+                break;
+            case (MultiRangeEnemyState.BackDash):
+                DashBack();
+                break;
             case (MultiRangeEnemyState.RangedActive):
-                ShootAtPlayer();
+                RangedActiveMovment();
+                break;
+            case (MultiRangeEnemyState.RangedAttack):
+                AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
                 break;
         }
     }
@@ -271,18 +321,52 @@ public class MultiRangeEnemyController : MonoBehaviour
         }
     }
 
-    void ShootAtPlayer()
+    void DashBack()
+    {
+        if (transform.position.x < returnDashLocation.x && !isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        if (transform.position.x > returnDashLocation.x && isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        Vector2 currentMovement = Vector2.MoveTowards(transform.position, returnDashLocation, DashSpeed * Time.deltaTime);
+
+        if ((Vector2)transform.position == returnDashLocation)
+        {
+            SwitchState(MultiRangeEnemyState.Idle);
+        } else
+        {
+            transform.position = currentMovement;
+        }
+    }
+
+    void RangedActiveMovment()
     {
         Vector2 currentMovement = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, chaseTarget.transform.position.y), RangedYMoveSpeed * Time.deltaTime);
         float xTargetDistance = Mathf.Abs(transform.position.x - chaseTarget.transform.position.x);
+        float yTargetDistance = Mathf.Abs(transform.position.y - chaseTarget.transform.position.y);
 
-        if (canRangedAttack)
+        if (transform.position.x < chaseTarget.transform.position.x && !isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        if (transform.position.x > chaseTarget.transform.position.x && isFacingRight)
+        {
+            FlipEnemy();
+        }
+
+        if (canRangedAttack && yTargetDistance <= yShootingDistance)
         {
             SwitchState(MultiRangeEnemyState.RangedAttack);
             return;
         }
 
-        if (xTargetDistance >= MeleeStateActivationDistance)
+        if (xTargetDistance >= xShootingDistance)
         {
             SwitchState(MultiRangeEnemyState.Idle);
         }
@@ -290,6 +374,11 @@ public class MultiRangeEnemyController : MonoBehaviour
         {
             transform.position = currentMovement;
         }
+    }
+
+    void ShootAtPlayer()
+    {
+        projectiles.ShootProjectile(isFacingRight);
     }
 
     void TurnAround()
@@ -337,16 +426,6 @@ public class MultiRangeEnemyController : MonoBehaviour
             wanderTimer = WanderCooldown;
             SwitchState(MultiRangeEnemyState.Idle);
         }
-    }
-
-    void MeleeAttackMode()
-    {
-
-    }
-
-    void MeleeDashBack()
-    {
-
     }
 
     private void FlipEnemy()
