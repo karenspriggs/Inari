@@ -191,6 +191,7 @@ public class MultiRangeEnemyController : MonoBehaviour
             if (xTargetDistance <= xShootingDistance && xTargetDistance >= MeleeAttackDistance)
             {
                 Debug.Log("Start shooting");
+                SwitchState(MultiRangeEnemyState.RangedActive);
             }
         }
     }
