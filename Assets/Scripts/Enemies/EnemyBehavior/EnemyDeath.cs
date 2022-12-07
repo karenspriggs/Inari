@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class EnemyDeath : MonoBehaviour
 {
-    // Start is called before the first frame update
+    KillCount killCountscript;
+
+
     void Start()
     {
-        
+        killCountscript=GameObject.Find("KCO").GetComponent<KillCount>();
     }
 
     // Update is called once per frame
@@ -19,5 +21,6 @@ public class EnemyDeath : MonoBehaviour
     public void EnemyDeathEvent()
     {
         Destroy(transform.parent.gameObject);
+        killCountscript.AddKills();
     }
 }
