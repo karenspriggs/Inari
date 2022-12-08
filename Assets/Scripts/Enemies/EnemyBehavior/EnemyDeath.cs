@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class EnemyDeath : MonoBehaviour
 {
-    //KillCount killCounter;
-
+    //public KillCount count;
 
     void Start()
     {
-        //killCounter = GameObject.Find("kill count").GetComponent <KillCount>();
+        
     }
 
     // Update is called once per frame
@@ -22,8 +21,7 @@ public class EnemyDeath : MonoBehaviour
     public void EnemyDeathEvent()
     {
         Destroy(transform.parent.gameObject);
-
-       // killCounter.AddKills();
+        //count.AddKills();
 
     }
 }

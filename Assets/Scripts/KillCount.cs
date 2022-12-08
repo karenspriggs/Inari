@@ -8,27 +8,29 @@ using UnityEditor.Experimental.GraphView;
 
 public class KillCount : MonoBehaviour
 {
+    [SerializeField]
     public TextMeshProUGUI counterText;
     public int counter;
 
     void Start()
     {
-        GameObject.Find("kill count").GetComponent<TextMeshProUGUI>().SetText(counter.ToString());
+        GameObject.Find("killCount").GetComponent<TextMeshProUGUI>().SetText(counter.ToString());
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ShowKills();
+        ShowKills();
     }
 
-   // private void ShowKills()
-   // {
-       // counterText.text = counter.ToString();
-   // }
+   private void ShowKills()
+    { 
+        counterText.text = counter.ToString();
+    }
 
     public void AddKills()
     {
+        counterText.text = counter.ToString();
         counter++;
     }
 }
