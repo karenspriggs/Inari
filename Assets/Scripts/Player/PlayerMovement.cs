@@ -424,4 +424,9 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x + impulse.x, playerRigidbody.velocity.y + impulse.y);
     }
+
+    public Vector3 GetVelocity()
+    {
+        return playerRigidbody.velocity;
+    }
 }

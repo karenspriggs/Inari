@@ -10,6 +10,7 @@ public class PlayerAnimator : MonoBehaviour
     private int animatorMoveBool;
     private int animatorMoveValue;
     private int animatorGroundedBool;
+    private int animatorAttackBool;
 
     public float velocityToStopMovingAnim;
 
@@ -20,6 +21,7 @@ public class PlayerAnimator : MonoBehaviour
         animatorMoveBool = Animator.StringToHash("IsMoving");
         animatorMoveValue = Animator.StringToHash("MoveSpeed");
         animatorGroundedBool = Animator.StringToHash("IsGrounded");
+        animatorAttackBool = Animator.StringToHash("IsBasicAttacking");
     }
 
     public void AnimationUpdateMoveBool(float moveInput)
@@ -38,6 +40,11 @@ public class PlayerAnimator : MonoBehaviour
 
     public void AnimationUpdateGroundedBool(bool isGrounded) {
         animator.SetBool(animatorGroundedBool, isGrounded);
+    }
+
+    public void AnimationUpdateAttackBool(bool isBasicAttacking)
+    {
+        animator.SetBool(animatorAttackBool, isBasicAttacking);
     }
 
     public void SwitchState(InariState newState)

@@ -558,7 +558,7 @@ public class PlayerController : MonoBehaviour
 
     private void AnimationEndTransitionToNextState(InariState nextState)
     {
-        if (playerAnimator.CheckIfAnimationEnded())
+        if (playerAnimator.CheckIfAnimationEnded() && stateTimer > 0.1f)
         {
             SwitchState(nextState);
         }
