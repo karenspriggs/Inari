@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnemyDeath : MonoBehaviour
 {
-    KillCount killCountscript;
+    ///KillCount killCounter;
 
 
     void Start()
     {
-        killCountscript=GameObject.Find("KCO").GetComponent<KillCount>();
+        //killCounter = GameObject.Find("kill count").GetComponent <KillCount>();
     }
 
     // Update is called once per frame
@@ -21,6 +22,8 @@ public class EnemyDeath : MonoBehaviour
     public void EnemyDeathEvent()
     {
         Destroy(transform.parent.gameObject);
-        killCountscript.AddKills();
+
+        //killCounter.AddKills();
+
     }
 }
