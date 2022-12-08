@@ -171,6 +171,9 @@ public class MultiRangeEnemyController : MonoBehaviour
                 enemyAnimator.SwitchState(MultiRangeEnemyState.AttackDash);
                 returnDashLocation = this.transform.position;
                 break;
+            case (MultiRangeEnemyState.MeleeAlert):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.MeleeAlert);
+                break;
             case (MultiRangeEnemyState.MeleeAttack):
                 canMeleeAttack = false;
                 enemyAnimator.SwitchState(MultiRangeEnemyState.MeleeAttack);
@@ -213,6 +216,9 @@ public class MultiRangeEnemyController : MonoBehaviour
                 meleeAttackTimer = MeleeAttackCooldown;
                 rangedAttackTimer = RangedAttackCooldown;
                 AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
+                break;
+            case (MultiRangeEnemyState.MeleeAlert):
+                AnimationEndTransitionToNextState(MultiRangeEnemyState.AttackDash);
                 break;
             case (MultiRangeEnemyState.AttackDash):
                 DashToPlayer();
@@ -276,7 +282,7 @@ public class MultiRangeEnemyController : MonoBehaviour
             if (xTargetDistance <= MeleeStateActivationDistance)
             {
                 Debug.Log("Start dashing");
-                SwitchState(MultiRangeEnemyState.AttackDash);
+                SwitchState(MultiRangeEnemyState.MeleeAlert);
             }
         }
     }
