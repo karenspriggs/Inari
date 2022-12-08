@@ -30,6 +30,11 @@ public class TitleScreenButtons : MonoBehaviour
         SceneManager.LoadScene("OptionsTesting");
     }
 
+    public void OpenCredits()
+    {
+        Application.OpenURL("https://github.com/karenspriggs/Inari");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
