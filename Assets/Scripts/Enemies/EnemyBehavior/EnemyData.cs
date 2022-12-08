@@ -21,6 +21,7 @@ public class EnemyData : MonoBehaviour
 
     EnemyAnimator enemyAnimator;
     EnemyController enemyController;
+    MultiRangeEnemyController multiRangeController;
 
     public static Action EnemyHit;
     public static Action EnemyKilled;
@@ -37,6 +38,7 @@ public class EnemyData : MonoBehaviour
         currentHP = maxHP;
         enemyAnimator = GetComponent<EnemyAnimator>();
         enemyController = GetComponent<EnemyController>();
+        multiRangeController = GetComponent<MultiRangeEnemyController>();
     }
 
     private void Update()
@@ -62,7 +64,15 @@ public class EnemyData : MonoBehaviour
         if (currentHP <= 0 && !isDead)
         {
             Debug.Log("Enemy died");
-            enemyController.LaunchOnDeath(wasHitToLeft);
+
+            if (enemyController == null)
+            {
+                multiRangeController.LaunchOnDeath(wasHitToLeft);
+            } else
+            {
+                enemyController.LaunchOnDeath(wasHitToLeft);
+            }
+            
             isDead = true;
             EnemyKilled?.Invoke();
             EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);

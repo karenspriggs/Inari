@@ -38,8 +38,10 @@ public class MultiRangeEnemyController : MonoBehaviour
 
     [SerializeField]
     float rangedAttackTimer;
+    [SerializeField]
     float meleeAttackTimer;
     float wanderTimer;
+    float autoDeathTimer = 0.5f;
 
     bool canMove = true;
     bool canMeleeAttack = false;
@@ -49,6 +51,7 @@ public class MultiRangeEnemyController : MonoBehaviour
     bool shouldHitStun = false;
     bool targetChosen = false;
     bool isGrounded = true;
+    bool canAutoDie = false;
 
     [SerializeField]
     Vector2 currentWanderTarget;
@@ -124,12 +127,12 @@ public class MultiRangeEnemyController : MonoBehaviour
         {
             if (currentState != MultiRangeEnemyState.Hit && currentState != MultiRangeEnemyState.RangedAlert && currentState != MultiRangeEnemyState.MeleeAlert && currentState != MultiRangeEnemyState.BackDash)
             {
-                if (currentState != MultiRangeEnemyState.RangedActive)
+                if (currentState != MultiRangeEnemyState.RangedActive && currentState != MultiRangeEnemyState.RangedAttack)
                 {
                     DetermineIfShouldShoot();
                 }
 
-                if (currentState != MultiRangeEnemyState.AttackDash)
+                if (currentState != MultiRangeEnemyState.AttackDash && currentState != MultiRangeEnemyState.MeleeAttack)
                 {
                     DetermineIfShouldMelee();
                 }
@@ -138,8 +141,9 @@ public class MultiRangeEnemyController : MonoBehaviour
             }
 
             UpdateTimers();
-            DoState(currentState);
         }
+
+        DoState(currentState);
         UpdateGrounding();
     }
 
@@ -161,6 +165,7 @@ public class MultiRangeEnemyController : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.Hit):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.Hit);
+                enemyParticles.PlayHitParticles();
                 break;
             case (MultiRangeEnemyState.AttackDash):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.AttackDash);
@@ -169,9 +174,11 @@ public class MultiRangeEnemyController : MonoBehaviour
             case (MultiRangeEnemyState.MeleeAttack):
                 canMeleeAttack = false;
                 enemyAnimator.SwitchState(MultiRangeEnemyState.MeleeAttack);
+                meleeAttackTimer = MeleeAttackCooldown;
                 break;
             case (MultiRangeEnemyState.BackDash):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.BackDash);
+                Debug.Log("Is backdashing");
                 break;
             case (MultiRangeEnemyState.RangedActive):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.RangedActive);
@@ -180,6 +187,12 @@ public class MultiRangeEnemyController : MonoBehaviour
                 canRangedAttack = false;
                 rangedAttackTimer = RangedAttackCooldown;
                 enemyAnimator.SwitchState(MultiRangeEnemyState.RangedAttack);
+                break;
+            case (MultiRangeEnemyState.DeadLaunch):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.DeadLaunch);
+                break;
+            case (MultiRangeEnemyState.Dead):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.Dead);
                 break;
         }
     }
@@ -199,6 +212,7 @@ public class MultiRangeEnemyController : MonoBehaviour
                 canRangedAttack = false;
                 meleeAttackTimer = MeleeAttackCooldown;
                 rangedAttackTimer = RangedAttackCooldown;
+                AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
                 break;
             case (MultiRangeEnemyState.AttackDash):
                 DashToPlayer();
@@ -214,6 +228,13 @@ public class MultiRangeEnemyController : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.RangedAttack):
                 AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
+                break;
+            case (MultiRangeEnemyState.DeadLaunch):
+                UpdateAutoDeathTimer();
+                break;
+            case (MultiRangeEnemyState.Dead):
+                canMeleeAttack = false;
+                canRangedAttack = false;
                 break;
         }
     }
@@ -335,7 +356,7 @@ public class MultiRangeEnemyController : MonoBehaviour
 
         Vector2 currentMovement = Vector2.MoveTowards(transform.position, returnDashLocation, DashSpeed * Time.deltaTime);
 
-        if ((Vector2)transform.position == returnDashLocation)
+        if (Mathf.Abs(transform.position.x - returnDashLocation.x) <= 0.1 && Mathf.Abs(transform.position.y - returnDashLocation.y) <= 0.1)
         {
             SwitchState(MultiRangeEnemyState.Idle);
         } else
@@ -428,6 +449,22 @@ public class MultiRangeEnemyController : MonoBehaviour
         }
     }
 
+    public void LaunchOnDeath(bool isToLeft)
+    {
+        Debug.Log("Launching enemy");
+
+        Vector2 distanceToLaunch = deathLaunchDistance;
+
+        if (!isToLeft)
+        {
+            distanceToLaunch = new Vector2(-distanceToLaunch.x, distanceToLaunch.y);
+        }
+
+        rigidbody.AddForce(distanceToLaunch);
+
+        SwitchState(MultiRangeEnemyState.DeadLaunch);
+    }
+
     private void FlipEnemy()
     {
         isFacingRight = !isFacingRight;
@@ -498,15 +535,47 @@ public class MultiRangeEnemyController : MonoBehaviour
         }
     }
 
+    void UpdateAutoDeathTimer()
+    {
+        Debug.Log("Updating auto timer");
+
+        if (autoDeathTimer > 0)
+        {
+            autoDeathTimer -= 1 * Time.deltaTime;
+
+            if (autoDeathTimer <= 0)
+            {
+                autoDeathTimer = 0f;
+                Debug.Log("Can automatically die");
+                canAutoDie = true;
+            }
+        }
+    }
+
     void UpdateGrounding()
     {
         isGrounded = Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), groundMask)
             || Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), platformMask);
 
-        if (isGrounded && currentState == MultiRangeEnemyState.DeadLaunch && !groundedLastFrame)
+        if (isGrounded && currentState == MultiRangeEnemyState.DeadLaunch)
         {
-            SwitchState(MultiRangeEnemyState.Dead);
-            enemyParticles.PlayLandParticles();
+            if (groundedLastFrame && canAutoDie)
+            {
+                SwitchState(MultiRangeEnemyState.Dead);
+            } else
+            {
+                if (!groundedLastFrame)
+                {
+                    SwitchState(MultiRangeEnemyState.Dead);
+                    enemyParticles.PlayLandParticles();
+                }
+            }
+            
+        }
+
+        if (currentState == MultiRangeEnemyState.DeadLaunch)
+        {
+            rigidbody.gravityScale = 1f;
         }
 
         groundedLastFrame = isGrounded;

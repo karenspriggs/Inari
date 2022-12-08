@@ -39,10 +39,12 @@ public class EnemyController : MonoBehaviour
     bool shouldHitStun = false;
     bool targetChosen = false;
     bool isGrounded = true;
+    bool canAutoDie = false;
 
     [SerializeField]
     float attackTimer;
     float wanderTimer;
+    float autoDeathTimer = 0.5f;
 
     [SerializeField]
     Vector2 currentWanderTarget;
@@ -115,8 +117,8 @@ public class EnemyController : MonoBehaviour
             }
 
             UpdateTimers();
-            DoState(currentState);
         }
+        DoState(currentState);
         UpdateGrounding();
     }
 
@@ -198,6 +200,9 @@ public class EnemyController : MonoBehaviour
                 AnimationEndTransitionToNextState(EnemyState.Chase);
                 break;
             case (EnemyState.Stun):
+                break;
+            case (EnemyState.DeadLaunch):
+                UpdateAutoDeathTimer();
                 break;
             case (EnemyState.Death):
                 canAttack = false;
@@ -421,6 +426,23 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void UpdateAutoDeathTimer()
+    {
+        Debug.Log("Updating auto timer");
+
+        if (autoDeathTimer > 0)
+        {
+            autoDeathTimer -= 1 * Time.deltaTime;
+
+            if (autoDeathTimer <= 0)
+            {
+                autoDeathTimer = 0f;
+                Debug.Log("Can automatically die");
+                canAutoDie = true;
+            }
+        }
+    }
+
     void UpdateGrounding()
     {
         isGrounded = Physics2D.OverlapArea(new Vector2(collider.bounds.min.x + groundCheckXDistance, collider.bounds.min.y), new Vector2(collider.bounds.max.x - groundCheckXDistance, collider.bounds.min.y - groundCheckYDistance), groundMask)
@@ -437,10 +459,20 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        if (isGrounded && currentState == EnemyState.DeadLaunch && !groundedLastFrame)
+        if (isGrounded && currentState == EnemyState.DeadLaunch)
         {
-            SwitchState(EnemyState.Death);
-            enemyParticles.PlayLandParticles();
+            if (groundedLastFrame && canAutoDie)
+            {
+                SwitchState(EnemyState.Death);
+                enemyParticles.PlayLandParticles();
+            } else
+            {
+                if (!groundedLastFrame)
+                {
+                    SwitchState(EnemyState.Death);
+                    enemyParticles.PlayLandParticles();
+                }
+            }
         }
 
         groundedLastFrame = isGrounded;

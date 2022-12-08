@@ -82872,7 +82872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2669579056820573094, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2669579056820573094, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: m_GravityScale
@@ -82956,11 +82956,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: MeleeAttackDistance
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: RangedAttackCooldown
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: deathLaunchDistance.x
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
+      propertyPath: deathLaunchDistance.y
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 4860525143339494649, guid: 642f4ca76f8884e409305f836dce9cbe, type: 3}
       propertyPath: MeleeStateActivationDistance
