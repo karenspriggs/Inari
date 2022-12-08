@@ -14,7 +14,7 @@ public class KillCount : MonoBehaviour
 
     void Start()
     {
-        GameObject.Find("killCount").GetComponent<TextMeshProUGUI>().SetText(counter.ToString());
+        //GameObject.Find("killCount").GetComponent<TextMeshProUGUI>().SetText(counter.ToString());
     }
 
     // Update is called once per frame

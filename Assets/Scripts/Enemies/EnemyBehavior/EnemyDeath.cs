@@ -8,17 +8,10 @@ public class EnemyDeath : MonoBehaviour
 {
     public KillCount count;
 
-    void Start()
+    private void Start()
     {
-        
+        count = FindObjectOfType<KillCount>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void EnemyDeathEvent()
     {
         Destroy(transform.parent.gameObject);
