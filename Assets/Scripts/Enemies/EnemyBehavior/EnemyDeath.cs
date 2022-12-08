@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyDeath : MonoBehaviour
 {
-    ///KillCount killCounter;
+    //KillCount killCounter;
 
 
     void Start()
@@ -23,7 +23,7 @@ public class EnemyDeath : MonoBehaviour
     {
         Destroy(transform.parent.gameObject);
 
-        //killCounter.AddKills();
+       // killCounter.AddKills();
 
     }
 }

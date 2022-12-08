@@ -8,12 +8,12 @@ using UnityEditor.Experimental.GraphView;
 
 public class KillCount : MonoBehaviour
 {
-    //public TextMeshPro counterText;
-    int counter;
+    public TextMeshProUGUI counterText;
+    public int counter;
 
     void Start()
     {
-        GameObject.Find("kill count").GetComponent<TextMeshPro>().SetText(counter.ToString());
+        GameObject.Find("kill count").GetComponent<TextMeshProUGUI>().SetText(counter.ToString());
     }
 
     // Update is called once per frame

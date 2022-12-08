@@ -68482,6 +68482,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &993718685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6773761534776303858, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+  m_PrefabInstance: {fileID: 3362845495172622044}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &993718687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6387213438690144877, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+  m_PrefabInstance: {fileID: 3362845495172622044}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993718685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &993718689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993718685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561c3f886467d104b9100ee3652baa7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  counterText: {fileID: 993718687}
+  counter: 0
 --- !u!1 &1007168920
 GameObject:
   m_ObjectHideFlags: 0
@@ -98328,6 +98358,10 @@ PrefabInstance:
       propertyPath: m_Colors.m_SelectedColor.r
       value: 0.42988113
       objectReference: {fileID: 0}
+    - target: {fileID: 523858051033623431, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 523858051101954335, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: firstButton
       value: 
@@ -98808,6 +98842,10 @@ PrefabInstance:
       propertyPath: audioMixer
       value: 
       objectReference: {fileID: 24100000, guid: 5bfc6a93a623ba34cad37b1d8c17771d, type: 2}
+    - target: {fileID: 7001574602417308470, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7257543842510336376, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
