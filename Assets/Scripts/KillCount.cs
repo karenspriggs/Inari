@@ -8,9 +8,9 @@ using UnityEditor.Experimental.GraphView;
 
 public class KillCount : MonoBehaviour
 {
-    [SerializeField]
+    //[SerializeField]
     public TextMeshProUGUI counterText;
-    public int counter;
+    public int counter = 0;
 
     void Start()
     {
@@ -30,7 +30,7 @@ public class KillCount : MonoBehaviour
 
     public void AddKills()
     {
-        counterText.text = counter.ToString();
         counter++;
+        counterText.text = counter.ToString();
     }
 }
