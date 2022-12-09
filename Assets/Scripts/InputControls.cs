@@ -51,7 +51,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""id"": ""6f3c0ca3-d075-44ed-b2d6-9269d44b0489"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -94,6 +94,15 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""name"": ""UseItem"",
                     ""type"": ""Button"",
                     ""id"": ""05806270-1e7d-42fe-9388-86b7668ddbf3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UpButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""8227d4c6-3d71-48d3-9fbb-a335ea6a5cd9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -386,6 +395,50 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d90bac1-d35c-4571-a299-0c9ceb4061e3"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MainInput"",
+                    ""action"": ""UpButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e05ef2b-d56c-4d46-a69c-e5de3c5764c1"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4b7a99d-6a78-4e6e-9eb6-14edd720a1b1"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""207edd82-2475-4e22-93db-467e85e003dc"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -475,6 +528,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_DropDown = m_Player.FindAction("DropDown", throwIfNotFound: true);
         m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
+        m_Player_UpButton = m_Player.FindAction("UpButton", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SlowmoToggle = m_Debug.FindAction("SlowmoToggle", throwIfNotFound: true);
@@ -548,6 +602,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_DropDown;
     private readonly InputAction m_Player_UseItem;
+    private readonly InputAction m_Player_UpButton;
     public struct PlayerActions
     {
         private @InputControls m_Wrapper;
@@ -560,6 +615,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @DropDown => m_Wrapper.m_Player_DropDown;
         public InputAction @UseItem => m_Wrapper.m_Player_UseItem;
+        public InputAction @UpButton => m_Wrapper.m_Player_UpButton;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -593,6 +649,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @UseItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
                 @UseItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
                 @UseItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
+                @UpButton.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpButton;
+                @UpButton.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpButton;
+                @UpButton.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpButton;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -621,6 +680,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @UseItem.started += instance.OnUseItem;
                 @UseItem.performed += instance.OnUseItem;
                 @UseItem.canceled += instance.OnUseItem;
+                @UpButton.started += instance.OnUpButton;
+                @UpButton.performed += instance.OnUpButton;
+                @UpButton.canceled += instance.OnUpButton;
             }
         }
     }
@@ -710,6 +772,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDropDown(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnUpButton(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

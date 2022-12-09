@@ -29,7 +29,7 @@
                     "id": "6f3c0ca3-d075-44ed-b2d6-9269d44b0489",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -72,6 +72,15 @@
                     "name": "UseItem",
                     "type": "Button",
                     "id": "05806270-1e7d-42fe-9388-86b7668ddbf3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UpButton",
+                    "type": "Button",
+                    "id": "8227d4c6-3d71-48d3-9fbb-a335ea6a5cd9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -362,6 +371,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d90bac1-d35c-4571-a299-0c9ceb4061e3",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MainInput",
+                    "action": "UpButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e05ef2b-d56c-4d46-a69c-e5de3c5764c1",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4b7a99d-6a78-4e6e-9eb6-14edd720a1b1",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "207edd82-2475-4e22-93db-467e85e003dc",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
