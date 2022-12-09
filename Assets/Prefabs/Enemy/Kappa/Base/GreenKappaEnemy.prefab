@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5e3b4496213d1429a75667176d49bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 4
+  maxHP: 6
   currentHP: 0
   Attack: 2
   EnemyKillCoins: 0
@@ -148,6 +148,11 @@ MonoBehaviour:
   AnimatorStunStateName: KappaStun
   AnimatorLaunchDeathStateName: NewKappaDeathLAUNCH
   AnimatorDeathStateName: NewKappaDeathLANDING
+  AnimatorRangedAttackStateName: 
+  AnimatorRangedActiveStateName: 
+  AnimatorRangedAlertStateName: 
+  AnimatorForwardDashStateName: 
+  AnimatorBackwardDashStateName: 
   StunTime: 0
 --- !u!114 &5942777427239739033
 MonoBehaviour:
@@ -170,8 +175,10 @@ MonoBehaviour:
   AttackDistance: 2
   ChaseSpeed: 5
   WanderSpeed: 3
-  chaseDistance: 4
-  stopDistance: 6
+  xChaseDistance: 0
+  yChaseDistance: 0
+  xStopDistance: 0
+  yStopDistance: 0
   attackCooldown: 2
   WanderCooldown: 2
   maxWanderDistance: 3
@@ -1276,6 +1283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b55a0162ad42f74a8882f2b1e4efcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  count: {fileID: 0}
 --- !u!114 &8323663353730612899
 MonoBehaviour:
   m_ObjectHideFlags: 0
