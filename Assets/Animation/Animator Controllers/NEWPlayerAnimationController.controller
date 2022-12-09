@@ -862,7 +862,7 @@ AnimatorStateMachine:
     m_Position: {x: 570, y: 790, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3830516706124273030}
-    m_Position: {x: 480, y: 200, z: 0}
+    m_Position: {x: 520, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 608427261675686203}
     m_Position: {x: -220, y: 220, z: 0}
@@ -874,7 +874,7 @@ AnimatorStateMachine:
     m_Position: {x: -150, y: 350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7386297366004565854}
-    m_Position: {x: 745, y: 1115, z: 0}
+    m_Position: {x: 80, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7305685492402954899}
     m_Position: {x: 780, y: 1180, z: 0}
@@ -889,7 +889,7 @@ AnimatorStateMachine:
     m_Position: {x: 885, y: 1375, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5111644654485239178}
-    m_Position: {x: 920, y: 1440, z: 0}
+    m_Position: {x: 80, y: 470, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -993,6 +993,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 3
     m_ConditionEvent: MoveSpeed
     m_EventTreshold: 0.4
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsBasicAttacking
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3830516706124273030}
   m_Solo: 0
