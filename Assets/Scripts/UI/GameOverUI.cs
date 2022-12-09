@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System;
 
@@ -10,6 +11,7 @@ public class GameOverUI : MonoBehaviour
     public GameObject GameOverUIPanel;
     public static Action PlayerRestarted;
     private int sceneIndex;
+    public GameObject gameOverButton;
 
     private void Start()
     {
@@ -30,6 +32,8 @@ public class GameOverUI : MonoBehaviour
     {
         Time.timeScale = 0f;
         GameOverUIPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(gameOverButton);
     }
 
     public void ReloadScene()
