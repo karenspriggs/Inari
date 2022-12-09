@@ -92,12 +92,12 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""UseItem"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""05806270-1e7d-42fe-9388-86b7668ddbf3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""UpButton"",

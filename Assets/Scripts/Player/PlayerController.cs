@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using System.Linq.Expressions;
 
 public enum InariState
 {
@@ -47,6 +49,9 @@ public class PlayerController : MonoBehaviour
     private float isBasicAttacking;
     private bool b_isBasicAttacking;
 
+    private bool isHoldingUp;
+    private bool b_isHeavyAttacking;
+
     public InariState currentState = InariState.Neutral;
     public float DashStartupTimerMax = 0.5f;
     private float stateTimer = 0f; //state timer counts up
@@ -72,6 +77,7 @@ public class PlayerController : MonoBehaviour
     private bool jumpsEnabled = true;
     private bool dashEnabled = true;
     private bool attacksEnabled = true;
+    private bool heavyAttacksEnabled = true;
 
     private void OnEnable()
     {
@@ -96,6 +102,11 @@ public class PlayerController : MonoBehaviour
         //playerActions.Attack.canceled += ctx => isBasicAttacking = ctx.ReadValue<float>();
 
         playerActions.Attack.performed += ctx => onBasicAttackPressed();
+
+        playerActions.HeavyAttack.performed += ctx => onHeavyAttackPressed();
+
+        playerActions.UpButton.performed += ctx => isHoldingUp = (ctx.ReadValue<float>() == 1f);
+        playerActions.UpButton.canceled += ctx => isHoldingUp = (ctx.ReadValue<float>() == 1f);
 
         PlayerData.PlayerTookDamage += SetHit;
         PlayerData.PlayerDied += SetDead;
@@ -123,6 +134,11 @@ public class PlayerController : MonoBehaviour
         //playerActions.Attack.canceled -= ctx => isBasicAttacking = ctx.ReadValue<float>();
 
         playerActions.Attack.performed -= ctx => onBasicAttackPressed();
+
+        playerActions.HeavyAttack.performed -= ctx => onHeavyAttackPressed();
+
+        playerActions.UpButton.performed -= ctx => isHoldingUp = (ctx.ReadValue<float>() == 1f);
+        playerActions.UpButton.canceled -= ctx => isHoldingUp = (ctx.ReadValue<float>() == 1f);
 
         PlayerData.PlayerTookDamage -= SetHit;
         PlayerData.PlayerDied -= SetDead;
@@ -229,6 +245,11 @@ public class PlayerController : MonoBehaviour
         b_isBasicAttacking = true;
     }
 
+    private void onHeavyAttackPressed()
+    {
+        b_isHeavyAttacking = true;
+    }
+
     private void UseQuickSlot()
     {
         GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>().UseItem();
@@ -239,12 +260,17 @@ public class PlayerController : MonoBehaviour
     {
         if (attacksEnabled)
         {
-            //bool hasAttackInputThisFrame = isBasicAttacking > 0.1f;
+            //by putting this reset bool here, we effectively have an input buffer that saves an attack press
+            // until the next time attacks are enabled
+            // maybe not the best permanent solution, but it feels good and works for now
+            // unless we someday get a real sophisticated input buffer going
+            
             bool hasAttackInputThisFrame = b_isBasicAttacking;
             b_isBasicAttacking = false;
 
             if (hasAttackInputThisFrame)
             {
+            
                 if (currentState != InariState.GroundBasicAttacking && currentState != InariState.AirBasicAttacking && HasNotUsedAirComboYetIfInAir())
                 {
                     playerAttacks.basicAttacksIndex = 0;
@@ -266,14 +292,45 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    private bool CheckForHeavyAttack()
+    {
+        if (attacksEnabled)
+        {
+            bool hasAttackInputThisFrame = b_isHeavyAttacking;
+            b_isHeavyAttacking = false;
+
+            if (hasAttackInputThisFrame && IsntCancelingHeavyIntoHeavy())
+            {
+            
+                if (isGrounded) //only grounded heavys for now
+                {
+                    if (!isHoldingUp)
+                    {
+                        playerAttacks.currentAttack = playerAttacks.otherAttacks[InariOtherAttacks.GroundHeavy];
+                        
+                    }
+                    else
+                    {
+                        playerAttacks.currentAttack = playerAttacks.otherAttacks[InariOtherAttacks.GroundLaunch];
+                    }
+                    SwitchState(InariState.GroundBasicAttacking);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void SwitchAttackStateBasedOnGroundedness()
     {
         if (isGrounded)
         {
+            playerAttacks.currentAttack = playerAttacks.groundBasicAttacks[playerAttacks.basicAttacksIndex];
             SwitchState(InariState.GroundBasicAttacking);
         }
         else
         {
+            playerAttacks.currentAttack = playerAttacks.airBasicAttacks[playerAttacks.basicAttacksIndex];
             SwitchState(InariState.AirBasicAttacking);
         }
     }
@@ -281,6 +338,16 @@ public class PlayerController : MonoBehaviour
     private bool HasNotUsedAirComboYetIfInAir()
     {
         return !usedAirAttack;
+    }
+
+    private bool IsntCancelingHeavyIntoHeavy()
+    {
+        if (!playerAttacks.IsCurrentlyAttacking)
+        {
+            return true;
+        }
+
+        return playerAttacks.CanHeavyAttackCancel();
     }
 
     private void SetDead()
@@ -311,6 +378,14 @@ public class PlayerController : MonoBehaviour
 
     public void SwitchState(InariState newState)
     {
+        SwitchState(newState, string.Empty);
+    }
+    public void SwitchState(InariState newState, string args)
+    {
+        bool hasArgs = (args != string.Empty);
+
+        ExitState(currentState); // do any exit stuff, most states dont have anything anyway
+
         currentState = newState;
         switch (newState)
         {
@@ -319,7 +394,6 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = true;
                 attacksEnabled = true;
                 playerAnimator.SwitchState(newState);
-                
                 break;
             case InariState.DashStartup:
                 jumpsEnabled = false;
@@ -361,9 +435,10 @@ public class PlayerController : MonoBehaviour
                 dashEnabled = false;
                 attacksEnabled = false;
                 isInRecovery = false;
+                playerAttacks.IsCurrentlyAttacking = true;
                 playerSound.PlaySound(playerSound.AttackSound);
                 playerMovement.HaltVerticalVelocity();
-                playerAnimator.StartAnimation(playerAttacks.groundBasicAttacks[playerAttacks.basicAttacksIndex].Name);
+                playerAnimator.StartAnimation(playerAttacks.currentAttack.Name);
                 break;
             case InariState.AirBasicAttacking:
                 jumpsEnabled = false;
@@ -371,9 +446,10 @@ public class PlayerController : MonoBehaviour
                 attacksEnabled = false;
                 isInRecovery = false;
                 usedAirAttack = true;
+                playerAttacks.IsCurrentlyAttacking = true;
                 playerSound.PlaySound(playerSound.AttackSound);
                 playerMovement.HaltVerticalVelocity();
-                playerAnimator.StartAnimation(playerAttacks.airBasicAttacks[playerAttacks.basicAttacksIndex].Name);
+                playerAnimator.StartAnimation(playerAttacks.currentAttack.Name);
                 break;
             case InariState.Hit:
                 jumpsEnabled = false;
@@ -464,6 +540,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ExitState(InariState stateBeingLeft)
+    {
+        switch (stateBeingLeft)
+        {
+            case InariState.GroundBasicAttacking:
+            case InariState.AirBasicAttacking:
+                playerAttacks.IsCurrentlyAttacking = false;
+                break;
+            default:
+                break;
+        }
+    }
+
     private void CheckForInputs()
     {
         CheckForDrop();
@@ -471,6 +560,7 @@ public class PlayerController : MonoBehaviour
         if (CheckForDash()) return;
         if (CheckForJump()) return;
         if (CheckForBasicAttack()) return;
+        if (CheckForHeavyAttack()) return;
     }
 
     private void AllowHorizontalMovement()

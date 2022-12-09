@@ -19,12 +19,23 @@ public class InariAttack
         canHeavyAttackCancel = _canHeavyAttackCancel;
     }
 }
+public enum InariOtherAttacks
+{
+    GroundHeavy,
+    GroundLaunch
+}
 public class PlayerAttacks : MonoBehaviour
 {
     public List<InariAttack> groundBasicAttacks;
     public List<InariAttack> airBasicAttacks;
-    
+
+    public Dictionary<InariOtherAttacks, InariAttack> otherAttacks;
+
+    public InariAttack currentAttack;
+
     public int basicAttacksIndex = 0;
+
+    public bool IsCurrentlyAttacking = false;
 
     private void Awake()
     {
@@ -46,6 +57,12 @@ public class PlayerAttacks : MonoBehaviour
             new InariAttack("PlayerDollAirSwipeUp", true, true, true),
             new InariAttack("PlayerDollAirStab", true, true, true)
         };
+
+        otherAttacks = new Dictionary<InariOtherAttacks, InariAttack>();
+        otherAttacks.Add(InariOtherAttacks.GroundHeavy, new InariAttack("PlayerDollGroundHeavy", false, false, false));
+        otherAttacks.Add(InariOtherAttacks.GroundLaunch, new InariAttack("PlayerDollLaunch", false, true, false));
+
+        currentAttack = groundBasicAttacks[0];
     }
 
     public bool CanBasicAttackCombo()
@@ -83,16 +100,16 @@ public class PlayerAttacks : MonoBehaviour
 
     public bool CanDashCancel()
     {
-        return groundBasicAttacks[basicAttacksIndex].canDashCancel;
+        return currentAttack.canDashCancel;
     }
 
     public bool CanJumpCancel()
     {
-        return groundBasicAttacks[basicAttacksIndex].canJumpCancel;
+        return currentAttack.canJumpCancel;
     }
 
     public bool CanHeavyAttackCancel()
     {
-        return groundBasicAttacks[basicAttacksIndex].canHeavyAttackCancel;
+        return currentAttack.canHeavyAttackCancel;
     }
 }
