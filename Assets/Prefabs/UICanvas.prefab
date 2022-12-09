@@ -1256,11 +1256,11 @@ RectTransform:
   m_Father: {fileID: 3021392215353903353}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -77.27705, y: -25}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -220, y: 0}
   m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 1, y: 1}
 --- !u!222 &362085688589756792
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '# of Deaths :'
+  m_text: 'Deaths :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3544af1697799e842ad5c46d31d3495d, type: 2}
   m_sharedMaterial: {fileID: -5773755001459257401, guid: 3544af1697799e842ad5c46d31d3495d, type: 2}
@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.0000003278135, y: 0, z: -169.75179, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1393,7 +1393,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 565, y: 0}
+  m_AnchoredPosition: {x: 400, y: 0}
   m_SizeDelta: {x: 354.555, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8648122821816723975
@@ -1878,7 +1878,7 @@ GameObject:
   - component: {fileID: 3021392214543136426}
   - component: {fileID: 3021392214543136427}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: WinText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1901,8 +1901,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -469, y: 477}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -562.8, y: -175.97}
+  m_SizeDelta: {x: 204.0904, y: 70.4519}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3021392214543136426
 CanvasRenderer:
@@ -1995,7 +1995,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -1243.7543, w: 0}
+  m_margin: {x: 0, y: 0, z: -1123.0875, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2224,7 +2224,7 @@ GameObject:
   - component: {fileID: 3021392214700131608}
   - component: {fileID: 3021392214700131609}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Thanks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2247,7 +2247,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 217}
+  m_AnchoredPosition: {x: -500, y: -403.6}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3021392214700131608
@@ -3091,15 +3091,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 40d270062fcd18946996820d773b5266, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5942,7 +5942,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 565, y: 0}
+  m_AnchoredPosition: {x: 462.5, y: 0}
   m_SizeDelta: {x: 354.555, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5418606683666688489
@@ -13412,11 +13412,11 @@ RectTransform:
   m_Father: {fileID: 3021392215353903353}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000030518, y: 428}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -150, y: 0}
   m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 1, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7371405063217911057
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14097,8 +14097,16 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 737420450315240560, guid: 9c631cbd56bafa14b96a32c49f3e1f16, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.8485981
+      objectReference: {fileID: 0}
+    - target: {fileID: 737420450315240560, guid: 9c631cbd56bafa14b96a32c49f3e1f16, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.703575
+      value: 2.7035742
+      objectReference: {fileID: 0}
+    - target: {fileID: 737420450315240560, guid: 9c631cbd56bafa14b96a32c49f3e1f16, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.8485987
       objectReference: {fileID: 0}
     - target: {fileID: 737420450315240560, guid: 9c631cbd56bafa14b96a32c49f3e1f16, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -14106,7 +14114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 737420450315240560, guid: 9c631cbd56bafa14b96a32c49f3e1f16, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -175
+      value: -174.99997
       objectReference: {fileID: 0}
     - target: {fileID: 737420450315240567, guid: 9c631cbd56bafa14b96a32c49f3e1f16, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
