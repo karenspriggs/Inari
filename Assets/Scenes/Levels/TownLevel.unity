@@ -3744,6 +3744,11 @@ Transform:
   m_Father: {fileID: 1733924305}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &359560714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5447325295610737736, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
+  m_PrefabInstance: {fileID: 1108957555}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &361386563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5625611288189521677, guid: 811114480188e2f40a684dd5143a97f0, type: 3}
@@ -36102,11 +36107,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5625611288189521677, guid: 811114480188e2f40a684dd5143a97f0, type: 3}
   m_PrefabInstance: {fileID: 857182497}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &857812317 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 927890829245658341, guid: db33a122b2513d843918b55cc03acdf0, type: 3}
-  m_PrefabInstance: {fileID: 2091647385}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &860907737
 GameObject:
   m_ObjectHideFlags: 0
@@ -38698,7 +38698,7 @@ PrefabInstance:
     - target: {fileID: 421663685608513256, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
       propertyPath: animationProps
       value: 
-      objectReference: {fileID: 857812317}
+      objectReference: {fileID: 359560714}
     - target: {fileID: 421663685608513256, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
       propertyPath: attackCooldown
       value: 2
@@ -46289,12 +46289,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 421663685608513256, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
+      propertyPath: yStopDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 421663685608513256, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
       propertyPath: WanderCooldown
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 421663685608513256, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
       propertyPath: attackCooldown
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 421663685608513256, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
+      propertyPath: yChaseDistance
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 421663685608513256, guid: 9404446083bf6d244ac35db08858aafa, type: 3}
       propertyPath: maxWanderDistance

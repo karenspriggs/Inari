@@ -46,7 +46,6 @@ public class EnemyData : MonoBehaviour
         if (wasHit && !isDead)
         {
             Debug.Log("Enemy took damage");
-          //  currentHP--;
             EnemyHit?.Invoke();
             wasHit = false;
             CheckIfDead();
@@ -55,7 +54,6 @@ public class EnemyData : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-       // currentHP -= damage;
         CheckIfDead();
     }
 
@@ -74,7 +72,7 @@ public class EnemyData : MonoBehaviour
             }
             
             isDead = true;
-            PlayerSaveSystem.SessionSaveData.playerStats.HighestComboCount++;
+            PlayerSaveSystem.SessionSaveData.playerStats.EnemiesKilled++;
             EnemyKilled?.Invoke();
             EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
         }
@@ -95,7 +93,6 @@ public class EnemyData : MonoBehaviour
         {
             wasHit = true;
             currentHP -= (int)collision.GetComponentInParent<PlayerData>().Attack;
-            CheckIfDead();
             if (collision.gameObject.transform.position.x < this.gameObject.transform.position.x)
             {
                 wasHitToLeft = true;

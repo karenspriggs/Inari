@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     float attackTimer;
     float wanderTimer;
-    float autoDeathTimer = 0.5f;
+    float autoDeathTimer = 4f;
 
     [SerializeField]
     Vector2 currentWanderTarget;
