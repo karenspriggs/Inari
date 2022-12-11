@@ -99,6 +99,11 @@ public class ComboUI : MonoBehaviour
             ToggleTimerVisibility(false);
         }
 
+        if (currentscore > PlayerSaveSystem.SessionSaveData.playerStats.HighestComboCount)
+        {
+            PlayerSaveSystem.SessionSaveData.playerStats.HighestComboCount = currentscore;
+        }
+
         if (currentscore != 0)
         {
             TweenScore();

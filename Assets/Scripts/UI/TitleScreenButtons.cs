@@ -22,7 +22,7 @@ public class TitleScreenButtons : MonoBehaviour
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(StartingSceneBuildIndex);
+        SceneManager.LoadScene(PlayerSaveSystem.SessionSaveData.currentLevelIndex);
     }
 
     public void OptionsMenu()

@@ -74,6 +74,7 @@ public class EnemyData : MonoBehaviour
             }
             
             isDead = true;
+            PlayerSaveSystem.SessionSaveData.playerStats.HighestComboCount++;
             EnemyKilled?.Invoke();
             EnemyKilledValues?.Invoke(EnemyKillCoins, EnemyKillXP);
         }

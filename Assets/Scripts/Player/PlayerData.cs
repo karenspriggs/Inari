@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using System.Security.Cryptography;
+using UnityEngine.SceneManagement;
 
 public class PlayerData : MonoBehaviour
 {
@@ -83,6 +84,9 @@ public class PlayerData : MonoBehaviour
                 transform.position = checkpointManager.ReturnCheckpointTransform(manualCheckpointSpawnID);
             }
         }
+
+        PlayerSaveSystem.SessionSaveData.currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+
         currentHP = maxHP;
         currentEnergy = maxEnergy;
         InitializedPlayerHealth?.Invoke(currentHP);
@@ -92,24 +96,11 @@ public class PlayerData : MonoBehaviour
     private void OnEnable()
     {
         EnemyData.EnemyKilled += OnEnemyKilled;
-        GameOverUI.PlayerRestarted += RestartAtCheckPoint;
     }
 
     private void OnDisable()
     {
         EnemyData.EnemyKilled -= OnEnemyKilled;
-        GameOverUI.PlayerRestarted -= RestartAtCheckPoint;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void Respawn()
-    {
-        
     }
 
     public void TakeDamage(float damage)
@@ -156,6 +147,8 @@ public class PlayerData : MonoBehaviour
     {
         if (currentHP <= 0)
         {
+            PlayerSaveSystem.SessionSaveData.playerStats.TimesDiedInLevel++;
+
             PlayerDied?.Invoke();
         }
     }
@@ -177,16 +170,6 @@ public class PlayerData : MonoBehaviour
         yield return new WaitForSeconds(invulnTime);
         isInvincible = false;
         isInvincibleCoroutineRunning = false;
-    }
-
-    public void RestartAtCheckPoint()
-    {
-        //transform.position = checkpointManager.ReturnCheckpointTransform(currentCheckpointID);
-        //currentHP = maxHP;
-        //float energyToRecover = maxEnergy - currentEnergy;
-        //currentEnergy += energyToRecover;
-        //PlayerTookDamage?.Invoke(-maxHP);
-        //PlayerUsedEnergy?.Invoke(-energyToRecover);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
