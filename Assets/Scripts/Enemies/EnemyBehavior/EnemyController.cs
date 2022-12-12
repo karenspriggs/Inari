@@ -159,6 +159,7 @@ public class EnemyController : MonoBehaviour
                 enemyAnimator.SwitchState(EnemyState.Hit);
                 break;
             case (EnemyState.Stun):
+                enemyAnimator.SwitchState(EnemyState.Stun);
                 break;
             case (EnemyState.DeadLaunch):
                 enemyAnimator.SwitchState(EnemyState.DeadLaunch);
@@ -491,6 +492,12 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox") && (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch))
         {
             SwitchState(EnemyState.Hit);
+            hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
+        }
+
+        if (collision.gameObject.CompareTag("HeavyHitbox") && (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch))
+        {
+            SwitchState(EnemyState.Stun);
             hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
         }
 

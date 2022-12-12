@@ -101,5 +101,19 @@ public class EnemyData : MonoBehaviour
                 wasHitToLeft = false;
             }
         }
+
+        if (collision.gameObject.CompareTag("HeavyHitbox"))
+        {
+            wasHit = true;
+            currentHP -= (int)collision.GetComponentInParent<PlayerData>().Attack;
+            if (collision.gameObject.transform.position.x < this.gameObject.transform.position.x)
+            {
+                wasHitToLeft = true;
+            }
+            else
+            {
+                wasHitToLeft = false;
+            }
+        }
     }
 }
