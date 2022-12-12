@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     float attackTimer;
     float wanderTimer;
-    float autoDeathTimer = 4f;
+    float autoDeathTimer = 0.5f;
 
     [SerializeField]
     Vector2 currentWanderTarget;
@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
     public float yStopDistance;
     public float attackCooldown;
     public float WanderCooldown;
+    public float LaunchDistance;
     public int maxWanderDistance;
     public bool willWander = true;
     public Vector2 deathLaunchDistance;
@@ -108,7 +109,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch)
+        if (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch && currentState != EnemyState.Stun && currentState != EnemyState.Launched)
         {
             if (currentState != EnemyState.Hit && currentState != EnemyState.ChaseStartup)
             {
@@ -159,7 +160,15 @@ public class EnemyController : MonoBehaviour
                 enemyAnimator.SwitchState(EnemyState.Hit);
                 break;
             case (EnemyState.Stun):
+                enemyParticles.PlayHitParticles();
+                enemySounds.PlaySound(enemySounds.HitSound);
                 enemyAnimator.SwitchState(EnemyState.Stun);
+                break;
+            case (EnemyState.Launched):
+                enemyParticles.PlayHitParticles();
+                LaunchUpwards();
+                enemySounds.PlaySound(enemySounds.HitSound);
+                enemyAnimator.SwitchState(EnemyState.Launched);
                 break;
             case (EnemyState.DeadLaunch):
                 enemyAnimator.SwitchState(EnemyState.DeadLaunch);
@@ -201,6 +210,14 @@ public class EnemyController : MonoBehaviour
                 AnimationEndTransitionToNextState(EnemyState.Chase);
                 break;
             case (EnemyState.Stun):
+                canAttack = false;
+                attackTimer = attackCooldown;
+                AnimationEndTransitionToNextState(EnemyState.Idle);
+                break;
+            case (EnemyState.Launched):
+                canAttack = false;
+                attackTimer = attackCooldown;
+                AnimationEndTransitionToNextState(EnemyState.Idle);
                 break;
             case (EnemyState.DeadLaunch):
                 UpdateAutoDeathTimer();
@@ -353,6 +370,11 @@ public class EnemyController : MonoBehaviour
             transform.position = currentMovement;
     }
 
+    public void LaunchUpwards()
+    {
+        rigidbody.AddForce(new Vector2(0, LaunchDistance));
+    }
+
     public void LaunchOnDeath(bool isToLeft)
     {
         Debug.Log("Launching enemy");
@@ -498,6 +520,12 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("HeavyHitbox") && (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch))
         {
             SwitchState(EnemyState.Stun);
+            hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
+        }
+
+        if (collision.gameObject.CompareTag("LaunchHitbox") && (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch))
+        {
+            SwitchState(EnemyState.Launched);
             hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
         }
 

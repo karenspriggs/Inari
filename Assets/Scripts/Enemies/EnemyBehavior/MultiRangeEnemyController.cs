@@ -7,6 +7,7 @@ public enum MultiRangeEnemyState
     Idle,
     Wander,
     Hit,
+    Stun,
     MeleeAlert,
     AttackDash,
     MeleeAttack,
@@ -15,6 +16,7 @@ public enum MultiRangeEnemyState
     RangedActive,
     RangedAttack,
     RangedConfused,
+    Launched,
     DeadLaunch,
     Dead
 }
@@ -75,6 +77,7 @@ public class MultiRangeEnemyController : MonoBehaviour
     [Header("How fast the tengu moves up and down to match the player's Y axis when shooting")]
     public float RangedYMoveSpeed;
     public float WanderCooldown;
+    public float LaunchDistance;
     public int maxWanderDistance;
     public bool willWander = true;
 
@@ -123,7 +126,7 @@ public class MultiRangeEnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentState != MultiRangeEnemyState.Dead && currentState != MultiRangeEnemyState.DeadLaunch)
+        if (currentState != MultiRangeEnemyState.Dead && currentState != MultiRangeEnemyState.DeadLaunch && currentState != MultiRangeEnemyState.Stun && currentState != MultiRangeEnemyState.Launched)
         {
             if (currentState != MultiRangeEnemyState.Hit && currentState != MultiRangeEnemyState.RangedAlert && currentState != MultiRangeEnemyState.MeleeAlert && currentState != MultiRangeEnemyState.BackDash)
             {
@@ -167,6 +170,10 @@ public class MultiRangeEnemyController : MonoBehaviour
                 enemyAnimator.SwitchState(MultiRangeEnemyState.Hit);
                 enemyParticles.PlayHitParticles();
                 break;
+            case (MultiRangeEnemyState.Stun):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.Stun);
+                enemyParticles.PlayHitParticles();
+                break;
             case (MultiRangeEnemyState.AttackDash):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.AttackDash);
                 returnDashLocation = this.transform.position;
@@ -190,6 +197,10 @@ public class MultiRangeEnemyController : MonoBehaviour
                 canRangedAttack = false;
                 rangedAttackTimer = RangedAttackCooldown;
                 enemyAnimator.SwitchState(MultiRangeEnemyState.RangedAttack);
+                break;
+            case (MultiRangeEnemyState.Launched):
+                enemyAnimator.SwitchState(MultiRangeEnemyState.Launched);
+                enemyParticles.PlayHitParticles();
                 break;
             case (MultiRangeEnemyState.DeadLaunch):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.DeadLaunch);
@@ -217,6 +228,13 @@ public class MultiRangeEnemyController : MonoBehaviour
                 rangedAttackTimer = RangedAttackCooldown;
                 AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
                 break;
+            case (MultiRangeEnemyState.Stun):
+                canMeleeAttack = false;
+                canRangedAttack = false;
+                meleeAttackTimer = MeleeAttackCooldown;
+                rangedAttackTimer = RangedAttackCooldown;
+                AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
+                break;
             case (MultiRangeEnemyState.MeleeAlert):
                 AnimationEndTransitionToNextState(MultiRangeEnemyState.AttackDash);
                 break;
@@ -233,6 +251,13 @@ public class MultiRangeEnemyController : MonoBehaviour
                 RangedActiveMovment();
                 break;
             case (MultiRangeEnemyState.RangedAttack):
+                AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
+                break;
+            case (MultiRangeEnemyState.Launched):
+                canMeleeAttack = false;
+                canRangedAttack = false;
+                meleeAttackTimer = MeleeAttackCooldown;
+                rangedAttackTimer = RangedAttackCooldown;
                 AnimationEndTransitionToNextState(MultiRangeEnemyState.Idle);
                 break;
             case (MultiRangeEnemyState.DeadLaunch):
@@ -453,6 +478,11 @@ public class MultiRangeEnemyController : MonoBehaviour
             wanderTimer = WanderCooldown;
             SwitchState(MultiRangeEnemyState.Idle);
         }
+    }
+
+    public void LaunchUpwards()
+    {
+        rigidbody.AddForce(new Vector2(0, LaunchDistance));
     }
 
     public void LaunchOnDeath(bool isToLeft)

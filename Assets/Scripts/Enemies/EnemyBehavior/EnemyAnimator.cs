@@ -17,6 +17,7 @@ public class EnemyAnimator : MonoBehaviour
     public string AnimatorHitStateName;
     public string AnimatorAttackStateName;
     public string AnimatorStunStateName;
+    public string AnimatorLaunchStateName;
     public string AnimatorLaunchDeathStateName;
     public string AnimatorDeathStateName;
 
@@ -91,7 +92,10 @@ public class EnemyAnimator : MonoBehaviour
                 StartAnimation(AnimatorHitStateName);
                 break;
             case (EnemyState.Stun):
-                StartAnimation(AnimatorStunStateName, StunTime);
+                StartAnimation(AnimatorStunStateName);
+                break;
+            case (EnemyState.Launched):
+                StartAnimation(AnimatorStunStateName);
                 break;
             case (EnemyState.DeadLaunch):
                 StartAnimation(AnimatorLaunchDeathStateName);
@@ -138,6 +142,12 @@ public class EnemyAnimator : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.BackDash):
                 StartAnimation(AnimatorBackwardDashStateName);
+                break;
+            case (MultiRangeEnemyState.Stun):
+                StartAnimation(AnimatorStunStateName);
+                break;
+            case (MultiRangeEnemyState.Launched):
+                StartAnimation(AnimatorStunStateName);
                 break;
             case (MultiRangeEnemyState.DeadLaunch):
                 StartAnimation(AnimatorLaunchDeathStateName);

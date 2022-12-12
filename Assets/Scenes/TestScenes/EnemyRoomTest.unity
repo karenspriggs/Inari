@@ -69602,6 +69602,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.9785428
       objectReference: {fileID: 0}
+    - target: {fileID: 4504882094457312721, guid: db33a122b2513d843918b55cc03acdf0, type: 3}
+      propertyPath: LaunchDistance
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 4735188141521151242, guid: db33a122b2513d843918b55cc03acdf0, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9966672
@@ -78013,6 +78017,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winScreen: {fileID: 3362845495172622045}
+  levelNameText: {fileID: 0}
+  deathCounterText: {fileID: 0}
+  killCounterText: {fileID: 0}
+  comboCounterText: {fileID: 0}
+  levelName: 
 --- !u!4 &1488412913
 Transform:
   m_ObjectHideFlags: 0
@@ -93438,6 +93447,14 @@ PrefabInstance:
     - target: {fileID: 1446207058598675802, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0.0007273932
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446207058598675802, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.999772
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888618437431685798, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9994328
       objectReference: {fileID: 0}
     - target: {fileID: 1888618437431685798, guid: 06e575d31de578d449c6162b19fbf59a, type: 3}
       propertyPath: m_LocalRotation.x
