@@ -482,6 +482,11 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+        if (currentState == EnemyState.Launched && rigidbody.velocity.y <= 0)
+        {
+            rigidbody.gravityScale = 0.05f;
+        }
+
         if (isGrounded && currentState == EnemyState.DeadLaunch)
         {
             if (groundedLastFrame && canAutoDie)
