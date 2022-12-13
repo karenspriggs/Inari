@@ -50,7 +50,7 @@ public class UIHealthbar : MonoBehaviour
         
     }
 
-    void SetMaxHPValue(float maxHP)
+    public void SetMaxHPValue(float maxHP)
     {
         maxHPValue = maxHP;
         currentValue = maxHP;

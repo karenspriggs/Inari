@@ -13,6 +13,7 @@ public class ItemController : MonoBehaviour
     public Sprite quickslot;
     public TextMeshProUGUI count;
     public TextMeshProUGUI itemname;
+    public TextMeshProUGUI value;
     public void AddItem(Item newItem)
     {
         item = newItem;
@@ -40,6 +41,7 @@ public class ItemController : MonoBehaviour
         count.text = GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Items.Count(i => i == item).ToString();
         itemname.text = item.itemName;
         icon.sprite = item.icon;
+        value.text = "Heal Value: " + item.health.ToString();
     }
 
     public void ClearItem()

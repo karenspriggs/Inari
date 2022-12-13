@@ -25,6 +25,9 @@ public class LevelUpScreen : MonoBehaviour
 
     public TextMeshProUGUI levelText;
 
+    public UIEnergybar energyBar;
+    public UIHealthbar healthBar;
+
   //  public TextMeshProUGUI experienceText;
     [SerializeField]
     PlayerData playerStats;
@@ -51,6 +54,8 @@ public class LevelUpScreen : MonoBehaviour
         levelText.text = "Current Level: " + playerLevel.level.ToString();
         pointsText.text = "Upgrade Points: " + playerLevel.upgradePoints.ToString();
         progressText.text = "XP to Next Level: " + (playerLevel.requiredXP - playerLevel.currentXP).ToString();
+        energyBar.SetMaxEnergyValue(playerStats.maxEnergy);
+        healthBar.SetMaxHPValue(playerStats.maxHP);
     }
 
     public void CloseScreen()

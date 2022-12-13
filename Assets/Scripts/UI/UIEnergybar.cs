@@ -54,7 +54,7 @@ public class UIEnergybar : MonoBehaviour
         energyText.text = $"{currentValue}/{maxEnergyValue}";
     }
 
-    void SetMaxEnergyValue(float maxEnergy)
+    public void SetMaxEnergyValue(float maxEnergy)
     {
         maxEnergyValue = maxEnergy;
         currentValue = maxEnergy;

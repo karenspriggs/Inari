@@ -18,7 +18,11 @@ public class PlayerItemPickup : MonoBehaviour
     {
         var quickSlot = GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>();
         PlayerInventory.Instance.Add(Item);
-        if (quickSlot.itemcontroller.item == Item)
+        if (quickSlot.itemcontroller.item == null)
+        {
+            quickSlot.SetQuickSlot(Item);
+        }
+            else if (quickSlot.itemcontroller.item == Item)
         {
             quickSlot.itemcontroller.ItemRefresh();
         }

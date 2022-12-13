@@ -30,7 +30,6 @@ public class PlayerLevelSystem : MonoBehaviour
     public float statGain = 1.25f;
     [SerializeField]
     LevelUpScreen levelScreen;
-
     public bool isNewVersion = false;
     public bool isUsingSaveData = false;
 
