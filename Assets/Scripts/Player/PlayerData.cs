@@ -23,6 +23,7 @@ public class PlayerData : MonoBehaviour
 
     public PlayerStats playerStats;
     public CheckpointManager checkpointManager;
+    public PlayerController playerController;
 
     public float currentEnergy;
     public float dashEnergyCost;
@@ -86,6 +87,8 @@ public class PlayerData : MonoBehaviour
         }
 
         PlayerSaveSystem.SessionSaveData.currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+
+        playerController = GetComponent<PlayerController>();
 
         currentHP = maxHP;
         currentEnergy = maxEnergy;
@@ -176,7 +179,7 @@ public class PlayerData : MonoBehaviour
     {
         if (collision.gameObject.tag == "EnemyAttackHitbox")
         {
-            if (!isInvincible)
+            if (!isInvincible && playerController.currentState != InariState.Dashing)
             {
                 int damage;
 
