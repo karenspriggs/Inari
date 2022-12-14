@@ -7,6 +7,12 @@ public class WinScreenButtons : MonoBehaviour
 {
     public int nextLevelIndex;
 
+    public void LoadTitleScreen()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
+
     public void LoadNextLevel()
     {
         Time.timeScale = 1;
