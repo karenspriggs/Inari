@@ -109,7 +109,7 @@ public class PlayerData : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHP -= damage;
-        PlayerTookDamage?.Invoke(damage);
+        PlayerTookDamage?.Invoke(currentHP);
         CheckIfDead();
     }
 
@@ -127,7 +127,7 @@ public class PlayerData : MonoBehaviour
             currentHP += healing;
         }
 
-        PlayerRegainedHP?.Invoke(-healthGained);
+        PlayerRegainedHP?.Invoke(currentHP);
     }
 
     public bool TryDashing()
@@ -143,7 +143,7 @@ public class PlayerData : MonoBehaviour
     public void UseEnergy(float energycost)
     {
         currentEnergy -= energycost;
-        PlayerUsedEnergy?.Invoke(energycost);
+        PlayerUsedEnergy?.Invoke(currentEnergy);
     }
 
     void CheckIfDead()
@@ -165,7 +165,7 @@ public class PlayerData : MonoBehaviour
         }
 
         currentEnergy += energyGained;
-        PlayerUsedEnergy?.Invoke(-energyGained);
+        PlayerUsedEnergy?.Invoke(currentEnergy);
     }
 
     IEnumerator InvulnCoroutine()

@@ -33,14 +33,20 @@ public class UIEnergybar : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerData.InitializedPlayerEnergy += SetMaxEnergyValue;
+        PlayerData.InitializedPlayerEnergy += Init;
         PlayerData.PlayerUsedEnergy += SetValue;
     }
 
     private void OnDisable()
     {
-        PlayerData.InitializedPlayerEnergy -= SetMaxEnergyValue;
+        PlayerData.InitializedPlayerEnergy -= Init;
         PlayerData.PlayerUsedEnergy -= SetValue;
+    }
+
+    private void Init(float energy)
+    {
+        SetMaxEnergyValue(energy);
+        SetValue(energy);
     }
 
     // Update is called once per frame
@@ -57,14 +63,12 @@ public class UIEnergybar : MonoBehaviour
     public void SetMaxEnergyValue(float maxEnergy)
     {
         maxEnergyValue = maxEnergy;
-        currentValue = maxEnergy;
-
         SetEnergyText();
     }
 
     public void SetValue(float energy)
     {
-        currentValue -= energy;
+        currentValue = energy;
         mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * currentValue / maxEnergyValue);
 
         LeanTween.cancel(mask.gameObject);

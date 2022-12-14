@@ -56,6 +56,8 @@ public class LevelUpScreen : MonoBehaviour
         progressText.text = "XP to Next Level: " + (playerLevel.requiredXP - playerLevel.currentXP).ToString();
         energyBar.SetMaxEnergyValue(playerStats.maxEnergy);
         healthBar.SetMaxHPValue(playerStats.maxHP);
+        energyBar.SetValue(playerStats.currentEnergy);
+        healthBar.SetValue(playerStats.currentHP);
     }
 
     public void CloseScreen()
