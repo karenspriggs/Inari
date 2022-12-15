@@ -99,7 +99,12 @@ public class EnemyController : MonoBehaviour
 
         if (xStopDistance <= xChaseDistance)
         {
-            Debug.LogError($"{gameObject.name} has a stop distance that is shorter than their chase distance. This will cause their chase behavior to not work properly. Make the stop distance larger or I will nuclear strike your house - John Unity");
+            Debug.LogError($"{gameObject.name} has an x stop distance that is shorter than their chase distance. This will cause their chase behavior to not work properly. Make the stop distance larger or I will nuclear strike your house - John Unity");
+        }
+
+        if (yStopDistance <= yChaseDistance)
+        {
+            Debug.LogError($"{gameObject.name} has a y stop distance that is shorter than their chase distance. This will cause their chase behavior to not work properly. Make the stop distance larger or I will nuclear strike your house - John Unity");
         }
 
         hitLocation = Vector2.zero;
@@ -109,13 +114,10 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch && currentState != EnemyState.Stun && currentState != EnemyState.Launched)
+        if (currentState != EnemyState.Death && currentState != EnemyState.DeadLaunch && currentState != EnemyState.Stun && currentState != EnemyState.Launched && currentState != EnemyState.Hit && currentState != EnemyState.ChaseStartup)
         {
-            if (currentState != EnemyState.Hit && currentState != EnemyState.ChaseStartup)
-            {
-                DetermineIfShouldChase();
-                DetermineState();
-            }
+            DetermineIfShouldChase();
+            DetermineState();
 
             UpdateTimers();
         }
