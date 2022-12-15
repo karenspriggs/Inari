@@ -2767,6 +2767,18 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6534854772515789269, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: maxHP
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789269, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: currentHP
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789269, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: maxEnergy
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534854772515789269, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
       propertyPath: dashEnergyCost
       value: 2
       objectReference: {fileID: 0}
@@ -2907,6 +2919,10 @@ PrefabInstance:
       value: -0.99883753
       objectReference: {fileID: 0}
     - target: {fileID: 8146517732000392658, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: -0.014525294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146517732000392658, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
       propertyPath: m_Bounds.m_Center.y
       value: -0.009632662
       objectReference: {fileID: 0}
@@ -2977,6 +2993,14 @@ PrefabInstance:
     - target: {fileID: 8899917549678123773, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.01596574
+      objectReference: {fileID: 0}
+    - target: {fileID: 8899917549678123773, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0007273932
+      objectReference: {fileID: 0}
+    - target: {fileID: 8899917549678123773, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.999772
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbc5bba776007c64bb1ed77bba552126, type: 3}
