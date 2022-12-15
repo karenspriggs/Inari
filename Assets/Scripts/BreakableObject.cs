@@ -8,14 +8,14 @@ public class BreakableObject : MonoBehaviour
 
     bool isBroken = false;
     SpriteRenderer spriteRenderer;
-    BoxCollider2D boxCollider2D;
+    CapsuleCollider2D capsuleCollider2D;
     Rigidbody2D rigidbody2D;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class BreakableObject : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerAttackHitbox") || collision.gameObject.CompareTag("HeavyHitbox") && !isBroken)
         {
-            Physics2D.IgnoreCollision(boxCollider2D, collision.GetComponentInParent<CapsuleCollider2D>());
+            Physics2D.IgnoreCollision(capsuleCollider2D, collision.GetComponentInParent<CapsuleCollider2D>());
             isBroken = true;
             spriteRenderer.sprite = brokenSprite;
         }
