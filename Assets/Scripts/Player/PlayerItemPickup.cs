@@ -35,6 +35,7 @@ public class PlayerItemPickup : MonoBehaviour
         {
             sounds.PlaySound(sounds.pickedUp);
             PickUp();
+            collision.GetComponentInChildren<PlayerData>().HealHealth(6);
         }
     }
 }

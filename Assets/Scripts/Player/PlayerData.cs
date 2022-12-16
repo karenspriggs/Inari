@@ -120,14 +120,14 @@ public class PlayerData : MonoBehaviour
 
         if (currentHP + healing >= maxHP)
         {
-            healthGained = currentHP + healing - maxHP;
+            healthGained = maxHP - currentHP;
             currentHP = maxHP;
         }
         else
         {
             currentHP += healing;
         }
-
+        Debug.Log(healthGained);
         PlayerRegainedHP?.Invoke(-healthGained);
     }
 
