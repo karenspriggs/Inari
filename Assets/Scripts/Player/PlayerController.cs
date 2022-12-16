@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     PlayerAttacks playerAttacks;
     PlayerSound playerSound;
     PlayerParticles playerParticles;
+    QuickSlot quickSlot;
 
     [Header("Input Settings")]
     public float movementSmoothingSpeed = 1f;
@@ -158,6 +159,8 @@ public class PlayerController : MonoBehaviour
         playerAttacks = GetComponent<PlayerAttacks>();
         playerSound = GetComponent<PlayerSound>();
         playerParticles = GetComponent<PlayerParticles>();
+
+        quickSlot = GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>();
     }
 
     void SetMovementInput()
@@ -252,9 +255,11 @@ public class PlayerController : MonoBehaviour
 
     private void UseQuickSlot()
     {
-        // TODO: some way to check if inari has an item he can eat and return it here. so i dont play the sound if hes got no food!!!!
-        playerSound.PlaySound(playerSound.EatSound);
-        GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>().UseItem();
+        if (quickSlot.CanUseItem())
+        {
+            playerSound.PlaySound(playerSound.EatSound);
+            quickSlot.UseItem();
+        }
     }
 
 

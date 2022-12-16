@@ -22,9 +22,8 @@ public class QuickSlot : MonoBehaviour
     {
         itemcontroller.UseItem();
     }
-    // Update is called once per frame
-    void Update()
+    public bool CanUseItem()
     {
-        
+        return itemcontroller.CanUseItem();
     }
 }

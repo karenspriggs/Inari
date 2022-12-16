@@ -18,7 +18,10 @@ public class ItemController : MonoBehaviour
     {
         item = newItem;
     }
-
+    public bool CanUseItem()
+    {
+        return !(item == null);
+    }
     public void UseItem()
     {
         if (item == null) return;
