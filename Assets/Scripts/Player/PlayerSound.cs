@@ -7,11 +7,13 @@ public class PlayerSound : SoundPlayer
     public enum AttackSounds
     {
         Basic,
-        Heavy
+        Heavy,
+        Launch
     }
 
     public AudioClip AttackSound;
     public AudioClip HeavyAttackSound;
+    public AudioClip LaunchAttackSound;
     public AudioClip JumpSound;
     public AudioClip LandingSound;
     public AudioClip DashSound;
@@ -28,6 +30,9 @@ public class PlayerSound : SoundPlayer
                 break;
             case AttackSounds.Heavy:
                 PlaySound(HeavyAttackSound);
+                break;
+            case AttackSounds.Launch:
+                PlaySound(LaunchAttackSound);
                 break;
         }
     }

@@ -63,7 +63,7 @@ public class PlayerAttacks : MonoBehaviour
 
         otherAttacks = new Dictionary<InariOtherAttacks, InariAttack>();
         otherAttacks.Add(InariOtherAttacks.GroundHeavy, new InariAttack("ALTERNATIVE_NEWPlayerDollGroundHeavy", false, false, false, PlayerSound.AttackSounds.Heavy));
-        otherAttacks.Add(InariOtherAttacks.GroundLaunch, new InariAttack("PlayerDollLaunch", false, true, false));
+        otherAttacks.Add(InariOtherAttacks.GroundLaunch, new InariAttack("PlayerDollLaunch", false, true, false, PlayerSound.AttackSounds.Launch));
 
         currentAttack = groundBasicAttacks[0];
     }
