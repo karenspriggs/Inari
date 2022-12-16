@@ -54,6 +54,7 @@ public class MultiRangeEnemyController : MonoBehaviour
     bool targetChosen = false;
     bool isGrounded = true;
     bool canAutoDie = false;
+    bool hasSeenPlayer = false;
 
     [SerializeField]
     Vector2 currentWanderTarget;
@@ -181,7 +182,11 @@ public class MultiRangeEnemyController : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.MeleeAlert):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.MeleeAlert);
-                enemySounds.PlaySound(enemySounds.AlertSound);
+                if (!hasSeenPlayer)
+                {
+                    enemySounds.PlaySound(enemySounds.AlertSound);
+                    hasSeenPlayer = true;
+                }
                 break;
             case (MultiRangeEnemyState.MeleeAttack):
                 canMeleeAttack = false;
