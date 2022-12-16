@@ -9,14 +9,17 @@ public class InariAttack
     public bool canDashCancel;
     public bool canJumpCancel;
     public bool canHeavyAttackCancel;
+    public PlayerSound.AttackSounds Sound;
 
     public InariAttack(string name) : this(name, true, true, true) { }
-    public InariAttack(string name, bool _canDashCancel, bool _canJumpCancel, bool _canHeavyAttackCancel)
+    public InariAttack(string name, bool _canDashCancel, bool _canJumpCancel, bool _canHeavyAttackCancel) : this(name, _canDashCancel, _canJumpCancel, _canHeavyAttackCancel, PlayerSound.AttackSounds.Basic) { }
+    public InariAttack(string name, bool _canDashCancel, bool _canJumpCancel, bool _canHeavyAttackCancel, PlayerSound.AttackSounds sound)
     {
         Name = name;
         canDashCancel = _canDashCancel;
         canJumpCancel = _canJumpCancel;
         canHeavyAttackCancel = _canHeavyAttackCancel;
+        Sound = sound;
     }
 }
 public enum InariOtherAttacks
@@ -59,7 +62,7 @@ public class PlayerAttacks : MonoBehaviour
         };
 
         otherAttacks = new Dictionary<InariOtherAttacks, InariAttack>();
-        otherAttacks.Add(InariOtherAttacks.GroundHeavy, new InariAttack("ALTERNATIVE_NEWPlayerDollGroundHeavy", false, false, false));
+        otherAttacks.Add(InariOtherAttacks.GroundHeavy, new InariAttack("ALTERNATIVE_NEWPlayerDollGroundHeavy", false, false, false, PlayerSound.AttackSounds.Heavy));
         otherAttacks.Add(InariOtherAttacks.GroundLaunch, new InariAttack("PlayerDollLaunch", false, true, false));
 
         currentAttack = groundBasicAttacks[0];
