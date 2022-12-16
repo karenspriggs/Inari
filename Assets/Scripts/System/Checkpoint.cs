@@ -13,6 +13,8 @@ public class Checkpoint : MonoBehaviour
     public bool hasActivated = false;
     public bool shouldLightUp = true;
 
+    AudioSource audioSource;
+
     private Light2D checkpointLight;
     private LightAnimator lanternAnimator;
 
@@ -26,6 +28,7 @@ public class Checkpoint : MonoBehaviour
         checkpointLight.enabled = false;
         checkpointCollider = GetComponent<BoxCollider2D>();
         lanternAnimator = GetComponent<LightAnimator>();
+        audioSource = GetComponent<AudioSource>();
 
         if (PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID >= this.checkpointID)
         {
@@ -38,6 +41,7 @@ public class Checkpoint : MonoBehaviour
     void UseCheckpoint()
     {
         DisableCheckpoint();
+        audioSource.Play();
         PlayerPassedCheckpoint?.Invoke();
         PlayerSaveSystem.SessionSaveData.playerStats.LatestCheckpointID = this.checkpointID;
         PlayerSaveSystem.SaveGame();

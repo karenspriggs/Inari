@@ -7,7 +7,10 @@ public class EnemyRoom : MonoBehaviour
     public GameObject[] ActivationObjects;
     public List<EnemySpawnEffect> Enemies;
     public BoxCollider2D[] WallColliders;
+
     SpriteRenderer spriteRenderer;
+    AudioSource audioSource;
+    
 
     public bool isActivated;
     public int enemyCount;
@@ -34,6 +37,8 @@ public class EnemyRoom : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = false;
 
+        audioSource = GetComponent<AudioSource>();
+
         foreach(EnemySpawnEffect spawner in GetComponentsInChildren<EnemySpawnEffect>())
         {
             Enemies.Add(spawner);
@@ -53,6 +58,8 @@ public class EnemyRoom : MonoBehaviour
         }
 
         spriteRenderer.enabled = true;
+
+        audioSource.Play();
     }
 
     void DecreaseEnemyCount() 
