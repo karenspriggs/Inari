@@ -27,6 +27,7 @@ public class PlayerData : MonoBehaviour
 
     public float currentEnergy;
     public float dashEnergyCost;
+    public float heavyAttackEnergyCost;
     public float energyForKillingEnemy;
     public float invulnTime;
     public int currentCheckpointID;
@@ -130,9 +131,19 @@ public class PlayerData : MonoBehaviour
         PlayerRegainedHP?.Invoke(-healthGained);
     }
 
-    public bool TryDashing()
+    public bool HasEnergyToDash()
     {
         if (currentEnergy - dashEnergyCost < 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool HasEnergyToHeavyAttack()
+    {
+        if (currentEnergy - heavyAttackEnergyCost < 0)
         {
             return false;
         }

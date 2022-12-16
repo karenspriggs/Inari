@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
             bool hasDashInputThisFrame = isDashing > 0.1f;
             if (hasDashInputThisFrame)
             {
-                if (playerData.TryDashing())
+                if (playerData.HasEnergyToDash())
                 {
                     if (canDash && currentState != InariState.DashStartup)
                     {
@@ -299,11 +299,12 @@ public class PlayerController : MonoBehaviour
             bool hasAttackInputThisFrame = b_isHeavyAttacking;
             b_isHeavyAttacking = false;
 
-            if (hasAttackInputThisFrame && IsntCancelingHeavyIntoHeavy())
+            if (hasAttackInputThisFrame && IsntCancelingHeavyIntoHeavy() && playerData.HasEnergyToHeavyAttack())
             {
             
                 if (isGrounded) //only grounded heavys for now
                 {
+                    playerData.UseEnergy(playerData.heavyAttackEnergyCost);
                     if (!isHoldingUp)
                     {
                         playerAttacks.currentAttack = playerAttacks.otherAttacks[InariOtherAttacks.GroundHeavy];
