@@ -169,6 +169,7 @@ public class MultiRangeEnemyController : MonoBehaviour
             case (MultiRangeEnemyState.Hit):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.Hit);
                 enemyParticles.PlayHitParticles();
+                enemySounds.PlaySound(enemySounds.HitSound);
                 break;
             case (MultiRangeEnemyState.Stun):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.Stun);
@@ -180,11 +181,13 @@ public class MultiRangeEnemyController : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.MeleeAlert):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.MeleeAlert);
+                enemySounds.PlaySound(enemySounds.AlertSound);
                 break;
             case (MultiRangeEnemyState.MeleeAttack):
                 canMeleeAttack = false;
                 enemyAnimator.SwitchState(MultiRangeEnemyState.MeleeAttack);
                 meleeAttackTimer = MeleeAttackCooldown;
+                enemySounds.PlaySound(enemySounds.AttackSound);
                 break;
             case (MultiRangeEnemyState.BackDash):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.BackDash);
@@ -197,6 +200,7 @@ public class MultiRangeEnemyController : MonoBehaviour
                 canRangedAttack = false;
                 rangedAttackTimer = RangedAttackCooldown;
                 enemyAnimator.SwitchState(MultiRangeEnemyState.RangedAttack);
+                enemySounds.PlaySound(enemySounds.RangedAttackSound);
                 break;
             case (MultiRangeEnemyState.Launched):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.Launched);
@@ -207,6 +211,7 @@ public class MultiRangeEnemyController : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.Dead):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.Dead);
+                enemySounds.PlaySound(enemySounds.DeathSound);
                 break;
         }
     }
@@ -364,13 +369,7 @@ public class MultiRangeEnemyController : MonoBehaviour
             return;
         }
 
-        if (targetDistance >= MeleeStateActivationDistance)
-        {
-            SwitchState(MultiRangeEnemyState.Idle);
-        } else
-        {
-            transform.position = currentMovement;
-        }
+        transform.position = currentMovement;
     }
 
     void DashBack()
@@ -511,6 +510,11 @@ public class MultiRangeEnemyController : MonoBehaviour
         Vector3 propsLocalScale = animationProps.transform.localScale;
         propsLocalScale.x *= -1f;
         animationProps.transform.localScale = propsLocalScale;
+
+        foreach(Projectile p in projectiles.projectilePool)
+        {
+            p.FlipSelf();
+        }
     }
 
     void ResetWander() =>
@@ -611,7 +615,7 @@ public class MultiRangeEnemyController : MonoBehaviour
 
         if (currentState == MultiRangeEnemyState.DeadLaunch)
         {
-            rigidbody.gravityScale = 1f;
+            rigidbody.gravityScale = 5f;
         }
 
         groundedLastFrame = isGrounded;
@@ -641,6 +645,18 @@ public class MultiRangeEnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Bumperbox") && currentState == MultiRangeEnemyState.Wander)
         {
             TurnAround();
+        }
+
+        if (collision.gameObject.CompareTag("LaunchHitbox") && (currentState != MultiRangeEnemyState.Dead && currentState != MultiRangeEnemyState.DeadLaunch))
+        {
+            SwitchState(MultiRangeEnemyState.Launched);
+            hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
+        }
+
+        if (collision.gameObject.CompareTag("HeavyHitbox") && (currentState != MultiRangeEnemyState.Dead && currentState != MultiRangeEnemyState.DeadLaunch))
+        {
+            SwitchState(MultiRangeEnemyState.Stun);
+            hitLocation = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
         }
     }
 }

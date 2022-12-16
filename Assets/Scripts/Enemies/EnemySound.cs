@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySound : SoundPlayer
 {
     public AudioClip AttackSound;
+    public AudioClip RangedAttackSound;
     public AudioClip ConfusedSound;
     public AudioClip AlertSound;
     public AudioClip IdleSound1;

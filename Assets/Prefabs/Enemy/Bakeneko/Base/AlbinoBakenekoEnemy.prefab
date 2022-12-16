@@ -122,7 +122,7 @@ MonoBehaviour:
   yStopDistance: 0
   attackCooldown: 0
   WanderCooldown: 0
-  LaunchDistance: 0
+  LaunchDistance: 1150
   maxWanderDistance: 0
   willWander: 1
   deathLaunchDistance: {x: 0, y: 0}
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 690543908060843257}
   AttackSound: {fileID: 8300000, guid: d43b5da29d962d943bb42f80b8d8d6f0, type: 3}
+  RangedAttackSound: {fileID: 0}
   ConfusedSound: {fileID: 0}
   AlertSound: {fileID: 0}
   IdleSound1: {fileID: 0}

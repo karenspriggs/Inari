@@ -105,7 +105,7 @@ public class EnemyData : MonoBehaviour
         if (collision.gameObject.CompareTag("HeavyHitbox"))
         {
             wasHit = true;
-            currentHP -= (int)collision.GetComponentInParent<PlayerData>().Attack;
+            currentHP -= (int)collision.GetComponentInParent<PlayerData>().Attack * 2;
             if (collision.gameObject.transform.position.x < this.gameObject.transform.position.x)
             {
                 wasHitToLeft = true;
