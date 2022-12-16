@@ -13,6 +13,7 @@ public class BreakableObject : SoundPlayer
     CapsuleCollider2D capsuleCollider2D;
     Rigidbody2D rigidbody2D;
 
+    public GameObject hiddenObject;
 
     // Start is called before the first frame update
     new void Start()
@@ -25,14 +26,30 @@ public class BreakableObject : SoundPlayer
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerAttackHitbox") || collision.gameObject.CompareTag("HeavyHitbox") && !isBroken)
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox") || collision.gameObject.CompareTag("HeavyHitbox") || collision.gameObject.CompareTag("LaunchHitbox"))
         {
-            Physics2D.IgnoreCollision(capsuleCollider2D, collision.GetComponentInParent<CapsuleCollider2D>());
-            isBroken = true;
-            spriteRenderer.sprite = brokenSprite;
+            if (!isBroken)
+            {
+                //first time break
+                Physics2D.IgnoreCollision(capsuleCollider2D, collision.GetComponentInParent<CapsuleCollider2D>());
+                isBroken = true;
+                spriteRenderer.sprite = brokenSprite;
 
+                // TODO: put this on a better layer probably. not just the default one?
+                this.gameObject.layer = 0; // stop being ground. 0 is default layer. this stops inari from trying to land on it
+                
+
+                //reveal hidden object if there is one
+                if (hiddenObject != null)
+                {
+                    hiddenObject.SetActive(true);
+                }
+            }
+
+            //any time hit, play the sound and particles
             PlaySound(breakSound);
             breakParticles.Play();
         }
+        
     }
 }
