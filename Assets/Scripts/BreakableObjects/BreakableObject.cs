@@ -2,27 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableObject : MonoBehaviour
+public class BreakableObject : SoundPlayer
 {
     public Sprite brokenSprite;
+    public AudioClip breakSound;
+    public ParticleSystem breakParticles;
 
     bool isBroken = false;
     SpriteRenderer spriteRenderer;
     CapsuleCollider2D capsuleCollider2D;
     Rigidbody2D rigidbody2D;
 
+
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,6 +30,9 @@ public class BreakableObject : MonoBehaviour
             Physics2D.IgnoreCollision(capsuleCollider2D, collision.GetComponentInParent<CapsuleCollider2D>());
             isBroken = true;
             spriteRenderer.sprite = brokenSprite;
+
+            PlaySound(breakSound);
+            breakParticles.Play();
         }
     }
 }
