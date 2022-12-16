@@ -252,6 +252,8 @@ public class PlayerController : MonoBehaviour
 
     private void UseQuickSlot()
     {
+        // TODO: some way to check if inari has an item he can eat and return it here. so i dont play the sound if hes got no food!!!!
+        playerSound.PlaySound(playerSound.EatSound);
         GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>().UseItem();
     }
 
@@ -437,7 +439,7 @@ public class PlayerController : MonoBehaviour
                 attacksEnabled = false;
                 isInRecovery = false;
                 playerAttacks.IsCurrentlyAttacking = true;
-                playerSound.PlaySound(playerSound.AttackSound);
+                playerSound.PlayAttackSound(playerAttacks.currentAttack.Sound);
                 playerMovement.HaltVerticalVelocity();
                 playerAnimator.StartAnimation(playerAttacks.currentAttack.Name);
                 break;
@@ -448,7 +450,7 @@ public class PlayerController : MonoBehaviour
                 isInRecovery = false;
                 usedAirAttack = true;
                 playerAttacks.IsCurrentlyAttacking = true;
-                playerSound.PlaySound(playerSound.AttackSound);
+                playerSound.PlayAttackSound(playerAttacks.currentAttack.Sound);
                 playerMovement.HaltVerticalVelocity();
                 playerAnimator.StartAnimation(playerAttacks.currentAttack.Name);
                 break;
