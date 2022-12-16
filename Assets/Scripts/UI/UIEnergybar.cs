@@ -33,13 +33,13 @@ public class UIEnergybar : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerData.InitializedPlayerEnergy += Init;
+        PlayerData.InitializedPlayerEnergy += SetMaxEnergyValue;
         PlayerData.PlayerUsedEnergy += SetValue;
     }
 
     private void OnDisable()
     {
-        PlayerData.InitializedPlayerEnergy -= Init;
+        PlayerData.InitializedPlayerEnergy -= SetMaxEnergyValue;
         PlayerData.PlayerUsedEnergy -= SetValue;
     }
 
@@ -63,12 +63,13 @@ public class UIEnergybar : MonoBehaviour
     public void SetMaxEnergyValue(float maxEnergy)
     {
         maxEnergyValue = maxEnergy;
+        currentValue = maxEnergy;
         SetEnergyText();
     }
 
     public void SetValue(float energy)
     {
-        currentValue = energy;
+        currentValue -= energy;
         mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * currentValue / maxEnergyValue);
 
         LeanTween.cancel(mask.gameObject);

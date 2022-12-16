@@ -32,14 +32,14 @@ public class UIHealthbar : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerData.InitializedPlayerHealth += Init;
+        PlayerData.InitializedPlayerHealth += SetMaxHPValue;
         PlayerData.PlayerTookDamage += SetValue;
         PlayerData.PlayerRegainedHP += SetValue;
     }
 
     private void OnDisable()
     {
-        PlayerData.InitializedPlayerHealth -= Init;
+        PlayerData.InitializedPlayerHealth -= SetMaxHPValue;
         PlayerData.PlayerTookDamage -= SetValue;
         PlayerData.PlayerRegainedHP -= SetValue;
     }
@@ -60,6 +60,7 @@ public class UIHealthbar : MonoBehaviour
     public void SetMaxHPValue(float maxHP)
     {
         maxHPValue = maxHP;
+        currentValue = maxHP;
         SetHPText();
     }
 
@@ -68,12 +69,11 @@ public class UIHealthbar : MonoBehaviour
         healthText.text = $"{currentValue}/{maxHPValue}";
     }
 
-    public void SetValue(float HP)
+    public void SetValue(float damage)
     {
         Debug.Log("Updating Value");
-        Debug.Log(HP);
 
-        currentValue = HP;
+        currentValue -= damage;
 
         if (currentValue > maxHPValue)
         {
