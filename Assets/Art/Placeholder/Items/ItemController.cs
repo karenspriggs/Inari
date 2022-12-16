@@ -28,7 +28,7 @@ public class ItemController : MonoBehaviour
         int count = GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Items.Count(i => i == item);
         if (count <= 0)
         {
-            GameObject.FindWithTag("QuickSlot").GetComponent<QuickSlot>().itemcontroller.ClearItem();
+            ClearItem();
         }
         else
         {
