@@ -120,8 +120,8 @@ public class PlayerData : MonoBehaviour
 
         if (currentHP + healing >= maxHP)
         {
-            currentHP = maxHP;
             healthGained = currentHP + healing - maxHP;
+            currentHP = maxHP;
         }
         else
         {
