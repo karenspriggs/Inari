@@ -25,8 +25,8 @@ public class ItemController : MonoBehaviour
         GameObject.FindWithTag("Player").GetComponent<PlayerData>().HealHealth(item.health);
         GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Remove(item);
         GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().ListItems();
-        int count = GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Items.Count(i => i == item);
-        if (count <= 0)
+        int _count = GameObject.FindWithTag("Inventory").GetComponent<PlayerInventory>().Items.Count(i => i == item);
+        if (_count <= 0)
         {
             ClearItem();
         }
