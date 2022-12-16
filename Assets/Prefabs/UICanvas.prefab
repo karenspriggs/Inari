@@ -2658,6 +2658,7 @@ GameObject:
   - component: {fileID: 3021392215289344622}
   - component: {fileID: 5123784879552030408}
   - component: {fileID: 4664666019572107424}
+  - component: {fileID: 3274578218937489472}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -2836,6 +2837,25 @@ MonoBehaviour:
   levelUpText: {fileID: 3808498214683353960}
   LevelUpTextDuration: 3
   TextFadeDuration: 1
+--- !u!114 &3274578218937489472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021392215289344616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e6c4cc4b46e2d24c8cb597e0d4f8a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winScreen: {fileID: 0}
+  button: {fileID: 7746113233013001391}
+  levelNameText: {fileID: 0}
+  deathCounterText: {fileID: 0}
+  killCounterText: {fileID: 0}
+  comboCounterText: {fileID: 0}
+  levelName: 
 --- !u!1 &3021392215353903350
 GameObject:
   m_ObjectHideFlags: 0
@@ -2847,6 +2867,7 @@ GameObject:
   - component: {fileID: 3021392215353903353}
   - component: {fileID: 3021392215353903355}
   - component: {fileID: 5373725854324627289}
+  - component: {fileID: 4235353330706223217}
   m_Layer: 5
   m_Name: WinScreen
   m_TagString: Untagged
@@ -2903,6 +2924,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextLevelIndex: 0
+--- !u!114 &4235353330706223217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021392215353903350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e6c4cc4b46e2d24c8cb597e0d4f8a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winScreen: {fileID: 0}
+  button: {fileID: 7746113233013001391}
+  levelNameText: {fileID: 0}
+  deathCounterText: {fileID: 0}
+  killCounterText: {fileID: 0}
+  comboCounterText: {fileID: 0}
+  levelName: 
 --- !u!1 &3021392215385833845
 GameObject:
   m_ObjectHideFlags: 0
@@ -11906,6 +11946,8 @@ MonoBehaviour:
   previewHealthText: {fileID: 3130802700213203128}
   previewEnergyText: {fileID: 4577783129098656443}
   levelText: {fileID: 4226945386559891862}
+  energyBar: {fileID: 0}
+  healthBar: {fileID: 0}
   playerStats: {fileID: 0}
   playerLevel: {fileID: 0}
   AttackButton: {fileID: 0}

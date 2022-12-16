@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class WinScreenUI : MonoBehaviour
 {
     public GameObject winScreen;
+    public GameObject button;
 
     public TMP_Text levelNameText;
 
@@ -24,6 +26,8 @@ public class WinScreenUI : MonoBehaviour
             Time.timeScale = 0;
             UpdateScreenValues();
             ResetValues();
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(button);
         }
     }
 
