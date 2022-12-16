@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5753239184472973950}
   - component: {fileID: 5753239184472973951}
   - component: {fileID: 5753239184472973944}
-  - component: {fileID: 5753239184472973945}
   - component: {fileID: 5753239184472973946}
   - component: {fileID: 4801180357963473961}
+  - component: {fileID: 2675983963505033888}
   m_Layer: 0
   m_Name: Onigiri
   m_TagString: Food
@@ -211,19 +211,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5753239184472973945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5753239184472973924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d90938b255db514e9fefa4f5d058ece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds: {fileID: 5753239184472973946}
 --- !u!114 &5753239184472973946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,3 +242,17 @@ MonoBehaviour:
   count: {fileID: 0}
   itemname: {fileID: 0}
   value: {fileID: 0}
+--- !u!114 &2675983963505033888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753239184472973924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57abdb9ef69de1449962aec4adb998ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: {fileID: 5753239184472973946}
+  Item: {fileID: 11400000, guid: 5bbaf404a93e2b54aba1f4f7c7622e57, type: 2}
