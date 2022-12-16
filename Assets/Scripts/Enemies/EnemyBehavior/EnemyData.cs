@@ -30,6 +30,7 @@ public class EnemyData : MonoBehaviour
     public bool isNewController = true;
     public bool isDead = false;
     public bool wasHit = false;
+    bool killedByHeavy = false;
     bool wasHitToLeft = false;
 
     // Start is called before the first frame update
@@ -65,10 +66,10 @@ public class EnemyData : MonoBehaviour
 
             if (enemyController == null)
             {
-                multiRangeController.LaunchOnDeath(wasHitToLeft);
+                multiRangeController.LaunchOnDeath(wasHitToLeft, killedByHeavy);
             } else
             {
-                enemyController.LaunchOnDeath(wasHitToLeft);
+                enemyController.LaunchOnDeath(wasHitToLeft, killedByHeavy);
             }
             
             isDead = true;
@@ -100,6 +101,8 @@ public class EnemyData : MonoBehaviour
             {
                 wasHitToLeft = false;
             }
+
+            killedByHeavy = false;
         }
 
         if (collision.gameObject.CompareTag("HeavyHitbox"))
@@ -114,6 +117,8 @@ public class EnemyData : MonoBehaviour
             {
                 wasHitToLeft = false;
             }
+
+            killedByHeavy = true;
         }
 
         if (collision.gameObject.CompareTag("LaunchHitbox"))
@@ -128,6 +133,7 @@ public class EnemyData : MonoBehaviour
             {
                 wasHitToLeft = false;
             }
+            killedByHeavy = false;
         }
     }
 }

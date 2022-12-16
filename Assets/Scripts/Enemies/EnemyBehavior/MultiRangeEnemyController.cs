@@ -213,10 +213,10 @@ public class MultiRangeEnemyController : MonoBehaviour
                 break;
             case (MultiRangeEnemyState.DeadLaunch):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.DeadLaunch);
+                enemySounds.PlaySound(enemySounds.DeathSound);
                 break;
             case (MultiRangeEnemyState.Dead):
                 enemyAnimator.SwitchState(MultiRangeEnemyState.Dead);
-                enemySounds.PlaySound(enemySounds.DeathSound);
                 break;
         }
     }
@@ -489,7 +489,7 @@ public class MultiRangeEnemyController : MonoBehaviour
         rigidbody.AddForce(new Vector2(0, LaunchDistance));
     }
 
-    public void LaunchOnDeath(bool isToLeft)
+    public void LaunchOnDeath(bool isToLeft, bool isKilledByHeavy)
     {
         Debug.Log("Launching enemy");
 
@@ -498,6 +498,11 @@ public class MultiRangeEnemyController : MonoBehaviour
         if (!isToLeft)
         {
             distanceToLaunch = new Vector2(-distanceToLaunch.x, distanceToLaunch.y);
+        }
+
+        if (isKilledByHeavy)
+        {
+            distanceToLaunch *= 2;
         }
 
         rigidbody.AddForce(distanceToLaunch);

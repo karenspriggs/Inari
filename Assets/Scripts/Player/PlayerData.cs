@@ -190,7 +190,7 @@ public class PlayerData : MonoBehaviour
     {
         if (collision.gameObject.tag == "EnemyAttackHitbox")
         {
-            if (!isInvincible && playerController.currentState != InariState.Dashing)
+            if (!isInvincible && playerController.currentState != InariState.Dashing && playerController.currentState != InariState.GroundBasicAttacking)
             {
                 int damage;
 

@@ -377,7 +377,7 @@ public class EnemyController : MonoBehaviour
         rigidbody.AddForce(new Vector2(0, LaunchDistance));
     }
 
-    public void LaunchOnDeath(bool isToLeft)
+    public void LaunchOnDeath(bool isToLeft, bool killedByHeavy)
     {
         Debug.Log("Launching enemy");
 
@@ -386,6 +386,11 @@ public class EnemyController : MonoBehaviour
         if (!isToLeft)
         {
             distanceToLaunch = new Vector2(-distanceToLaunch.x, distanceToLaunch.y);
+        }
+
+        if (killedByHeavy)
+        {
+            distanceToLaunch *= 2;
         }
 
         rigidbody.AddForce(distanceToLaunch);
@@ -453,8 +458,6 @@ public class EnemyController : MonoBehaviour
 
     void UpdateAutoDeathTimer()
     {
-        Debug.Log("Updating auto timer");
-
         if (autoDeathTimer > 0)
         {
             autoDeathTimer -= 1 * Time.deltaTime;
@@ -462,7 +465,6 @@ public class EnemyController : MonoBehaviour
             if (autoDeathTimer <= 0)
             {
                 autoDeathTimer = 0f;
-                Debug.Log("Can automatically die");
                 canAutoDie = true;
             }
         }
