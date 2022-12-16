@@ -17,6 +17,7 @@ public class PlayerSound : SoundPlayer
     public AudioClip DashSound;
     public AudioClip HitSound;
     public AudioClip DeathSound;
+    public AudioClip EatSound;
 
     public void PlayAttackSound(AttackSounds attack)
     {
