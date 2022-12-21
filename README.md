@@ -2,7 +2,8 @@
 Source code for the Columbia College Chicago student game, INARI.
 Check it out here: https://bentocat.itch.io/inari
 
-#Credits
+# Credits
+
 Karen Spriggs - Programming, Concept Art
 
 Lane Howard - Game Design, Programming, Audio
