@@ -166,22 +166,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float dashSpeedThisFrame = DashSpeed;
 
-        bool dashRight = true;
-        if (inputMovement == 0)
-        {
-            dashRight = playerController.isFacingRight;
-        }
-        else
-        {
-            if (inputMovement < 0)
-            {
-                dashRight = false;
-            }
-            else
-            {
-                dashRight = true;
-            }
-        }
+        bool dashRight = GetDirectionPressedOrFacingDirection();
 
         if (!dashRight)
         {
@@ -298,6 +283,34 @@ public class PlayerMovement : MonoBehaviour
             if (shouldFaceRight != playerController.isFacingRight) FlipPlayer();
         }
     }
+
+    public void FaceDirPressedOverride()
+    {
+        if (GetDirectionPressedOrFacingDirection() != playerController.isFacingRight) FlipPlayer();
+    }
+
+    public bool GetDirectionPressedOrFacingDirection()
+    {
+        bool returnRight = true;
+        if (inputMovement == 0)
+        {
+            returnRight = playerController.isFacingRight;
+        }
+        else
+        {
+            if (inputMovement < 0)
+            {
+                returnRight = false;
+            }
+            else
+            {
+                returnRight = true;
+            }
+        }
+
+        return returnRight;
+    }
+
 
     void FlipPlayer()
     {

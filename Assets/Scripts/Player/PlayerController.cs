@@ -445,6 +445,7 @@ public class PlayerController : MonoBehaviour
                 isInRecovery = false;
                 playerAttacks.IsCurrentlyAttacking = true;
                 playerSound.PlayAttackSound(playerAttacks.currentAttack.Sound);
+                playerMovement.FaceDirPressedOverride();
                 playerMovement.HaltVerticalVelocity();
                 playerAnimator.StartAnimation(playerAttacks.currentAttack.Name);
                 break;
@@ -456,6 +457,7 @@ public class PlayerController : MonoBehaviour
                 usedAirAttack = true;
                 playerAttacks.IsCurrentlyAttacking = true;
                 playerSound.PlayAttackSound(playerAttacks.currentAttack.Sound);
+                playerMovement.FaceDirPressedOverride();
                 playerMovement.HaltVerticalVelocity();
                 playerAnimator.StartAnimation(playerAttacks.currentAttack.Name);
                 break;
