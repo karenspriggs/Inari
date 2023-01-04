@@ -5,25 +5,15 @@ using UnityEngine;
 public class EnemyRoom : MonoBehaviour
 {
     public GameObject[] ActivationObjects;
-    public List<EnemySpawnEffect> Enemies;
     public BoxCollider2D[] WallColliders;
+    public EnemyRoomWave[] enemyWaves;
 
     SpriteRenderer spriteRenderer;
     AudioSource audioSource;
     
-
     public bool isActivated;
-    public int enemyCount;
-
-    private void OnEnable()
-    {
-        EnemyData.EnemyKilled += DecreaseEnemyCount;
-    }
-
-    private void OnDisable()
-    {
-        EnemyData.EnemyKilled -= DecreaseEnemyCount;
-    }
+    public int currentWaveIndex = 0;
+    public int waveCount;
 
     private void Start()
     {
@@ -37,12 +27,9 @@ public class EnemyRoom : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = false;
 
-        audioSource = GetComponent<AudioSource>();
+        waveCount = enemyWaves.Length;
 
-        foreach(EnemySpawnEffect spawner in GetComponentsInChildren<EnemySpawnEffect>())
-        {
-            Enemies.Add(spawner);
-        }
+        audioSource = GetComponent<AudioSource>();
     }
 
     void ActivateRoom()
@@ -52,30 +39,22 @@ public class EnemyRoom : MonoBehaviour
             obj.SetActive(true);
         }
 
-        foreach(EnemySpawnEffect enemy in Enemies)
-        {
-            enemy.TurnOnEffect();
-        }
+        StartNextWave();
 
         spriteRenderer.enabled = true;
 
         audioSource.Play();
     }
 
-    void DecreaseEnemyCount() 
-    {
-        if (isActivated)
-        {
-            enemyCount--;
-            CheckIfShouldDeactivate();
-        }
-    }
-
     void CheckIfShouldDeactivate()
     {
-        if (enemyCount == 0)
+        if (waveCount == 0)
         {
             DeactivateRoom();
+        } else
+        {
+            currentWaveIndex++;
+            StartNextWave();
         }
     }
 
@@ -87,6 +66,17 @@ public class EnemyRoom : MonoBehaviour
         }
 
         spriteRenderer.enabled = false;
+    }
+
+    public void ClearWave()
+    {
+        waveCount--;
+        CheckIfShouldDeactivate();
+    }
+
+    void StartNextWave()
+    {
+        enemyWaves[currentWaveIndex].StartWave();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
