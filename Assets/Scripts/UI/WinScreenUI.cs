@@ -10,6 +10,8 @@ public class WinScreenUI : MonoBehaviour
     public GameObject winScreen;
     public GameObject button;
 
+    public CollectibleManager collectibleManager;
+
     public TMP_Text levelNameText;
 
     public TMP_Text deathCounterText;
